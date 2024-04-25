@@ -1,2 +1,2 @@
-# ChatStation
-ChatStation For Desktop
+# OllamaUI
+Ollama For Desktop UI
