@@ -1,6 +1,6 @@
+import {defineConfig} from "vite";
 import {join} from "path";
 import {builtinModules} from "module";
-import {defineConfig} from "vite";
 // @ts-ignore
 import wasm from "vite-plugin-wasm";
 // @ts-ignore
@@ -21,7 +21,7 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 index: join(__dirname, "index.ts"),
-                browser: join(__dirname, "browser.ts")
+                browser: join(__dirname, "index.ts")
             },
             output: {
                 format: "cjs",
