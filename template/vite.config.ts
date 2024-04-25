@@ -1,7 +1,10 @@
+import path from "path";
 import {defineConfig} from "vite";
 import vue from "@vitejs/plugin-vue";
 import wasm from "vite-plugin-wasm";
 import topLevelAwait from "vite-plugin-top-level-await";
+import tailwind from "tailwindcss";
+import autoprefixer from "autoprefixer";
 import Package from "../package.json";
 
 export default defineConfig({
@@ -32,5 +35,15 @@ export default defineConfig({
     },
     define: {
         __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: "true"
-    }
+    },
+    css: {
+        postcss: {
+            plugins: [tailwind(), autoprefixer()],
+        }
+    },
+    resolve: {
+        alias: {
+            "@": path.resolve(__dirname, "./src"),
+        },
+    },
 })
