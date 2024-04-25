@@ -1,6 +1,6 @@
 {
-    "name": "ollamaui",
-    "title": "OllamaUI",
+    "name": "nodechain",
+    "title": "NodeChain",
     "version": "1.0.0",
     "author": "MakerYang <www.makeryang.com>",
     "description": "www.makeryang.com",
@@ -16,8 +16,8 @@
         "macarm": "electron-builder -mac --arm64"
     },
     "build": {
-        "productName": "OllamaUI",
-        "appId": "com.makeryang.Ollama_UI",
+        "productName": "NodeChain",
+        "appId": "com.makeryang.NodeChain",
         "asar": false,
         "buildDependenciesFromSource": true,
         "directories": {
@@ -71,7 +71,7 @@
             "createStartMenuShortcut": true,
             "installerIcon": "scripts/icons/windows.ico",
             "uninstallerIcon": "scripts/icons/windows.ico",
-            "shortcutName": "OllamaUI"
+            "shortcutName": "NodeChain"
         }
     },
     "dependencies": {
