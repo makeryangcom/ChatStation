@@ -8,11 +8,18 @@
 import {onBeforeMount, onMounted, onBeforeUnmount, onUnmounted, nextTick} from "vue";
 import CommonHeader from "./common/header.vue";
 
+type FatherProps = {
+    base: any,
+    theme: string,
+    mode: string
+}
+const props: any = defineProps<FatherProps>();
+
 onBeforeMount(() => {});
 
 onMounted(() => {
     nextTick(()=>{
-
+        console.log(props);
     });
 });
 
