@@ -7,9 +7,9 @@
     "license": "MIT",
     "main": "release/dist/main/index.cjs",
     "scripts": {
-        "dev": "node scripts/watch.mjs",
+        "dev": "node tools/watch.mjs",
         "rebuild": "electron-rebuild -f --ignore=",
-        "build": "rimraf release/dist && node --max-old-space-size=6096 scripts/build.mjs && node --max-old-space-size=6096 scripts/index.mjs",
+        "build": "rimraf release/dist && node --max-old-space-size=6096 tools/build.mjs && node --max-old-space-size=6096 tools/index.mjs",
         "win64": "electron-builder --win --x64",
         "win32": "electron-builder --win --ia32",
         "mac": "electron-builder --mac --x64",
@@ -49,18 +49,18 @@
             ]
         },
         "mac": {
-            "icon": "scripts/icons/macos.icns",
-            "artifactName": "${productName}_Setup_${version}.${ext}"
+            "icon": "tools/icons/macos.icns",
+            "artifactName": "${productName}_${version}.${ext}"
         },
         "win": {
-            "icon": "scripts/icons/windows.ico",
-            "artifactName": "${productName}_Setup_${version}.${ext}",
+            "icon": "tools/icons/windows.ico",
+            "artifactName": "${productName}_${version}.${ext}",
             "target": "nsis",
             "requestedExecutionLevel": "highestAvailable"
         },
         "linux": {
-            "icon": "scripts/icons",
-            "artifactName": "${productName}_Setup_${version}.${ext}"
+            "icon": "tools/icons",
+            "artifactName": "${productName}_${version}.${ext}"
         },
         "nsis": {
             "oneClick": false,
@@ -69,8 +69,8 @@
             "allowToChangeInstallationDirectory": true,
             "createDesktopShortcut": true,
             "createStartMenuShortcut": true,
-            "installerIcon": "scripts/icons/windows.ico",
-            "uninstallerIcon": "scripts/icons/windows.ico",
+            "installerIcon": "tools/icons/windows.ico",
+            "uninstallerIcon": "tools/icons/windows.ico",
             "shortcutName": "NodeChain"
         }
     },

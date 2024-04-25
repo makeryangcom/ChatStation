@@ -2,7 +2,7 @@ import {defineConfig} from "vite";
 import vue from "@vitejs/plugin-vue";
 import wasm from "vite-plugin-wasm";
 import topLevelAwait from "vite-plugin-top-level-await";
-import Package from "../../package.json";
+import Package from "../package.json";
 
 export default defineConfig({
     root: __dirname,
@@ -22,7 +22,7 @@ export default defineConfig({
         topLevelAwait()
     ],
     build: {
-        outDir: "../../release/dist/renderer",
+        outDir: "../release/dist/template",
         emptyOutDir: true,
         sourcemap: false
     },

@@ -1,11 +1,11 @@
-import {defineConfig} from "vite";
 import {join} from "path";
 import {builtinModules} from "module";
+import {defineConfig} from "vite";
 // @ts-ignore
 import wasm from "vite-plugin-wasm";
 // @ts-ignore
 import topLevelAwait from "vite-plugin-top-level-await";
-import Package from "../../package.json";
+import Package from "../package.json";
 
 export default defineConfig({
     root: __dirname,
@@ -14,7 +14,7 @@ export default defineConfig({
         topLevelAwait()
     ],
     build: {
-        outDir: "../../release/dist/preload",
+        outDir: "../release/dist/package",
         emptyOutDir: true,
         minify: "terser",
         sourcemap: false,
