@@ -129,6 +129,29 @@ Electron.app.whenReady().then(() => {
 
 // Listen for main process messages
 Electron.ipcMain.on("message", (event: any, args: any) => {
+    if(args.type === "header-right-button"){
+        if(args.data === "close"){
+            Windows.Main.close();
+            Electron.app.quit();
+        }
+        if(args.data === "min"){
+            Windows.Main.minimize();
+        }
+        if(args.data === "size"){
+            if(Windows.Main.isMaximized()){
+                Windows.Main.unmaximize();
+            }else{
+                Windows.Main.maximize();
+            }
+        }
+        if(args.data === "resize"){
+            if(Windows.Main.isMaximized()){
+                event.sender.send("message", {type: "header-right-button", data: "max"});
+            }else{
+                event.sender.send("message", {type: "header-right-button", data: "restore"});
+            }
+        }
+    }
     if(args.type === "updater"){
         console.log("[main:updater]");
     }

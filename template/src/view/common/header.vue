@@ -39,7 +39,7 @@
                                                     <AvatarImage src="https://avatar.vercel.sh/acme-inc.png" alt="1212" />
                                                     <AvatarFallback>SC</AvatarFallback>
                                                 </Avatar>
-                                                <span>192.168.31.233</span>
+                                                <span>127.0.0.1</span>
                                                 <CheckIcon class="ml-auto h-4 w-4 opacity-0"></CheckIcon>
                                             </CommandItem>
                                         </CommandGroup>
@@ -140,13 +140,14 @@
                 </div>
             </div>
             <div class="right-item">
-                <div class="item">
-                    <MinusIcon class="item-icon" />
+                <div class="item" @click="onRightButton('min')">
+                    <MinusIcon title="最小化" class="item-icon" />
                 </div>
-                <div class="item">
-                    <BoxIcon class="item-icon" />
+                <div class="item" :title="!props.base.window.max ? '全屏' : '还原'" @click="onRightButton('size')">
+                    <BoxIcon class="item-icon" v-if="!props.base.window.max" />
+                    <RotateCounterClockwiseIcon class="item-icon" v-if="props.base.window.max" />
                 </div>
-                <div class="item">
+                <div class="item" title="关闭" @click="onRightButton('close')">
                     <Cross1Icon class="item-icon" />
                 </div>
             </div>
@@ -164,10 +165,18 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, 
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator} from "../../package/ui/command";
 import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "../../package/ui/dialog";
 import {Popover, PopoverContent, PopoverTrigger} from "../../package/ui/popover";
-import {CaretSortIcon, CheckIcon, PlusCircledIcon, ChatBubbleIcon, ShuffleIcon, MixIcon, LayersIcon, Cross1Icon, MinusIcon, BoxIcon} from "@radix-icons/vue";
+import {CaretSortIcon, CheckIcon, PlusCircledIcon, ChatBubbleIcon, ShuffleIcon, MixIcon, LayersIcon, Cross1Icon, MinusIcon, BoxIcon, RotateCounterClockwiseIcon} from "@radix-icons/vue";
+
+const props: any = defineProps<{
+    base: any
+}>();
 
 const open = ref(false);
 const showDialog = ref(false);
+
+function onRightButton(data: string){
+    props.base.ipc.send("message", {type: "header-right-button", data: data});
+}
 
 function onTab(tab: string){
     console.log(tab);
@@ -243,9 +252,6 @@ onUnmounted(() => {});
 }
 .page-header .header-item .page-tab .tabs .list button .icon{
     margin-right: 5px;
-}
-.page-header .header-item .page-tab .tabs .list button span{
-    font-size: 13px;
 }
 .page-header .header-item .right-item{
     width: auto;

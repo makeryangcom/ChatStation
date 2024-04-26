@@ -1,6 +1,6 @@
 <template>
     <main class="page-main">
-        <CommonHeader ref="commonHeader"></CommonHeader>
+        <CommonHeader ref="commonHeader" :base="props.base"></CommonHeader>
     </main>
 </template>
 
@@ -8,18 +8,23 @@
 import {onBeforeMount, onMounted, onBeforeUnmount, onUnmounted, nextTick} from "vue";
 import CommonHeader from "./common/header.vue";
 
-type FatherProps = {
+const props: any = defineProps<{
     base: any,
     theme: string,
     mode: string
-}
-const props: any = defineProps<FatherProps>();
+}>();
+
+props.base.ipc.on("message", (event: any, message: any) => {
+    if(message.type === "header-right-button"){
+        props.base.window.max = message.data !== "restore";
+    }
+});
 
 onBeforeMount(() => {});
 
 onMounted(() => {
     nextTick(()=>{
-        console.log(props);
+        console.log("[page:props]", props);
     });
 });
 

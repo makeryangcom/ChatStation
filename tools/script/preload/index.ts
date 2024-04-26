@@ -1,14 +1,21 @@
-import OsApi from "os";
-import PathApi from "path";
-import FileApi from "fs";
+import Os from "os";
+import Path from "path";
+import File from "fs";
+import {ipcRenderer} from "electron";
+import * as Config from "../../../package.json";
 
 (window as any).base = {
-    os: OsApi,
-    path: PathApi,
-    platform: OsApi.platform(), //darwin、linux、win32
-    file: FileApi,
+    os: Os,
+    path: Path,
+    platform: Os.platform(), //darwin、linux、win32
+    config: Config,
+    file: File,
+    ipc: ipcRenderer,
     lang: {
         t: false,
         locale: false
+    },
+    window: {
+        max: false
     }
 }

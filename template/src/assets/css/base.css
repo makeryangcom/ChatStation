@@ -7,3 +7,7 @@ html{
 .dialog-overlay{
     background-color: rgba(0, 0, 0, .2) !important;
 }
+
+.text-sm{
+    font-size: 13px !important;
+}
