@@ -81,6 +81,7 @@ yarn linux
 ```
 
 ## Links & Thank
+
 [https://github.com/ollama/ollama](https://github.com/ollama/ollama)
 
 [https://www.radix-ui.com/icons](https://www.radix-ui.com/icons)
