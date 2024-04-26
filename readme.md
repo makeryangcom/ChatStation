@@ -86,3 +86,7 @@ yarn linux
 [https://www.radix-ui.com/icons](https://www.radix-ui.com/icons)
 
 [https://www.shadcn-vue.com](https://www.shadcn-vue.com)
+
+[https://cn.vuejs.org](https://cn.vuejs.org/)
+
+[https://vitejs.dev](https://vitejs.dev/)
