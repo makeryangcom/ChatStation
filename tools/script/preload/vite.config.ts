@@ -5,7 +5,7 @@ import {builtinModules} from "module";
 import wasm from "vite-plugin-wasm";
 // @ts-ignore
 import topLevelAwait from "vite-plugin-top-level-await";
-import Package from "../package.json";
+import Package from "../../../package.json";
 
 export default defineConfig({
     root: __dirname,
@@ -14,14 +14,13 @@ export default defineConfig({
         topLevelAwait()
     ],
     build: {
-        outDir: "../release/dist/package",
+        outDir: "../../../release/dist/preload",
         emptyOutDir: true,
         minify: "terser",
         sourcemap: false,
         rollupOptions: {
             input: {
-                index: join(__dirname, "index.ts"),
-                browser: join(__dirname, "index.ts")
+                index: join(__dirname, "index.ts")
             },
             output: {
                 format: "cjs",

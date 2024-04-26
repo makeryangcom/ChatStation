@@ -14,33 +14,33 @@
                                         <AvatarImage src="https://avatar.vercel.sh/acme-inc.png" alt="1212" />
                                         <AvatarFallback>SC</AvatarFallback>
                                     </Avatar>
-                                    <span>Monsters Inc.</span>
+                                    <span>OpenAI ChatGPT</span>
                                     <CaretSortIcon class="ml-auto h-4 w-4 shrink-0 opacity-50" />
                                 </Button>
                             </PopoverTrigger>
                             <PopoverContent class="w-[200px] p-0">
                                 <Command>
                                     <CommandList>
-                                        <CommandInput placeholder="Search team..." />
-                                        <CommandEmpty>No team found.</CommandEmpty>
-                                        <CommandGroup heading="aaaa">
+                                        <CommandInput :placeholder="$t('header.left.search_model')" />
+                                        <CommandEmpty>No Model Found.</CommandEmpty>
+                                        <CommandGroup :heading="$t('header.left.cloud_model')">
                                             <CommandItem value="1">
                                                 <Avatar class="mr-2 h-5 w-5">
                                                     <AvatarImage src="https://avatar.vercel.sh/acme-inc.png" alt="1212" />
                                                     <AvatarFallback>SC</AvatarFallback>
                                                 </Avatar>
-                                                <span>12121212</span>
+                                                <span>OpenAI ChatGPT</span>
                                                 <CheckIcon class="ml-auto h-4 w-4"></CheckIcon>
                                             </CommandItem>
                                         </CommandGroup>
-                                        <CommandGroup heading="bbbb">
-                                            <CommandItem value="1">
+                                        <CommandGroup :heading="$t('header.left.local_model')">
+                                            <CommandItem value="2">
                                                 <Avatar class="mr-2 h-5 w-5">
                                                     <AvatarImage src="https://avatar.vercel.sh/acme-inc.png" alt="1212" />
                                                     <AvatarFallback>SC</AvatarFallback>
                                                 </Avatar>
-                                                <span>23232</span>
-                                                <CheckIcon class="ml-auto h-4 w-4"></CheckIcon>
+                                                <span>192.168.31.233</span>
+                                                <CheckIcon class="ml-auto h-4 w-4 opacity-0"></CheckIcon>
                                             </CommandItem>
                                         </CommandGroup>
                                     </CommandList>
@@ -50,7 +50,7 @@
                                             <DialogTrigger as-child>
                                                 <CommandItem value="create-team" @select="()=>{open = false; showDialog = true;}">
                                                     <PlusCircledIcon class="mr-2 h-5 w-5" />
-                                                    <span> Create Team</span>
+                                                    <span>{{$t("header.left.new_local_model")}}</span>
                                                 </CommandItem>
                                             </DialogTrigger>
                                         </CommandGroup>

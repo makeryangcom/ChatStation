@@ -7,9 +7,9 @@
     "license": "MIT",
     "main": "release/dist/main/index.cjs",
     "scripts": {
-        "dev": "node tools/watch.mjs",
+        "dev": "node tools/script/watch.mjs",
         "rebuild": "electron-rebuild -f --ignore=",
-        "build": "rimraf release/dist && node --max-old-space-size=6096 tools/build.mjs && node --max-old-space-size=6096 tools/index.mjs",
+        "build": "rimraf release/dist && node --max-old-space-size=6096 tools/script/build.mjs && node --max-old-space-size=6096 tools/script/index.mjs",
         "win64": "electron-builder --win --x64",
         "win32": "electron-builder --win --ia32",
         "mac": "electron-builder --mac --x64",

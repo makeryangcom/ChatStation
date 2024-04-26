@@ -10,7 +10,7 @@ function watchMain(server) {
     });
 
     return build({
-        configFile: "main/vite.config.ts",
+        configFile: "tools/script/main/vite.config.ts",
         mode: "development",
         plugins: [{
             name: "electron-main-watcher",
@@ -31,7 +31,7 @@ function watchMain(server) {
 
 function watchPreload(server) {
     return build({
-        configFile: "package/vite.config.ts",
+        configFile: "tools/script/preload/vite.config.ts",
         mode: "development",
         plugins: [{
             name: "electron-preload-watcher",

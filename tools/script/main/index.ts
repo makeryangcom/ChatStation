@@ -29,7 +29,8 @@ Electron.app.commandLine.appendSwitch("disable-gpu", "false");
 Electron.app.commandLine.appendSwitch("--lang", "en-US");
 
 // Initialize the application's root domain and path
-const application_url: string = Electron.app.isPackaged ? `file://${path.join(__dirname, "../template/index.html")}` : `http://localhost:9898`
+const application_url: string = Electron.app.isPackaged ? `file://${path.join(__dirname, "../template/index.html")}` : `http://localhost:9898`;
+const user_agent: string = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.215 Safari/537.36 NodeChain/2024.04";
 
 function onWindowMain(){
     console.log("[main:onWindowMain]");
@@ -49,7 +50,7 @@ function onWindowMain(){
             webSecurity: false,
             nodeIntegration: true,
             contextIsolation: false,
-            preload: path.join(__dirname, "../package/index.cjs")
+            preload: path.join(__dirname, "../preload/index.cjs")
         },
         fullscreen: false,
         show: false,
@@ -58,9 +59,9 @@ function onWindowMain(){
     });
 
     Windows.Main.loadURL(
-        application_url + "#/?package=" + path.join(__dirname, "../package/browser.cjs"),
+        application_url + "#/?preload=" + path.join(__dirname, "../preload/index.cjs"),
         {
-            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.215 Safari/537.36"
+            "userAgent": user_agent
         }
     ).then((res: any) => {
         console.log("[main:load]", res);
@@ -90,6 +91,14 @@ Electron.app.whenReady().then(() => {
             console.log("[main:activate]", 0);
             onWindowMain();
         }
+    });
+    // Request Listening and Interception Handling
+    Electron.session.defaultSession.webRequest.onBeforeSendHeaders((details: any, callback: any) =>{
+        details.requestHeaders["User-Agent"] = user_agent;
+        if (details.url.includes("google.com")) {
+            details.requestHeaders["User-Agent"] = "Chrome";
+        }
+        callback({cancel: false, requestHeaders: details.requestHeaders});
     });
     // listens for power suspend and screen lock
     Electron.powerMonitor.on("suspend", () => {
