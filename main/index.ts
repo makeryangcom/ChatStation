@@ -2,7 +2,6 @@ import os from "os";
 import path from "path";
 import * as Electron from "electron";
 import ElectronDebug from "electron-debug";
-import * as Updater from "electron-updater";
 
 // Initialize the application window
 let Windows: any = {
@@ -63,7 +62,9 @@ function onWindowMain(){
         {
             "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.215 Safari/537.36"
         }
-    ).then((r: any) => {});
+    ).then((res: any) => {
+        console.log("[main:load]", res);
+    });
 
     Windows.Main.on("ready-to-show", function () {
         Windows.Main.show();

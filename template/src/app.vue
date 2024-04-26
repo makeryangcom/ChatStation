@@ -8,14 +8,14 @@
 import {ref, onMounted, nextTick} from "vue";
 
 const app: any = ref({
-    base: (window as any).NodeChain,
-    theme: localStorage.getItem("nodechain:theme") ? localStorage.getItem("nodechain:theme") : "theme-zinc",
+    base: (window as any).base,
+    theme: localStorage.getItem("nodechain:theme") ? localStorage.getItem("nodechain:theme") : "zinc",
     mode: localStorage.getItem("nodechain:mode") ? localStorage.getItem("nodechain:mode") : "",
 });
 
 onMounted(() => {
     nextTick(()=>{
-        document.documentElement.className = app.value.theme + " " + app.value.mode;
+        document.documentElement.className = "theme-" + app.value.theme + " " + app.value.mode;
     });
 });
 

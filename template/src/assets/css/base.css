@@ -3,3 +3,7 @@
 html{
     background-color: hsl(var(--background));
 }
+
+.dialog-overlay{
+    background-color: rgba(0, 0, 0, .2) !important;
+}
