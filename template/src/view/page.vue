@@ -9,9 +9,7 @@ import {onBeforeMount, onMounted, onBeforeUnmount, onUnmounted, nextTick} from "
 import CommonHeader from "./common/header.vue";
 
 const props: any = defineProps<{
-    base: any,
-    theme: string,
-    mode: string
+    base: any
 }>();
 
 props.base.ipc.on("message", (event: any, message: any) => {

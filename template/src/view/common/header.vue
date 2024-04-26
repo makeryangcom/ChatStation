@@ -73,21 +73,25 @@
             <div class="page-tab">
                 <Tabs class="tabs" default-value="chat">
                     <TabsList class="list">
-                        <TabsTrigger value="chat" @click="onTab('chat')">
+                        <TabsTrigger value="chat" @click="onHeaderTab('chat')">
                             <ChatBubbleIcon class="icon" />
                             <span>{{$t("header.tab.chat")}}</span>
                         </TabsTrigger>
-                        <TabsTrigger value="workflow">
+                        <TabsTrigger value="workflow" @click="onHeaderTab('workflow')">
                             <ShuffleIcon class="icon" />
                             <span>{{$t("header.tab.workflow")}}</span>
                         </TabsTrigger>
-                        <TabsTrigger value="agent">
-                            <MixIcon class="icon" />
+                        <TabsTrigger value="agent" @click="onHeaderTab('agent')">
+                            <RocketIcon class="icon" />
                             <span>{{$t("header.tab.agent")}}</span>
                         </TabsTrigger>
-                        <TabsTrigger value="database">
+                        <TabsTrigger value="database" @click="onHeaderTab('database')">
                             <LayersIcon class="icon" />
                             <span>{{$t("header.tab.database")}}</span>
+                        </TabsTrigger>
+                        <TabsTrigger value="extension" @click="onHeaderTab('extension')">
+                            <MixIcon class="icon" />
+                            <span>{{$t("header.tab.extension")}}</span>
                         </TabsTrigger>
                     </TabsList>
                 </Tabs>
@@ -165,7 +169,7 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, 
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator} from "../../package/ui/command";
 import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "../../package/ui/dialog";
 import {Popover, PopoverContent, PopoverTrigger} from "../../package/ui/popover";
-import {CaretSortIcon, CheckIcon, PlusCircledIcon, ChatBubbleIcon, ShuffleIcon, MixIcon, LayersIcon, Cross1Icon, MinusIcon, BoxIcon, RotateCounterClockwiseIcon} from "@radix-icons/vue";
+import {CaretSortIcon, CheckIcon, RocketIcon, PlusCircledIcon, ChatBubbleIcon, ShuffleIcon, MixIcon, LayersIcon, Cross1Icon, MinusIcon, BoxIcon, RotateCounterClockwiseIcon} from "@radix-icons/vue";
 
 const props: any = defineProps<{
     base: any
@@ -178,7 +182,7 @@ function onRightButton(data: string){
     props.base.ipc.send("message", {type: "header-right-button", data: data});
 }
 
-function onTab(tab: string){
+function onHeaderTab(tab: string){
     console.log(tab);
 }
 

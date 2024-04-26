@@ -10,7 +10,8 @@ export default {
             chat: "Chat",
             workflow: "Workflow",
             agent: "Agent",
-            database: "Database"
+            database: "Database",
+            extension: "Extension"
         }
     }
 }
