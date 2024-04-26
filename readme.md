@@ -87,6 +87,6 @@ yarn linux
 
 [https://www.shadcn-vue.com](https://www.shadcn-vue.com)
 
-[https://cn.vuejs.org](https://cn.vuejs.org/)
+[https://vuejs.org](https://vuejs.org)
 
 [https://vitejs.dev](https://vitejs.dev/)
