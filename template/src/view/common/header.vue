@@ -71,7 +71,7 @@
         </div>
         <div class="header-item">
             <div class="page-tab">
-                <Tabs class="tabs" default-value="chat">
+                <Tabs class="tabs" v-model:model-value="page.current" default-value="chat">
                     <TabsList class="list">
                         <TabsTrigger value="chat" @click="onHeaderTab('chat')">
                             <ChatBubbleIcon class="icon" />
@@ -147,9 +147,9 @@
                 <div class="item" @click="onRightButton('min')">
                     <MinusIcon title="最小化" class="item-icon" />
                 </div>
-                <div class="item" :title="!props.base.window.max ? '全屏' : '还原'" @click="onRightButton('size')">
-                    <BoxIcon class="item-icon" v-if="!props.base.window.max" />
-                    <RotateCounterClockwiseIcon class="item-icon" v-if="props.base.window.max" />
+                <div class="item" :title="!base.window.max ? '全屏' : '还原'" @click="onRightButton('size')">
+                    <BoxIcon class="item-icon" v-if="!base.window.max" />
+                    <RotateCounterClockwiseIcon class="item-icon" v-if="base.window.max" />
                 </div>
                 <div class="item" title="关闭" @click="onRightButton('close')">
                     <Cross1Icon class="item-icon" />
@@ -161,18 +161,19 @@
 
 <script setup lang="ts">
 import {ref, onBeforeMount, onMounted, onBeforeUnmount, onUnmounted, nextTick} from "vue";
-import {cn} from "@/package/utils";
-import {Button} from "../../package/ui/button";
-import {Tabs, TabsList, TabsTrigger} from "../../package/ui/tabs";
-import {Avatar, AvatarFallback, AvatarImage} from "../../package/ui/avatar";
-import {DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger} from "../../package/ui/dropdown-menu";
-import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator} from "../../package/ui/command";
-import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "../../package/ui/dialog";
-import {Popover, PopoverContent, PopoverTrigger} from "../../package/ui/popover";
+import type {BaseStruct, PageStruct} from "@/package/struct";
+import {Button} from "@/package/ui/button";
+import {Tabs, TabsList, TabsTrigger} from "@/package/ui/tabs";
+import {Avatar, AvatarFallback, AvatarImage} from "@/package/ui/avatar";
+import {DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger} from "@/package/ui/dropdown-menu";
+import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator} from "@/package/ui/command";
+import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "@/package/ui/dialog";
+import {Popover, PopoverContent, PopoverTrigger} from "@/package/ui/popover";
 import {CaretSortIcon, CheckIcon, RocketIcon, PlusCircledIcon, ChatBubbleIcon, ShuffleIcon, MixIcon, LayersIcon, Cross1Icon, MinusIcon, BoxIcon, RotateCounterClockwiseIcon} from "@radix-icons/vue";
 
 const props: any = defineProps<{
-    base: any
+    base: BaseStruct,
+    page: PageStruct
 }>();
 
 const open = ref(false);
@@ -183,15 +184,13 @@ function onRightButton(data: string){
 }
 
 function onHeaderTab(tab: string){
-    console.log(tab);
+    props.page.current = tab;
 }
 
 onBeforeMount(() => {});
 
 onMounted(() => {
-    nextTick(()=>{
-
-    });
+    nextTick(()=>{});
 });
 
 onBeforeUnmount(() => {});

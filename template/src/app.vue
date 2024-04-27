@@ -7,12 +7,13 @@
 <script setup lang="ts">
 import {ref, onMounted, nextTick} from "vue";
 import {useI18n} from "vue-i18n";
+import type {AppStruct} from "@/package/struct";
 
 const i18n = useI18n();
-let app: any = ref({
+const app = ref<AppStruct>({
     base: (window as any).base,
-    theme: localStorage.getItem("nodechain:theme") ? localStorage.getItem("nodechain:theme") : "zinc",
-    mode: localStorage.getItem("nodechain:mode") ? localStorage.getItem("nodechain:mode") : "",
+    theme: localStorage.getItem("nodechain:theme") ? localStorage.getItem("nodechain:theme") + "" : "zinc",
+    mode: localStorage.getItem("nodechain:mode") ? localStorage.getItem("nodechain:mode") + "" : "",
 });
 
 onMounted(async () => {

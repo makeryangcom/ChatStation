@@ -11,3 +11,7 @@ html{
 .text-sm{
     font-size: 13px !important;
 }
+
+.scrollbar-box{
+    width: 8px !important;
+}

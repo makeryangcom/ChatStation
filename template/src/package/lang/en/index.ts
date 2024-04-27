@@ -13,5 +13,14 @@ export default {
             database: "Database",
             extension: "Extension"
         }
+    },
+    chat: {
+        time: {
+            today: "Today",
+            history: "History"
+        },
+        search: {
+            placeholder: "Search keywords..."
+        }
     }
 }

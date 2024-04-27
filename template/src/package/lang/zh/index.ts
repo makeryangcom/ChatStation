@@ -13,5 +13,14 @@ export default {
             database: "数据库",
             extension: "扩展"
         }
+    },
+    chat: {
+        time: {
+            today: "今天",
+            history: "历史"
+        },
+        search: {
+            placeholder: "搜索关键词..."
+        }
     }
 }
