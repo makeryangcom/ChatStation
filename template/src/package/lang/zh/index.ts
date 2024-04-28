@@ -12,6 +12,14 @@ export default {
             agent: "智能体",
             database: "数据库",
             extension: "扩展"
+        },
+        account: {
+            menu: {
+                profile: "用户中心",
+                billing: "账单",
+                settings: "设置",
+                logout: "退出"
+            }
         }
     },
     chat: {

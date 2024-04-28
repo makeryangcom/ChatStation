@@ -12,6 +12,14 @@ export default {
             agent: "Agent",
             database: "Database",
             extension: "Extension"
+        },
+        account: {
+            menu: {
+                profile: "Profile",
+                billing: "Billing",
+                settings: "Settings",
+                logout: "Log out"
+            }
         }
     },
     chat: {

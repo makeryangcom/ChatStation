@@ -34,7 +34,7 @@
                             <div class="relative">
                                 <Popover>
                                     <PopoverTrigger as-child>
-                                        <Button variant="outline" class="w-[280px] justify-start text-left font-normal">
+                                        <Button variant="outline" class="w-[276px] justify-start text-left font-normal">
                                             <CalendarIcon class="mr-2 h-4 w-4" />
                                             <template v-if="page.chat.filter.date.start">
                                                 <template v-if="page.chat.filter.date.end">
@@ -49,8 +49,8 @@
                                             </template>
                                         </Button>
                                     </PopoverTrigger>
-                                    <PopoverContent align="start" :align-offset="0" class="w-auto p-0 calendar-main">
-                                        <RangeCalendar v-model="page.chat.filter.date" :locale="props.base.lang.locale" initial-focus :number-of-months="2" @update:start-value="(value) => page.chat.filter.date.start = value" @update:model-value="(value) => console.log(value)" />
+                                    <PopoverContent align="start" :align-offset="0" class="w-[276px] p-0 calendar-main">
+                                        <RangeCalendar v-model="page.chat.filter.date" :locale="props.base.lang.locale" initial-focus :number-of-months="1" @update:start-value="(value) => page.chat.filter.date.start = value" @update:model-value="(value) => console.log(value)" />
                                     </PopoverContent>
                                 </Popover>
                             </div>
@@ -141,7 +141,9 @@
             </ResizablePanel>
             <ResizableHandle with-handle />
             <ResizablePanel class="right">
-                <div class="chat-item-box">12</div>
+                <div class="chat-item-box">
+                    <div class="chat-item-main">1</div>
+                </div>
             </ResizablePanel>
         </ResizablePanelGroup>
     </main>
@@ -212,7 +214,7 @@ onUnmounted(() => {});
     height: 100%;
 }
 .page-chat .chat-main .left .conversation{
-    height: calc(100% - 104px);
+    height: calc(100% - 114px);
 }
 .page-chat .chat-main .left .conversation .conversation-c{
     height: 100%;
@@ -228,5 +230,11 @@ onUnmounted(() => {});
 }
 .page-chat .chat-main .right .chat-item-box{
     width: 100%;
+    height: 100%;
+}
+.page-chat .chat-main .right .chat-item-box .chat-item-main{
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
 }
 </style>

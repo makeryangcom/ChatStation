@@ -119,24 +119,21 @@
                             <DropdownMenuSeparator />
                             <DropdownMenuGroup>
                                 <DropdownMenuItem>
-                                    <span>Profile</span>
+                                    <span>{{$t("header.account.menu.profile")}}</span>
                                     <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
-                                    <span>Billing</span>
+                                    <span>{{$t("header.account.menu.billing")}}</span>
                                     <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
-                                    <span>Settings</span>
+                                    <span>{{$t("header.account.menu.settings")}}</span>
                                     <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <span>New Team</span>
                                 </DropdownMenuItem>
                             </DropdownMenuGroup>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem>
-                                <span>Log out</span>
+                                <span>{{$t("header.account.menu.logout")}}</span>
                                 <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                             </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -201,14 +198,14 @@ onUnmounted(() => {});
 <style scoped>
 .page-header{
     width: 100%;
-    height: 50px;
+    height: 60px;
     background-color: hsl(var(--card));
     border-bottom: 1px solid hsl(var(--border));
     -webkit-app-region: drag;
 }
 .page-header .header-item{
     width: calc(100% - 680px);
-    height: 50px;
+    height: 60px;
     display: inline-block;
     vertical-align: top;
 }
@@ -221,10 +218,10 @@ onUnmounted(() => {});
 }
 .page-header .header-item .left-item{
     width: auto;
-    height: 50px;
+    height: 60px;
     display: inline-block;
     vertical-align: top;
-    padding: 7px 5px;
+    padding: 13px 5px;
 }
 .page-header .header-item .left-item:first-child{
     padding-left: 10px;
@@ -244,7 +241,7 @@ onUnmounted(() => {});
 }
 .page-header .header-item .page-tab{
     width: 100%;
-    padding: 7px;
+    padding: 13px 0;
     text-align: center;
 }
 .page-header .header-item .page-tab .tabs .list{
@@ -258,8 +255,8 @@ onUnmounted(() => {});
 }
 .page-header .header-item .right-item{
     width: auto;
-    height: 50px;
-    padding: 7px 5px;
+    height: 60px;
+    padding: 13px 5px;
     display: inline-block;
     vertical-align: top;
 }

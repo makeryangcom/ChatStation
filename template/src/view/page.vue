@@ -85,6 +85,6 @@ onUnmounted(() => {});
 }
 .page-main .page-section{
     width: 100%;
-    height: calc(100% - 74px);
+    height: calc(100% - 84px);
 }
 </style>
