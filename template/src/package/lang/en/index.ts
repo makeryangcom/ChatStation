@@ -15,9 +15,11 @@ export default {
         }
     },
     chat: {
+        new: "New Conversation",
         time: {
             today: "Today",
-            history: "History"
+            history: "History",
+            search: "Select search time range..."
         },
         search: {
             placeholder: "Search keywords..."

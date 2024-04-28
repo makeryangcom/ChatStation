@@ -27,9 +27,10 @@ export interface PageStruct {
             time: string,
             array: Array<string>
             date: {
-                start: string,
-                end: string
-            }
+                start: any,
+                end: any
+            },
+            df: any,
         },
         search: {
             keyword: string

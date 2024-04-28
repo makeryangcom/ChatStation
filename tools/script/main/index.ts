@@ -74,6 +74,10 @@ function onWindowMain(){
     Electron.globalShortcut.register("Shift+Alt+H", () => {
         Windows.Main.webContents.openDevTools({mode: "bottom", activate: false});
     });
+
+    Electron.globalShortcut.register("Shift+Alt+L", () => {
+        Windows.Main.webContents.send("message", {type: "switch-language"});
+    });
 }
 
 // When the application is ready

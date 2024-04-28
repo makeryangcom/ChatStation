@@ -34,9 +34,10 @@ const page = ref<PageStruct>({
             time: "today",
             array: ["today", "history"],
             date: {
-                start: "1",
-                end: "2"
-            }
+                start: false,
+                end: false
+            },
+            df: false,
         },
         search: {
             keyword: ""
@@ -47,6 +48,14 @@ const page = ref<PageStruct>({
 props.base.ipc.on("message", (event: any, message: any) => {
     if(message.type === "header-right-button"){
         props.base.window.max = message.data !== "restore";
+    }
+    if(message.type === "switch-language"){
+        if(props.base.lang.locale === "zh"){
+            props.base.lang.locale = "en";
+        }else{
+            props.base.lang.locale = "zh";
+        }
+        localStorage.setItem("nodechain:lang", props.base.lang.locale);
     }
 });
 

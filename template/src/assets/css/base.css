@@ -12,6 +12,14 @@ html{
     font-size: 13px !important;
 }
 
+.text-muted-foreground{
+    min-width: 36px !important;
+}
+
 .scrollbar-box{
     width: 8px !important;
+}
+
+span.placeholder{
+    color: hsl(var(--muted-foreground));
 }

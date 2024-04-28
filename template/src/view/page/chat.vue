@@ -5,7 +5,7 @@
                 <Tabs class="tab-item" v-model:model-value="page.chat.filter.time" :default-value="page.chat.filter.time">
                     <div class="flex items-center p-2">
                         <TabsList>
-                            <TabsTrigger :value="item" v-for="(item, index) in page.chat.filter.array" :key="index">{{$t("chat.time." + item)}}</TabsTrigger>
+                            <TabsTrigger :value="item" v-for="(item, index) in page.chat.filter.array" :key="index" @click="onFilterTime(item)">{{$t("chat.time." + item)}}</TabsTrigger>
                         </TabsList>
                         <div class="ml-auto">
                             <TooltipProvider>
@@ -16,7 +16,7 @@
                                         </Button>
                                     </TooltipTrigger>
                                     <TooltipContent align="center" side="right" :align-offset="0" :arrow-padding="0" avoid-collisions :collision-boundary="null" :collision-padding="{}" hide-when-detached sticky="always">
-                                        <span>新建对话</span>
+                                        <span>{{$t("chat.new")}}</span>
                                     </TooltipContent>
                                 </Tooltip>
                             </TooltipProvider>
@@ -36,11 +36,21 @@
                                     <PopoverTrigger as-child>
                                         <Button variant="outline" class="w-[280px] justify-start text-left font-normal">
                                             <CalendarIcon class="mr-2 h-4 w-4" />
-                                            <template>2024-04-28</template>
+                                            <template v-if="page.chat.filter.date.start">
+                                                <template v-if="page.chat.filter.date.end">
+                                                    <span>{{page.chat.filter.df.format(page.chat.filter.date.start.toDate(getLocalTimeZone()))}} - {{page.chat.filter.df.format(page.chat.filter.date.end.toDate(getLocalTimeZone()))}}</span>
+                                                </template>
+                                                <template v-else>
+                                                    <span>{{page.chat.filter.df.format(page.chat.filter.date.start.toDate(getLocalTimeZone()))}}</span>
+                                                </template>
+                                            </template>
+                                            <template v-else>
+                                                <span class="placeholder">{{$t("chat.time.search")}}</span>
+                                            </template>
                                         </Button>
                                     </PopoverTrigger>
-                                    <PopoverContent class="w-auto p-0">
-                                        <RangeCalendar v-model="page.chat.filter.date" initial-focus :number-of-months="2" @update:start-value="(startDate) => page.chat.filter.date.start = startDate" />
+                                    <PopoverContent align="start" :align-offset="0" class="w-auto p-0 calendar-main">
+                                        <RangeCalendar v-model="page.chat.filter.date" :locale="props.base.lang.locale" initial-focus :number-of-months="2" @update:start-value="(value) => page.chat.filter.date.start = value" @update:model-value="(value) => console.log(value)" />
                                     </PopoverContent>
                                 </Popover>
                             </div>
@@ -51,69 +61,50 @@
                             <ScrollArea class="h-screen flex conversation-s">
                                 <div class="flex-1 flex flex-col gap-2 p-3 pt-0 scroll-box">
                                     <TransitionGroup name="list" appear>
-                                        <button class="flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent" :key="0">
+                                        <button class="flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm hover:bg-accent" :key="0">
                                             <div class="flex w-full flex-col gap-1">
                                                 <div class="flex items-center">
                                                     <div class="flex items-center gap-2">
-                                                        <div class="font-semibold">William Smith</div>
+                                                        <div class="font-semibold">llama3:8b</div>
                                                         <span class="flex h-2 w-2 rounded-full bg-blue-600" />
                                                     </div>
-                                                    <div class="ml-auto text-xs text-foreground">6 months ago</div>
+                                                    <div class="ml-auto text-xs text-foreground">6 minute ago</div>
                                                 </div>
-                                                <div class="text-xs font-medium">Re: Project Update</div>
                                             </div>
-                                            <div class="line-clamp-2 text-xs text-muted-foreground">Thank you for the project update. It looks great! I've gone through the report, and the progress is impressive. The team has done a fantastic job, and I appreciate the hard work everyone has put in. I have a few minor suggestions that I'll include in the attached document.Let's discuss these duri</div>
+                                            <div class="line-clamp-2 text-xs text-muted-foreground">需要一个基于Python的手机号码格式验证程序</div>
                                             <div class="flex items-center gap-2">
-                                                <Badge class="badge-item" variant="outline">meeting</Badge>
-                                                <Badge class="badge-item" variant="default">work</Badge>
-                                                <Badge class="badge-item" variant="secondary">important</Badge>
+                                                <Badge class="badge-item" variant="outline">python</Badge>
+                                                <Badge class="badge-item" variant="default">手机号码</Badge>
+                                                <Badge class="badge-item" variant="secondary">格式验证</Badge>
                                             </div>
                                         </button>
                                         <button class="flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent bg-muted" :key="0">
                                             <div class="flex w-full flex-col gap-1">
                                                 <div class="flex items-center">
                                                     <div class="flex items-center gap-2">
-                                                        <div class="font-semibold">Emily Davis</div>
+                                                        <div class="font-semibold">qwen:14b</div>
                                                     </div>
-                                                    <div class="ml-auto text-xs text-muted-foreground">about 1 year ago</div>
+                                                    <div class="ml-auto text-xs text-muted-foreground">15 minute ago</div>
                                                 </div>
-                                                <div class="text-xs font-medium">Re: Question about Budget</div>
                                             </div>
-                                            <div class="line-clamp-2 text-xs text-muted-foreground">Thank you for the project update. It looks great! I've gone through the report, and the progress is impressive. The team has done a fantastic job, and I appreciate the hard work everyone has put in. I have a few minor suggestions that I'll include in the attached document.Let's discuss these duri</div>
+                                            <div class="line-clamp-2 text-xs text-muted-foreground">这段代码首先创建了一个 Date 对象，它默认代表创建时的日期和时间。getFullYear() 方法返回四位数的年份；getMonth() 方法返回月份（从 0 开始计数，所以实际月份需要加 1）；getDate() 方法返回一个月中的第几天。</div>
                                             <div class="flex items-center gap-2">
-                                                <Badge class="badge-item" variant="outline">meeting</Badge>
+                                                <Badge class="badge-item" variant="outline">nodejs</Badge>
                                             </div>
                                         </button>
                                         <button class="flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent" :key="0">
                                             <div class="flex w-full flex-col gap-1">
                                                 <div class="flex items-center">
                                                     <div class="flex items-center gap-2">
-                                                        <div class="font-semibold">William Smith</div>
-                                                        <span class="flex h-2 w-2 rounded-full bg-blue-600" />
+                                                        <div class="font-semibold">OpenAI ChatGPT</div>
                                                     </div>
-                                                    <div class="ml-auto text-xs text-foreground">6 months ago</div>
+                                                    <div class="ml-auto text-xs text-foreground">35 minute ago</div>
                                                 </div>
-                                                <div class="text-xs font-medium">Re: Project Update</div>
                                             </div>
-                                            <div class="line-clamp-2 text-xs text-muted-foreground">Thank you for the project update. It looks great! I've gone through the report, and the progress is impressive. The team has done a fantastic job, and I appreciate the hard work everyone has put in. I have a few minor suggestions that I'll include in the attached document.Let's discuss these duri</div>
+                                            <div class="line-clamp-2 text-xs text-muted-foreground">An unofficial, community-led Vue port of shadcn/ui. We are not affiliated with shadcn, but we did get his blessing before creating a Vue version of his work. This project was born out of the need for a similar project for the Vue ecosystem.</div>
                                             <div class="flex items-center gap-2">
-                                                <Badge class="badge-item" variant="secondary">work</Badge>
-                                            </div>
-                                        </button>
-                                        <button class="flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent" :key="0">
-                                            <div class="flex w-full flex-col gap-1">
-                                                <div class="flex items-center">
-                                                    <div class="flex items-center gap-2">
-                                                        <div class="font-semibold">William Smith</div>
-                                                        <span class="flex h-2 w-2 rounded-full bg-blue-600" />
-                                                    </div>
-                                                    <div class="ml-auto text-xs text-foreground">6 months ago</div>
-                                                </div>
-                                                <div class="text-xs font-medium">Re: Project Update</div>
-                                            </div>
-                                            <div class="line-clamp-2 text-xs text-muted-foreground">Thank you for the project update. It looks great! I've gone through the report, and the progress is impressive. The team has done a fantastic job, and I appreciate the hard work everyone has put in. I have a few minor suggestions that I'll include in the attached document.Let's discuss these duri</div>
-                                            <div class="flex items-center gap-2">
-                                                <Badge class="badge-item" variant="default">Test</Badge>
+                                                <Badge class="badge-item" variant="secondary">vue</Badge>
+                                                <Badge class="badge-item" variant="secondary">cli</Badge>
                                             </div>
                                         </button>
                                     </TransitionGroup>
@@ -121,20 +112,46 @@
                             </ScrollArea>
                         </TabsContent>
                         <TabsContent value="history" class="m-0 conversation-c">
-                            12
+                            <ScrollArea class="h-screen flex conversation-s">
+                                <div class="flex-1 flex flex-col gap-2 p-3 pt-0 scroll-box">
+                                    <TransitionGroup name="list" appear>
+                                        <button class="flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm hover:bg-accent" :key="0">
+                                            <div class="flex w-full flex-col gap-1">
+                                                <div class="flex items-center">
+                                                    <div class="flex items-center gap-2">
+                                                        <div class="font-semibold">llama3:8b</div>
+                                                        <span class="flex h-2 w-2 rounded-full bg-blue-600" />
+                                                    </div>
+                                                    <div class="ml-auto text-xs text-foreground">6 minute ago</div>
+                                                </div>
+                                            </div>
+                                            <div class="line-clamp-2 text-xs text-muted-foreground">需要一个基于Python的手机号码格式验证程序</div>
+                                            <div class="flex items-center gap-2">
+                                                <Badge class="badge-item" variant="outline">python</Badge>
+                                                <Badge class="badge-item" variant="default">手机号码</Badge>
+                                                <Badge class="badge-item" variant="secondary">格式验证</Badge>
+                                            </div>
+                                        </button>
+                                    </TransitionGroup>
+                                </div>
+                            </ScrollArea>
                         </TabsContent>
                     </div>
                 </Tabs>
             </ResizablePanel>
             <ResizableHandle with-handle />
-            <ResizablePanel class="right">2</ResizablePanel>
+            <ResizablePanel class="right">
+                <div class="chat-item-box">12</div>
+            </ResizablePanel>
         </ResizablePanelGroup>
     </main>
 </template>
 
 <script setup lang="ts">
-import {onBeforeMount, onMounted, onBeforeUnmount, onUnmounted, nextTick} from "vue";
+import {onBeforeMount, onMounted, onBeforeUnmount, onUnmounted, nextTick, ref, Ref} from "vue";
 import type {BaseStruct, PageStruct} from "@/package/struct";
+import type {DateRange} from "radix-vue";
+import {Empty} from "@/package/ui/empty";
 import {CalendarDate, DateFormatter, getLocalTimeZone} from "@internationalized/date";
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from "@/package/ui/resizable";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/package/ui/tooltip";
@@ -154,14 +171,22 @@ const props: any = defineProps<{
     page: PageStruct
 }>();
 
+function onFilterTime(time: string){
+    if(props.page.chat.filter.time !== time){
+        props.page.chat.filter.time = time;
+    }
+}
+
 onBeforeMount(() => {});
 
 onMounted(() => {
     nextTick(()=>{
-        props.page.chat.filter.date = {
-            start: new CalendarDate(2022, 1, 20),
-            end: new CalendarDate(2022, 1, 20).add({ days: 20 })
-        }
+        const now = new Date();
+        props.page.chat.filter.date = ref({
+            start: new CalendarDate(now.getFullYear(), now.getMonth() + 1, now.getDate()),
+            end: new CalendarDate(now.getFullYear(), now.getMonth() + 1, now.getDate()).add({days: 0})
+        }) as Ref<DateRange>;
+        props.page.chat.filter.df = new DateFormatter((props.base.lang.locale === "zh" ? "zh-CN" : "en-US"), {dateStyle: "long"})
     });
 });
 
@@ -200,5 +225,8 @@ onUnmounted(() => {});
     padding: 4px 5px;
     line-height: 12px;
     display: inline-block;
+}
+.page-chat .chat-main .right .chat-item-box{
+    width: 100%;
 }
 </style>

@@ -15,9 +15,11 @@ export default {
         }
     },
     chat: {
+        new: "新建对话",
         time: {
             today: "今天",
-            history: "历史"
+            history: "历史",
+            search: "选择搜索时间范围..."
         },
         search: {
             placeholder: "搜索关键词..."
