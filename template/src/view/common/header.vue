@@ -105,7 +105,7 @@
                             <Button variant="ghost" class="relative h-8 w-8 rounded-full">
                                 <Avatar class="h-8 w-8">
                                     <AvatarImage src="https://avatars.githubusercontent.com/u/156150246?v=4" alt="@shadcn" />
-                                    <AvatarFallback>SC</AvatarFallback>
+                                    <AvatarFallback>U</AvatarFallback>
                                 </Avatar>
                             </Button>
                         </DropdownMenuTrigger>
