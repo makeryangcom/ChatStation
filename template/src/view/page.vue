@@ -2,12 +2,12 @@
     <main class="page-main">
         <CommonHeader ref="commonHeader" :base="props.base" :page="page"></CommonHeader>
         <section class="page-section">
-            <PageInstall ref="pageInstall" :base="props.base" :page="page" v-if="!page.initialization.status"></PageInstall>
-            <PageChat ref="pageChat" :base="props.base" :page="page" v-if="page.initialization.status"></PageChat>
-            <PageWorkflow ref="pageWorkflow" :base="props.base" :page="page"  v-if="page.initialization.status"></PageWorkflow>
-            <PageAgent ref="pageAgent" :base="props.base" :page="page"  v-if="page.initialization.status"></PageAgent>
-            <PageDatabase ref="pageDatabase" :base="props.base" :page="page" v-if="page.initialization.status"></PageDatabase>
-            <PageExtension ref="pageExtension" :base="props.base" :page="page" v-if="page.initialization.status"></PageExtension>
+            <PageInstall ref="pageInstall" :base="props.base" :page="page" v-if="!page.install.status"></PageInstall>
+            <PageChat ref="pageChat" :base="props.base" :page="page" v-if="page.install.status"></PageChat>
+            <PageWorkflow ref="pageWorkflow" :base="props.base" :page="page"  v-if="page.install.status"></PageWorkflow>
+            <PageAgent ref="pageAgent" :base="props.base" :page="page"  v-if="page.install.status"></PageAgent>
+            <PageDatabase ref="pageDatabase" :base="props.base" :page="page" v-if="page.install.status"></PageDatabase>
+            <PageExtension ref="pageExtension" :base="props.base" :page="page" v-if="page.install.status"></PageExtension>
         </section>
         <CommonFooter ref="commonFooter" :base="props.base" :page="page"></CommonFooter>
     </main>
@@ -31,8 +31,17 @@ const props: any = defineProps<{
 
 const page = ref<PageStruct>({
     current: "chat",
-    initialization: {
-        status: false
+    install: {
+        status: false,
+        mode: "local",
+        local: {
+            input: "",
+            button_loading: false
+        },
+        remote: {
+            input: "",
+            button_loading: false
+        }
     },
     chat: {
         filter: {
@@ -76,7 +85,6 @@ onBeforeMount(() => {});
 onMounted(() => {
     nextTick(()=>{
         console.log("[page:props]", props);
-        // page.value.initialization.status = true;
     });
 });
 

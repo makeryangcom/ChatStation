@@ -25,8 +25,17 @@ export interface BaseStruct {
 
 export interface PageStruct {
     current: string,
-    initialization: {
-        status: boolean
+    install: {
+        status: boolean,
+        mode: string,
+        local: {
+            input: string,
+            button_loading: boolean
+        },
+        remote: {
+            input: string,
+            button_loading: boolean
+        }
     },
     chat: {
         filter: {

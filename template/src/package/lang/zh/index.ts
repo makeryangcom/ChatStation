@@ -4,7 +4,7 @@ export default {
             search_model: "搜索模型...",
             local_model: "本地",
             remote_model: "远程",
-            new_remote_model: "新的本地大模型"
+            new_remote_model: "新的远程设备"
         },
         tab: {
             chat: "对话",

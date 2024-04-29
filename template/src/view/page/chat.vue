@@ -280,7 +280,6 @@
 import {onBeforeMount, onMounted, onBeforeUnmount, onUnmounted, nextTick, ref, Ref} from "vue";
 import type {BaseStruct, PageStruct} from "@/package/struct";
 import type {DateRange} from "radix-vue";
-import {Empty} from "@/package/ui/empty";
 import {CalendarDate, DateFormatter, getLocalTimeZone} from "@internationalized/date";
 import {Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from "@/package/ui/select";
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from "@/package/ui/resizable";

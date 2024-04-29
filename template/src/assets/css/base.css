@@ -4,6 +4,10 @@ html{
     background-color: hsl(var(--background));
 }
 
+*{
+    user-select: none;
+}
+
 .dialog-overlay{
     background-color: rgba(0, 0, 0, .2) !important;
 }

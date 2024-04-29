@@ -71,25 +71,25 @@
         </div>
         <div class="header-item">
             <div class="page-tab">
-                <Tabs class="tabs" v-model:model-value="page.current" default-value="chat">
+                <Tabs class="tabs" v-model:model-value="page.current" :default-value="page.current">
                     <TabsList class="list">
-                        <TabsTrigger value="chat" @click="onHeaderTab('chat')" :disabled="!page.initialization.status">
+                        <TabsTrigger value="chat" @click="onHeaderTab('chat')" :disabled="!page.install.status">
                             <ChatBubbleIcon class="icon" />
                             <span>{{$t("header.tab.chat")}}</span>
                         </TabsTrigger>
-                        <TabsTrigger value="workflow" @click="onHeaderTab('workflow')" :disabled="!page.initialization.status">
+                        <TabsTrigger value="workflow" @click="onHeaderTab('workflow')" :disabled="!page.install.status">
                             <ShuffleIcon class="icon" />
                             <span>{{$t("header.tab.workflow")}}</span>
                         </TabsTrigger>
-                        <TabsTrigger value="agent" @click="onHeaderTab('agent')" :disabled="!page.initialization.status">
+                        <TabsTrigger value="agent" @click="onHeaderTab('agent')" :disabled="!page.install.status">
                             <RocketIcon class="icon" />
                             <span>{{$t("header.tab.agent")}}</span>
                         </TabsTrigger>
-                        <TabsTrigger value="database" @click="onHeaderTab('database')" :disabled="!page.initialization.status">
+                        <TabsTrigger value="database" @click="onHeaderTab('database')" :disabled="!page.install.status">
                             <LayersIcon class="icon" />
                             <span>{{$t("header.tab.database")}}</span>
                         </TabsTrigger>
-                        <TabsTrigger value="extension" @click="onHeaderTab('extension')" :disabled="!page.initialization.status">
+                        <TabsTrigger value="extension" @click="onHeaderTab('extension')" :disabled="!page.install.status">
                             <MixIcon class="icon" />
                             <span>{{$t("header.tab.extension")}}</span>
                         </TabsTrigger>

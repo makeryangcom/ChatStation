@@ -4,7 +4,7 @@ export default {
             search_model: "Search model...",
             local_model: "Local",
             remote_model: "Remote",
-            new_remote_model: "New Local Model"
+            new_remote_model: "New remote devices"
         },
         tab: {
             chat: "Chat",
