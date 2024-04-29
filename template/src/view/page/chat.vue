@@ -11,8 +11,9 @@
                             <TooltipProvider>
                                 <Tooltip>
                                     <TooltipTrigger as-child>
-                                        <Button variant="outline">
-                                            <PlusIcon />
+                                        <Button variant="ghost" size="icon">
+                                            <PlusIcon class="size-4" />
+                                            <span class="sr-only">Archive</span>
                                         </Button>
                                     </TooltipTrigger>
                                     <TooltipContent align="center" side="right" :align-offset="0" :arrow-padding="0" avoid-collisions :collision-boundary="null" :collision-padding="{}" hide-when-detached sticky="always">
@@ -34,7 +35,7 @@
                             <div class="relative">
                                 <Popover>
                                     <PopoverTrigger as-child>
-                                        <Button variant="outline" class="w-[276px] justify-start text-left font-normal">
+                                        <Button variant="outline" class="w-[256px] justify-start text-left font-normal">
                                             <CalendarIcon class="mr-2 h-4 w-4" />
                                             <template v-if="page.chat.filter.date.start">
                                                 <template v-if="page.chat.filter.date.end">
@@ -49,7 +50,7 @@
                                             </template>
                                         </Button>
                                     </PopoverTrigger>
-                                    <PopoverContent align="start" :align-offset="0" class="w-[276px] p-0 calendar-main">
+                                    <PopoverContent align="start" side="right" :align-offset="0" class="p-0 calendar-main">
                                         <RangeCalendar v-model="page.chat.filter.date" :locale="props.base.lang.locale" initial-focus :number-of-months="1" @update:start-value="(value) => page.chat.filter.date.start = value" @update:model-value="(value) => console.log(value)" />
                                     </PopoverContent>
                                 </Popover>
@@ -140,10 +141,136 @@
                 </Tabs>
             </ResizablePanel>
             <ResizableHandle with-handle />
-            <ResizablePanel class="right">
+            <ResizablePanel class="middle">
                 <div class="chat-item-box">
                     <div class="chat-item-main">1</div>
                 </div>
+            </ResizablePanel>
+            <ResizableHandle with-handle />
+            <ResizablePanel class="right">
+                <ScrollArea class="h-screen flex">
+                    <div class="items-center p-4">
+                        <div class="grid gap-2 pt-0">
+                            <HoverCard :open-delay="200" :close-delay="10">
+                                <HoverCardTrigger as-child>
+                                    <div class="grid gap-4">
+                                        <div class="flex items-center justify-between">
+                                            <Label>Workflow</Label>
+                                        </div>
+                                        <Select>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select a workflow" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectGroup>
+                                                    <SelectLabel>North America</SelectLabel>
+                                                    <SelectItem value="est">Eastern Standard Time (EST)</SelectItem>
+                                                </SelectGroup>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                </HoverCardTrigger>
+                                <HoverCardContent align="start" class="w-[260px] text-sm" side="left">The workflow which will generate the completion. Some workflows are suitable for natural language tasks, others specialize in code. Learn more.</HoverCardContent>
+                            </HoverCard>
+                        </div>
+                        <div class="grid gap-2 pt-4">
+                            <HoverCard :open-delay="200" :close-delay="10">
+                                <HoverCardTrigger as-child>
+                                    <div class="grid gap-4">
+                                        <div class="flex items-center justify-between">
+                                            <Label>Model</Label>
+                                        </div>
+                                        <Select>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select a model" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectGroup>
+                                                    <SelectLabel>North America</SelectLabel>
+                                                    <SelectItem value="est">Eastern Standard Time (EST)</SelectItem>
+                                                </SelectGroup>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                </HoverCardTrigger>
+                                <HoverCardContent align="start" class="w-[260px] text-sm" side="left">The model which will generate the completion. Some models are suitable for natural language tasks, others specialize in code. Learn more.</HoverCardContent>
+                            </HoverCard>
+                        </div>
+                        <fieldset class="grid gap-2 rounded-lg border p-4 mt-4">
+                            <legend class="-ml-1 px-1 text-sm font-medium">Settings</legend>
+                            <div class="grid gap-2">
+                                <HoverCard :open-delay="200" :close-delay="10">
+                                    <HoverCardTrigger as-child>
+                                        <div class="grid gap-4">
+                                            <div class="flex items-center justify-between">
+                                                <Label for="temperature">Temperature</Label>
+                                                <span class="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">{{page.chat.configuration.temperature?.[0]}}</span>
+                                            </div>
+                                            <Slider id="temperature" aria-label="Temperature" v-model="page.chat.configuration.temperature" :max="1" :step="0.1" class="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"></Slider>
+                                        </div>
+                                    </HoverCardTrigger>
+                                    <HoverCardContent align="start" class="w-[260px] text-sm" side="left">Controls randomness: lowering results in less random completions. As the temperature approaches zero, the model will become deterministic and repetitive.</HoverCardContent>
+                                </HoverCard>
+                            </div>
+                            <div class="grid gap-2 pt-2">
+                                <HoverCard :open-delay="200" :close-delay="10">
+                                    <HoverCardTrigger as-child>
+                                        <div class="grid gap-4">
+                                            <div class="flex items-center justify-between">
+                                                <Label for="maxlength">Max Tokens</Label>
+                                                <span class="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">{{page.chat.configuration.max_token?.[0]}}</span>
+                                            </div>
+                                            <Slider id="maxlength" aria-label="Max Tokens" v-model="page.chat.configuration.max_token" :max="4096" :step="10" class="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"></Slider>
+                                        </div>
+                                    </HoverCardTrigger>
+                                    <HoverCardContent align="start" class="w-[260px] text-sm" side="left">The maximum number of tokens to generate shared between the prompt and completion. The exact limit varies by model. (One token is roughly 4 characters for standard English text)</HoverCardContent>
+                                </HoverCard>
+                            </div>
+                            <div class="grid gap-2 pt-2">
+                                <HoverCard :open-delay="200" :close-delay="10">
+                                    <HoverCardTrigger as-child>
+                                        <div class="grid gap-4">
+                                            <div class="flex items-center justify-between">
+                                                <Label for="top_p">Top P</Label>
+                                                <span class="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">{{page.chat.configuration.top_p?.[0]}}</span>
+                                            </div>
+                                            <Slider id="top_p" aria-label="Top P" v-model="page.chat.configuration.top_p" :max="1" :step="0.1" class="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"></Slider>
+                                        </div>
+                                    </HoverCardTrigger>
+                                    <HoverCardContent align="start" class="w-[260px] text-sm" side="left">Controls diversity via nucleus sampling: 0.5 means half of all likelihood-weighted options are considered.</HoverCardContent>
+                                </HoverCard>
+                            </div>
+                            <div class="grid gap-2 pt-2">
+                                <HoverCard :open-delay="200" :close-delay="10">
+                                    <HoverCardTrigger as-child>
+                                        <div class="grid gap-4">
+                                            <div class="flex items-center justify-between">
+                                                <Label for="frequency_penalty">Frequency penalty</Label>
+                                                <span class="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">{{page.chat.configuration.frequency_penalty?.[0]}}</span>
+                                            </div>
+                                            <Slider id="frequency_penalty" aria-label="Frequency penalty" v-model="page.chat.configuration.frequency_penalty" :max="1" :step="0.1" class="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"></Slider>
+                                        </div>
+                                    </HoverCardTrigger>
+                                    <HoverCardContent align="start" class="w-[260px] text-sm" side="left">How much to penalize new tokens based on their existing frequency in the text so far. Decreases the model's likelihood to repeat the same line verbatim.</HoverCardContent>
+                                </HoverCard>
+                            </div>
+                            <div class="grid gap-2 pt-2">
+                                <HoverCard :open-delay="200" :close-delay="10">
+                                    <HoverCardTrigger as-child>
+                                        <div class="grid gap-4">
+                                            <div class="flex items-center justify-between">
+                                                <Label for="presence_penalty">Presence penalty</Label>
+                                                <span class="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">{{page.chat.configuration.presence_penalty?.[0]}}</span>
+                                            </div>
+                                            <Slider id="presence_penalty" aria-label="Presence penalty" v-model="page.chat.configuration.presence_penalty" :max="1" :step="0.1" class="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"></Slider>
+                                        </div>
+                                    </HoverCardTrigger>
+                                    <HoverCardContent align="start" class="w-[260px] text-sm" side="left">How much to penalize new tokens based on whether they appear in the text so far. Increases the model's likelihood to talk about new topics.</HoverCardContent>
+                                </HoverCard>
+                            </div>
+                        </fieldset>
+                    </div>
+                </ScrollArea>
             </ResizablePanel>
         </ResizablePanelGroup>
     </main>
@@ -155,16 +282,20 @@ import type {BaseStruct, PageStruct} from "@/package/struct";
 import type {DateRange} from "radix-vue";
 import {Empty} from "@/package/ui/empty";
 import {CalendarDate, DateFormatter, getLocalTimeZone} from "@internationalized/date";
+import {Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from "@/package/ui/select";
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from "@/package/ui/resizable";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/package/ui/tooltip";
 import {Tabs, TabsList, TabsTrigger, TabsContent} from "@/package/ui/tabs";
 import {Popover, PopoverContent, PopoverTrigger} from "@/package/ui/popover";
+import {HoverCard, HoverCardContent, HoverCardTrigger} from "@/package/ui/hover-card";
 import {RangeCalendar} from "@/package/ui/range-calendar";
 import {ScrollArea} from "@/package/ui/scroll-area";
 import {Separator} from "@/package/ui/separator";
 import {Input} from "@/package/ui/input";
 import {Search} from "lucide-vue-next";
 import {Badge} from "@/package/ui/badge";
+import {Label} from "@/package/ui/label";
+import {Slider} from "@/package/ui/slider";
 import {Button} from "@/package/ui/button";
 import {PlusIcon, CalendarIcon} from "@radix-icons/vue";
 
@@ -208,7 +339,7 @@ onUnmounted(() => {});
     display: block;
 }
 .page-chat .chat-main .left{
-    flex: 0 0 300px !important;
+    flex: 0 0 280px !important;
 }
 .page-chat .chat-main .left .tab-item{
     height: 100%;
@@ -228,13 +359,19 @@ onUnmounted(() => {});
     line-height: 12px;
     display: inline-block;
 }
-.page-chat .chat-main .right .chat-item-box{
+.page-chat .chat-main .middle .chat-item-box{
     width: 100%;
     height: 100%;
 }
-.page-chat .chat-main .right .chat-item-box .chat-item-main{
+.page-chat .chat-main .middle .chat-item-box .chat-item-main{
     width: 100%;
     max-width: 850px;
     margin: 0 auto;
+}
+.page-chat .chat-main .right{
+    flex: 0 0 280px !important;
+}
+.page-chat .chat-main .right .h-screen{
+    height: 100%;
 }
 </style>

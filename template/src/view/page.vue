@@ -2,11 +2,12 @@
     <main class="page-main">
         <CommonHeader ref="commonHeader" :base="props.base" :page="page"></CommonHeader>
         <section class="page-section">
-            <PageChat ref="pageChat" :base="props.base" :page="page"></PageChat>
-            <PageWorkflow ref="pageWorkflow" :base="props.base" :page="page"></PageWorkflow>
-            <PageAgent ref="pageAgent" :base="props.base" :page="page"></PageAgent>
-            <PageDatabase ref="pageDatabase" :base="props.base" :page="page"></PageDatabase>
-            <PageExtension ref="pageExtension" :base="props.base" :page="page"></PageExtension>
+            <PageInstall ref="pageInstall" :base="props.base" :page="page" v-if="!page.initialization.status"></PageInstall>
+            <PageChat ref="pageChat" :base="props.base" :page="page" v-if="page.initialization.status"></PageChat>
+            <PageWorkflow ref="pageWorkflow" :base="props.base" :page="page"  v-if="page.initialization.status"></PageWorkflow>
+            <PageAgent ref="pageAgent" :base="props.base" :page="page"  v-if="page.initialization.status"></PageAgent>
+            <PageDatabase ref="pageDatabase" :base="props.base" :page="page" v-if="page.initialization.status"></PageDatabase>
+            <PageExtension ref="pageExtension" :base="props.base" :page="page" v-if="page.initialization.status"></PageExtension>
         </section>
         <CommonFooter ref="commonFooter" :base="props.base" :page="page"></CommonFooter>
     </main>
@@ -21,6 +22,7 @@ import PageWorkflow from "@/view/page/workflow.vue";
 import PageAgent from "@/view/page/agent.vue";
 import PageDatabase from "@/view/page/database.vue";
 import PageExtension from "@/view/page/extension.vue";
+import PageInstall from "@/view/page/install.vue";
 import CommonFooter from "@/view/common/footer.vue";
 
 const props: any = defineProps<{
@@ -29,6 +31,9 @@ const props: any = defineProps<{
 
 const page = ref<PageStruct>({
     current: "chat",
+    initialization: {
+        status: false
+    },
     chat: {
         filter: {
             time: "today",
@@ -41,6 +46,13 @@ const page = ref<PageStruct>({
         },
         search: {
             keyword: ""
+        },
+        configuration: {
+            temperature: ref([0.6]),
+            max_token: ref([1024]),
+            top_p: ref([1]),
+            presence_penalty: ref([0]),
+            frequency_penalty: ref([0])
         }
     }
 });
@@ -64,6 +76,7 @@ onBeforeMount(() => {});
 onMounted(() => {
     nextTick(()=>{
         console.log("[page:props]", props);
+        // page.value.initialization.status = true;
     });
 });
 

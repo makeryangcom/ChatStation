@@ -2,9 +2,9 @@ export default {
     header: {
         left: {
             search_model: "Search model...",
-            cloud_model: "Cloud Model",
-            local_model: "Local Model",
-            new_local_model: "New Local Model"
+            local_model: "Local",
+            remote_model: "Remote",
+            new_remote_model: "New Local Model"
         },
         tab: {
             chat: "Chat",
@@ -31,6 +31,26 @@ export default {
         },
         search: {
             placeholder: "Search keywords..."
+        }
+    },
+    install: {
+        title: "Quick Start",
+        description: "Choose a method to quickly start your AI assistant.",
+        tab: {
+            local: {
+                title: "Local",
+                placeholder: "Select a location to store data",
+                heads_up: "Heads up!!!",
+                tips: "Local large model resources take up significant space. Ensure enough storage is available, recommended ≥ 30GB.",
+                button: "Start installation and deployment"
+            },
+            remote: {
+                title: "Remote",
+                placeholder: "Enter the domain name or IP address",
+                heads_up: "Heads up!!!",
+                tips: "Ensure the remote device has the large model service installed, or visit the official site for installation instructions.",
+                button: "Connect to Remote Device"
+            }
         }
     }
 }

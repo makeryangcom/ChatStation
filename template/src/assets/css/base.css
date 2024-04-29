@@ -23,3 +23,28 @@ html{
 span.placeholder{
     color: hsl(var(--muted-foreground));
 }
+
+.alert-main *{
+    color: hsl(var(--muted-foreground));
+}
+.alert-main.success{
+    border-color: #67C23A;
+}
+.alert-main.success *{
+    color: #67C23A;
+}
+.alert-main.warning{
+    border-color: #E6A23C;
+}
+.alert-main.warning *{
+    color: #E6A23C;
+}
+.alert-main.error *{
+    color: #F56C6C;
+}
+.alert-main h5{
+    font-size: 14px !important;
+}
+.alert-main div{
+    font-size: 12px !important;
+}

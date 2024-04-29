@@ -14,7 +14,7 @@
                                         <AvatarImage src="https://avatar.vercel.sh/acme-inc.png" alt="1212" />
                                         <AvatarFallback>SC</AvatarFallback>
                                     </Avatar>
-                                    <span>OpenAI ChatGPT</span>
+                                    <span>192.168.131.245</span>
                                     <CaretSortIcon class="ml-auto h-4 w-4 shrink-0 opacity-50" />
                                 </Button>
                             </PopoverTrigger>
@@ -23,24 +23,24 @@
                                     <CommandList>
                                         <CommandInput :placeholder="$t('header.left.search_model')" />
                                         <CommandEmpty>No Model Found.</CommandEmpty>
-                                        <CommandGroup :heading="$t('header.left.cloud_model')">
-                                            <CommandItem value="1">
-                                                <Avatar class="mr-2 h-5 w-5">
-                                                    <AvatarImage src="https://avatar.vercel.sh/acme-inc.png" alt="1212" />
-                                                    <AvatarFallback>SC</AvatarFallback>
-                                                </Avatar>
-                                                <span>OpenAI ChatGPT</span>
-                                                <CheckIcon class="ml-auto h-4 w-4"></CheckIcon>
-                                            </CommandItem>
-                                        </CommandGroup>
                                         <CommandGroup :heading="$t('header.left.local_model')">
                                             <CommandItem value="2">
                                                 <Avatar class="mr-2 h-5 w-5">
                                                     <AvatarImage src="https://avatar.vercel.sh/acme-inc.png" alt="1212" />
                                                     <AvatarFallback>SC</AvatarFallback>
                                                 </Avatar>
-                                                <span>127.0.0.1</span>
+                                                <span>localhost</span>
                                                 <CheckIcon class="ml-auto h-4 w-4 opacity-0"></CheckIcon>
+                                            </CommandItem>
+                                        </CommandGroup>
+                                        <CommandGroup :heading="$t('header.left.remote_model')">
+                                            <CommandItem value="1">
+                                                <Avatar class="mr-2 h-5 w-5">
+                                                    <AvatarImage src="https://avatar.vercel.sh/acme-inc.png" alt="1212" />
+                                                    <AvatarFallback>SC</AvatarFallback>
+                                                </Avatar>
+                                                <span>192.168.131.245</span>
+                                                <CheckIcon class="ml-auto h-4 w-4"></CheckIcon>
                                             </CommandItem>
                                         </CommandGroup>
                                     </CommandList>
@@ -50,7 +50,7 @@
                                             <DialogTrigger as-child>
                                                 <CommandItem value="create-team" @select="()=>{open = false; showDialog = true;}">
                                                     <PlusCircledIcon class="mr-2 h-5 w-5" />
-                                                    <span>{{$t("header.left.new_local_model")}}</span>
+                                                    <span>{{$t("header.left.new_remote_model")}}</span>
                                                 </CommandItem>
                                             </DialogTrigger>
                                         </CommandGroup>
@@ -73,23 +73,23 @@
             <div class="page-tab">
                 <Tabs class="tabs" v-model:model-value="page.current" default-value="chat">
                     <TabsList class="list">
-                        <TabsTrigger value="chat" @click="onHeaderTab('chat')">
+                        <TabsTrigger value="chat" @click="onHeaderTab('chat')" :disabled="!page.initialization.status">
                             <ChatBubbleIcon class="icon" />
                             <span>{{$t("header.tab.chat")}}</span>
                         </TabsTrigger>
-                        <TabsTrigger value="workflow" @click="onHeaderTab('workflow')">
+                        <TabsTrigger value="workflow" @click="onHeaderTab('workflow')" :disabled="!page.initialization.status">
                             <ShuffleIcon class="icon" />
                             <span>{{$t("header.tab.workflow")}}</span>
                         </TabsTrigger>
-                        <TabsTrigger value="agent" @click="onHeaderTab('agent')">
+                        <TabsTrigger value="agent" @click="onHeaderTab('agent')" :disabled="!page.initialization.status">
                             <RocketIcon class="icon" />
                             <span>{{$t("header.tab.agent")}}</span>
                         </TabsTrigger>
-                        <TabsTrigger value="database" @click="onHeaderTab('database')">
+                        <TabsTrigger value="database" @click="onHeaderTab('database')" :disabled="!page.initialization.status">
                             <LayersIcon class="icon" />
                             <span>{{$t("header.tab.database")}}</span>
                         </TabsTrigger>
-                        <TabsTrigger value="extension" @click="onHeaderTab('extension')">
+                        <TabsTrigger value="extension" @click="onHeaderTab('extension')" :disabled="!page.initialization.status">
                             <MixIcon class="icon" />
                             <span>{{$t("header.tab.extension")}}</span>
                         </TabsTrigger>

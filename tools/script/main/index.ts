@@ -26,7 +26,7 @@ process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
 ElectronDebug({showDevTools: false, devToolsMode: "bottom"});
 Electron.app.commandLine.appendSwitch("ignore-certificate-errors", "true");
 Electron.app.commandLine.appendSwitch("disable-gpu", "false");
-Electron.app.commandLine.appendSwitch("--lang", "en-US");
+// Electron.app.commandLine.appendSwitch("--lang", "en-US");
 
 // Initialize the application's root domain and path
 const application_url: string = Electron.app.isPackaged ? `file://${path.join(__dirname, "../template/index.html")}` : `http://localhost:9898`;

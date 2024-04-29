@@ -9,7 +9,7 @@ const messages = {
 
 const Lang = createI18n({
     legacy: false,
-    locale: localStorage.getItem("nodechain:lang") ? localStorage.getItem("nodechain:lang") + "" : "zh",
+    locale: localStorage.getItem("nodechain:lang") ? localStorage.getItem("nodechain:lang") + "" : "null",
     fallbackLocale: "en",
     messages,
 });

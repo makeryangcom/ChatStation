@@ -1,7 +1,10 @@
+import internal from "node:stream";
+
 export interface AppStruct {
     base: BaseStruct,
     theme: string
-    mode: string
+    mode: string,
+    language: string
 }
 
 export interface BaseStruct {
@@ -22,6 +25,9 @@ export interface BaseStruct {
 
 export interface PageStruct {
     current: string,
+    initialization: {
+        status: boolean
+    },
     chat: {
         filter: {
             time: string,
@@ -35,5 +41,12 @@ export interface PageStruct {
         search: {
             keyword: string
         },
+        configuration: {
+            temperature: any,
+            max_token: any,
+            top_p: any,
+            presence_penalty: any,
+            frequency_penalty: any
+        }
     }
 }

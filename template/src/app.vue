@@ -14,14 +14,22 @@ const app = ref<AppStruct>({
     base: (window as any).base,
     theme: localStorage.getItem("nodechain:theme") ? localStorage.getItem("nodechain:theme") + "" : "zinc",
     mode: localStorage.getItem("nodechain:mode") ? localStorage.getItem("nodechain:mode") + "" : "",
+    language: (navigator as any).language
 });
 
 onMounted(async () => {
     await nextTick( ()=>{
-        console.log("NodeChain " + app.value.base.config.version + " MakerYang(https://www.makeryang.com)");
+        console.log("NodeChain "  + app.value.language + " " + app.value.base.config.version + " MakerYang(https://www.makeryang.com)");
         document.documentElement.className = "theme-" + app.value.theme + " " + app.value.mode;
         app.value.base.lang.t = i18n.t;
         app.value.base.lang.locale = i18n.locale;
+        if(app.value.base.lang.locale === "null"){
+            if(app.value.language === "zh-CN"){
+                app.value.base.lang.locale = "zh";
+            }else{
+                app.value.base.lang.locale = "en";
+            }
+        }
         window.addEventListener("resize", function() {
             app.value.base.ipc.send("message", {type: "header-right-button", data: "resize"});
         });
