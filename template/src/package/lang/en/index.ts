@@ -31,6 +31,38 @@ export default {
         },
         search: {
             placeholder: "Search keywords..."
+        },
+        configuration: {
+            workflow: {
+                title: "Workflow",
+                placeholder: "Select the workflow to use...",
+                tips: "Use custom workflows in conversations to handle more complex tasks through powerful workflow processing."
+            },
+            model: {
+                title: "Model",
+                placeholder: "Select the model to use...",
+                tips: "Specify the dialogue model to use based on your needs and scenario in the conversation."
+            },
+            settings: {
+                title: "Settings",
+                presets: {
+                    creative: "Creative",
+                    balanced: "Balanced",
+                    precise: "Precise"
+                },
+                temperature: {
+                    title: "Temperature",
+                    tips: "Controls randomness: lowering results in less random completions. As the temperature approaches zero, the model will become deterministic and repetitive."
+                },
+                maxlength: {
+                    title: "Max Tokens",
+                    tips: "The maximum number of tokens to generate shared between the prompt and completion. The exact limit varies by model. (One token is roughly 4 characters for standard English text)"
+                },
+                top_p: {
+                    title: "Top P",
+                    tips: "Controls diversity via nucleus sampling: 0.5 means half of all likelihood-weighted options are considered."
+                }
+            }
         }
     },
     install: {
@@ -52,5 +84,8 @@ export default {
                 button: "Connect to Remote Device"
             }
         }
+    },
+    toast: {
+        20001: "Incomplete information, please check."
     }
 }

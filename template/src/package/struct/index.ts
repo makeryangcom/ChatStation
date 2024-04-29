@@ -1,5 +1,3 @@
-import internal from "node:stream";
-
 export interface AppStruct {
     base: BaseStruct,
     theme: string
@@ -50,6 +48,7 @@ export interface PageStruct {
         search: {
             keyword: string
         },
+        item: any,
         configuration: {
             temperature: any,
             max_token: any,
@@ -57,5 +56,8 @@ export interface PageStruct {
             presence_penalty: any,
             frequency_penalty: any
         }
+    },
+    ui: {
+        toast: any
     }
 }

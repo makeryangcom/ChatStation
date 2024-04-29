@@ -28,6 +28,11 @@ span.placeholder{
     color: hsl(var(--muted-foreground));
 }
 
+span.tips-main{
+    color: hsl(var(--muted-foreground));
+    font-size: 12px !important;
+}
+
 .alert-main *{
     color: hsl(var(--muted-foreground));
 }
@@ -51,4 +56,14 @@ span.placeholder{
 }
 .alert-main div{
     font-size: 12px !important;
+}
+
+.toaster-main{
+    width: auto !important;
+    min-width: 100px !important;
+    max-width: 350px !important;
+    bottom: 24px !important;
+}
+.toaster-main li{
+    color: hsl(var(--muted-foreground));
 }

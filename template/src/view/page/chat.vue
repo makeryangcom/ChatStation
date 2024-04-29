@@ -13,7 +13,6 @@
                                     <TooltipTrigger as-child>
                                         <Button variant="ghost" size="icon">
                                             <PlusIcon class="size-4" />
-                                            <span class="sr-only">Archive</span>
                                         </Button>
                                     </TooltipTrigger>
                                     <TooltipContent align="center" side="right" :align-offset="0" :arrow-padding="0" avoid-collisions :collision-boundary="null" :collision-padding="{}" hide-when-detached sticky="always">
@@ -27,7 +26,7 @@
                     <div class="p-3">
                         <form v-if="page.chat.filter.time === 'today'">
                             <div class="relative">
-                                <Search class="absolute left-2 top-2.5 size-4 text-muted-foreground" />
+                                <Search class="absolute left-0 top-2.5 size-4 text-muted-foreground" />
                                 <Input v-model="page.chat.search.keyword" :placeholder="$t('chat.search.placeholder')" class="pl-8" style="line-height: 36px" />
                             </div>
                         </form>
@@ -155,11 +154,11 @@
                                 <HoverCardTrigger as-child>
                                     <div class="grid gap-4">
                                         <div class="flex items-center justify-between">
-                                            <Label>Workflow</Label>
+                                            <Label>{{$t("chat.configuration.workflow.title")}}</Label>
                                         </div>
                                         <Select>
                                             <SelectTrigger>
-                                                <SelectValue placeholder="Select a workflow" />
+                                                <SelectValue :placeholder="$t('chat.configuration.workflow.placeholder')" />
                                             </SelectTrigger>
                                             <SelectContent>
                                                 <SelectGroup>
@@ -170,7 +169,9 @@
                                         </Select>
                                     </div>
                                 </HoverCardTrigger>
-                                <HoverCardContent align="start" class="w-[260px] text-sm" side="left">The workflow which will generate the completion. Some workflows are suitable for natural language tasks, others specialize in code. Learn more.</HoverCardContent>
+                                <HoverCardContent align="start" class="w-[260px] text-sm" side="left">
+                                    <span class="tips-main">{{$t("chat.configuration.workflow.tips")}}</span>
+                                </HoverCardContent>
                             </HoverCard>
                         </div>
                         <div class="grid gap-2 pt-4">
@@ -178,11 +179,11 @@
                                 <HoverCardTrigger as-child>
                                     <div class="grid gap-4">
                                         <div class="flex items-center justify-between">
-                                            <Label>Model</Label>
+                                            <Label>{{$t("chat.configuration.model.title")}}</Label>
                                         </div>
                                         <Select>
                                             <SelectTrigger>
-                                                <SelectValue placeholder="Select a model" />
+                                                <SelectValue :placeholder="$t('chat.configuration.model.placeholder')" />
                                             </SelectTrigger>
                                             <SelectContent>
                                                 <SelectGroup>
@@ -193,23 +194,34 @@
                                         </Select>
                                     </div>
                                 </HoverCardTrigger>
-                                <HoverCardContent align="start" class="w-[260px] text-sm" side="left">The model which will generate the completion. Some models are suitable for natural language tasks, others specialize in code. Learn more.</HoverCardContent>
+                                <HoverCardContent align="start" class="w-[260px] text-sm" side="left">
+                                    <span class="tips-main">{{$t("chat.configuration.model.tips")}}</span>
+                                </HoverCardContent>
                             </HoverCard>
                         </div>
                         <fieldset class="grid gap-2 rounded-lg border p-4 mt-4">
-                            <legend class="-ml-1 px-1 text-sm font-medium">Settings</legend>
+                            <legend class="-ml-1 px-1 text-sm font-medium">{{$t("chat.configuration.settings.title")}}</legend>
+                            <Tabs default-value="" class="flex-1">
+                                <TabsList class="grid grid-cols-3">
+                                    <TabsTrigger value="creative">{{$t("chat.configuration.settings.presets.creative")}}</TabsTrigger>
+                                    <TabsTrigger value="balanced">{{$t("chat.configuration.settings.presets.balanced")}}</TabsTrigger>
+                                    <TabsTrigger value="precise">{{$t("chat.configuration.settings.presets.precise")}}</TabsTrigger>
+                                </TabsList>
+                            </Tabs>
                             <div class="grid gap-2">
                                 <HoverCard :open-delay="200" :close-delay="10">
                                     <HoverCardTrigger as-child>
                                         <div class="grid gap-4">
                                             <div class="flex items-center justify-between">
-                                                <Label for="temperature">Temperature</Label>
+                                                <Label for="temperature">{{$t("chat.configuration.settings.temperature.title")}}</Label>
                                                 <span class="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">{{page.chat.configuration.temperature?.[0]}}</span>
                                             </div>
-                                            <Slider id="temperature" aria-label="Temperature" v-model="page.chat.configuration.temperature" :max="1" :step="0.1" class="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"></Slider>
+                                            <Slider id="temperature" v-model="page.chat.configuration.temperature" :max="1" :step="0.1" class="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"></Slider>
                                         </div>
                                     </HoverCardTrigger>
-                                    <HoverCardContent align="start" class="w-[260px] text-sm" side="left">Controls randomness: lowering results in less random completions. As the temperature approaches zero, the model will become deterministic and repetitive.</HoverCardContent>
+                                    <HoverCardContent align="start" class="w-[260px] text-sm" side="left">
+                                        <span class="tips-main">{{$t("chat.configuration.settings.temperature.tips")}}</span>
+                                    </HoverCardContent>
                                 </HoverCard>
                             </div>
                             <div class="grid gap-2 pt-2">
@@ -217,13 +229,15 @@
                                     <HoverCardTrigger as-child>
                                         <div class="grid gap-4">
                                             <div class="flex items-center justify-between">
-                                                <Label for="maxlength">Max Tokens</Label>
+                                                <Label for="maxlength">{{$t("chat.configuration.settings.maxlength.title")}}</Label>
                                                 <span class="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">{{page.chat.configuration.max_token?.[0]}}</span>
                                             </div>
-                                            <Slider id="maxlength" aria-label="Max Tokens" v-model="page.chat.configuration.max_token" :max="4096" :step="10" class="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"></Slider>
+                                            <Slider id="maxlength" v-model="page.chat.configuration.max_token" :max="4096" :step="10" class="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"></Slider>
                                         </div>
                                     </HoverCardTrigger>
-                                    <HoverCardContent align="start" class="w-[260px] text-sm" side="left">The maximum number of tokens to generate shared between the prompt and completion. The exact limit varies by model. (One token is roughly 4 characters for standard English text)</HoverCardContent>
+                                    <HoverCardContent align="start" class="w-[260px] text-sm" side="left">
+                                        <span class="tips-main">{{$t("chat.configuration.settings.maxlength.tips")}}</span>
+                                    </HoverCardContent>
                                 </HoverCard>
                             </div>
                             <div class="grid gap-2 pt-2">
@@ -231,13 +245,15 @@
                                     <HoverCardTrigger as-child>
                                         <div class="grid gap-4">
                                             <div class="flex items-center justify-between">
-                                                <Label for="top_p">Top P</Label>
+                                                <Label for="top_p">{{$t("chat.configuration.settings.top_p.title")}}</Label>
                                                 <span class="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">{{page.chat.configuration.top_p?.[0]}}</span>
                                             </div>
-                                            <Slider id="top_p" aria-label="Top P" v-model="page.chat.configuration.top_p" :max="1" :step="0.1" class="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"></Slider>
+                                            <Slider id="top_p" v-model="page.chat.configuration.top_p" :max="1" :step="0.1" class="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"></Slider>
                                         </div>
                                     </HoverCardTrigger>
-                                    <HoverCardContent align="start" class="w-[260px] text-sm" side="left">Controls diversity via nucleus sampling: 0.5 means half of all likelihood-weighted options are considered.</HoverCardContent>
+                                    <HoverCardContent align="start" class="w-[260px] text-sm" side="left">
+                                        <span class="tips-main">{{$t("chat.configuration.settings.top_p.tips")}}</span>
+                                    </HoverCardContent>
                                 </HoverCard>
                             </div>
                             <div class="grid gap-2 pt-2">

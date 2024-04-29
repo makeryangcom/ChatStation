@@ -33,7 +33,36 @@ export default {
             placeholder: "搜索关键词..."
         },
         configuration: {
-
+            workflow: {
+                title: "工作流",
+                placeholder: "选择要使用的工作流...",
+                tips: "在对话中使用自定义工作流，通过强大的工作流处理更复杂的任务。"
+            },
+            model: {
+                title: "模型",
+                placeholder: "选择要使用的模型...",
+                tips: "根据自己的需求和场景，在对话中指定要使用对话模型。"
+            },
+            settings: {
+                title: "设置",
+                presets: {
+                    creative: "创意",
+                    balanced: "平衡",
+                    precise: "精准"
+                },
+                temperature: {
+                    title: "温度",
+                    tips: "控制随机性：降低温度会导致生成的内容变得不那么随机。当温度接近零时，模型将变得确定性强和重复性高。"
+                },
+                maxlength: {
+                    title: "最大令牌数",
+                    tips: "生成的最大令牌数是提示和完成之间共享的。具体限制因模型而异。（一个令牌大约相当于标准英文文本的4个字符）。"
+                },
+                top_p: {
+                    title: "采样多样性",
+                    tips: "通过核采样控制多样性：0.5表示考虑所有按概率加权的选项中的一半。"
+                }
+            }
         }
     },
     install: {
@@ -55,5 +84,8 @@ export default {
                 button: "连接远程设备"
             }
         }
+    },
+    toast: {
+        20001: "信息不完整，请检查。"
     }
 }

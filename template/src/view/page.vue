@@ -11,11 +11,14 @@
         </section>
         <CommonFooter ref="commonFooter" :base="props.base" :page="page"></CommonFooter>
     </main>
+    <Toaster ref="toaster" />
 </template>
 
 <script setup lang="ts">
 import {ref, onBeforeMount, onMounted, onBeforeUnmount, onUnmounted, nextTick} from "vue";
 import type {BaseStruct, PageStruct} from "@/package/struct";
+import {useToast} from "@/package/ui/toast/use-toast";
+import {Toaster} from "@/package/ui/toast";
 import CommonHeader from "@/view/common/header.vue";
 import PageChat from "@/view/page/chat.vue";
 import PageWorkflow from "@/view/page/workflow.vue";
@@ -25,6 +28,7 @@ import PageExtension from "@/view/page/extension.vue";
 import PageInstall from "@/view/page/install.vue";
 import CommonFooter from "@/view/common/footer.vue";
 
+const {toast} = useToast();
 const props: any = defineProps<{
     base: BaseStruct
 }>();
@@ -56,6 +60,7 @@ const page = ref<PageStruct>({
         search: {
             keyword: ""
         },
+        item: false,
         configuration: {
             temperature: ref([0.6]),
             max_token: ref([1024]),
@@ -63,6 +68,9 @@ const page = ref<PageStruct>({
             presence_penalty: ref([0]),
             frequency_penalty: ref([0])
         }
+    },
+    ui: {
+        toast: toast
     }
 });
 

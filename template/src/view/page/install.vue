@@ -79,6 +79,13 @@ function onModeTab(mode: string){
 }
 
 function onLocalInstall(){
+    if(props.page.install.local.input === ""){
+        props.page.ui.toast({
+            description: props.base.lang.t("toast.20001"),
+            duration: 2000
+        });
+        return;
+    }
     props.page.install.local.button_loading = true;
     setTimeout(()=>{
         props.page.install.local.button_loading = false;
@@ -87,6 +94,13 @@ function onLocalInstall(){
 }
 
 function onRemoteConnect(){
+    if(props.page.install.remote.input === ""){
+        props.page.ui.toast({
+            description: props.base.lang.t("toast.20001"),
+            duration: 2000
+        });
+        return;
+    }
     props.page.install.remote.button_loading = true;
     setTimeout(()=>{
         props.page.install.remote.button_loading = false;

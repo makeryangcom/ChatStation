@@ -14,7 +14,7 @@ const app = ref<AppStruct>({
     base: (window as any).base,
     theme: localStorage.getItem("nodechain:theme") ? localStorage.getItem("nodechain:theme") + "" : "zinc",
     mode: localStorage.getItem("nodechain:mode") ? localStorage.getItem("nodechain:mode") + "" : "",
-    language: (navigator as any).language
+    language: (navigator as any).language,
 });
 
 onMounted(async () => {
