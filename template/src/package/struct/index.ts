@@ -49,7 +49,13 @@ export interface PageStruct {
             keyword: string
         },
         item: any,
+        form: {
+            message: string
+        },
         configuration: {
+            workflow: string,
+            model: string,
+            presets: Array<any>,
             temperature: any,
             max_token: any,
             top_p: any,

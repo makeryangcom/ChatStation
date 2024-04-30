@@ -61,7 +61,32 @@ const page = ref<PageStruct>({
             keyword: ""
         },
         item: false,
+        form: {
+            message: "",
+        },
         configuration: {
+            workflow: "",
+            model: "",
+            presets: [
+                {
+                    temperature: ref([0.8]),
+                    top_p: ref([0.9]),
+                    presence_penalty: ref([0.1]),
+                    frequency_penalty: ref([0.1])
+                },
+                {
+                    temperature: ref([0.5]),
+                    top_p: ref([0.85]),
+                    presence_penalty: ref([0.2]),
+                    frequency_penalty: ref([0.3])
+                },
+                {
+                    temperature: ref([0.2]),
+                    top_p: ref([0.75]),
+                    presence_penalty: ref([0.5]),
+                    frequency_penalty: ref([0.5])
+                }
+            ],
             temperature: ref([0.6]),
             max_token: ref([1024]),
             top_p: ref([1]),

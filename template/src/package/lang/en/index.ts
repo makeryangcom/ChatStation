@@ -32,6 +32,10 @@ export default {
         search: {
             placeholder: "Search keywords..."
         },
+        form: {
+            placeholder: "Message AI...",
+            button: "Send Message"
+        },
         configuration: {
             workflow: {
                 title: "Workflow",
@@ -61,6 +65,14 @@ export default {
                 top_p: {
                     title: "Top P",
                     tips: "Controls diversity via nucleus sampling: 0.5 means half of all likelihood-weighted options are considered."
+                },
+                frequency_penalty: {
+                    title: "Frequency penalty",
+                    tips: "How much to penalize new tokens based on their existing frequency in the text so far. Decreases the model's likelihood to repeat the same line verbatim."
+                },
+                presence_penalty: {
+                    title: "Presence penalty",
+                    tips: "How much to penalize new tokens based on whether they appear in the text so far. Increases the model's likelihood to talk about new topics."
                 }
             }
         }

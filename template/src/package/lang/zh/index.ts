@@ -32,6 +32,10 @@ export default {
         search: {
             placeholder: "搜索关键词..."
         },
+        form: {
+            placeholder: "发消息给AI...",
+            button: "发送消息"
+        },
         configuration: {
             workflow: {
                 title: "工作流",
@@ -61,6 +65,14 @@ export default {
                 top_p: {
                     title: "采样多样性",
                     tips: "通过核采样控制多样性：0.5表示考虑所有按概率加权的选项中的一半。"
+                },
+                frequency_penalty: {
+                    title: "惩罚频率",
+                    tips: "根据目前文本中已有的频率对新词汇进行多大程度的惩罚。这样可以降低模型重复相同行内容的可能性。"
+                },
+                presence_penalty: {
+                    title: "存在惩罚",
+                    tips: "根据新词汇是否出现在目前的文本中来决定对其进行多大程度的惩罚。这样可以增加模型谈论新话题的可能性"
                 }
             }
         }

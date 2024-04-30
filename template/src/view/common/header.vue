@@ -132,6 +132,8 @@
                                 </DropdownMenuItem>
                             </DropdownMenuGroup>
                             <DropdownMenuSeparator />
+                            <DropdownMenuItem>12</DropdownMenuItem>
+                            <DropdownMenuSeparator />
                             <DropdownMenuItem>
                                 <span>{{$t("header.account.menu.logout")}}</span>
                                 <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>

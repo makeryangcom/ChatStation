@@ -142,58 +142,136 @@
             <ResizableHandle with-handle />
             <ResizablePanel class="middle">
                 <div class="chat-item-box">
-                    <div class="chat-item-main">1</div>
+                    <ScrollArea class="h-screen flex conversation-s">
+                        <div class="chat-item-main p-3">
+                            <div class="markdown">
+                                <div class="flex w-max max-w-[95%] flex-col gap-2 rounded-lg px-3 py-2 bg-muted">
+                                    <span>在 Electron 的 Vue 应用中获取当前浏览器的语言，可以使用 JavaScript 的 navigator.language 属性。这个属性通常返回浏览器的首选语言，格式为语言代码，比如 en、zh-CN 等。</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-item-main p-3">
+                            <div class="markdown">
+                                <div class="flex w-max max-w-[95%] flex-col gap-2 rounded-lg px-3 py-2 ml-auto bg-primary text-primary-foreground">
+                                    <span>在electron的vue中获取当前游览器的语言。</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-item-main p-3">
+                            <div class="markdown">
+                                <div class="flex w-max max-w-[95%] flex-col gap-2 rounded-lg px-3 py-2 bg-muted">
+                                    <span>在 CSS 中，你可以使用子选择器（Child combinator）> 来选择某个元素的直接子元素。如果你想选择一个 div 元素中的第一层子元素，你可以使用以下的 CSS 选择器。</span>
+                                </div>
+                            </div>
+                        </div>
+                    </ScrollArea>
+                    <div class="chat-item-footer p-2">
+                        <form class="relative overflow-hidden rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring">
+                            <Textarea v-model="page.chat.form.message" :placeholder="$t('chat.form.placeholder')" class="min-h-12 resize-none border-0 p-3 shadow-none focus-visible:ring-0"/>
+                            <div class="flex items-center p-2 pt-0">
+                                <TooltipProvider>
+                                    <Tooltip>
+                                        <TooltipTrigger as-child>
+                                            <Button variant="ghost" size="icon">
+                                                <Paperclip class="size-4" />
+                                            </Button>
+                                        </TooltipTrigger>
+                                        <TooltipContent align="center" side="top" :align-offset="0" :arrow-padding="0" avoid-collisions :collision-boundary="null" :collision-padding="{}" hide-when-detached sticky="always">Attach File</TooltipContent>
+                                    </Tooltip>
+                                    <Tooltip>
+                                        <TooltipTrigger as-child>
+                                            <Button variant="ghost" size="icon">
+                                                <Mic class="size-4" />
+                                            </Button>
+                                        </TooltipTrigger>
+                                        <TooltipContent align="center" side="top" :align-offset="0" :arrow-padding="0" avoid-collisions :collision-boundary="null" :collision-padding="{}" hide-when-detached sticky="always">Use Microphone</TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
+                                <Button type="submit" size="sm" class="ml-auto gap-1.5">
+                                    <span>{{$t("chat.form.button")}}</span>
+                                    <CornerDownLeft class="size-3.5" />
+                                </Button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </ResizablePanel>
             <ResizableHandle with-handle />
             <ResizablePanel class="right">
-                <ScrollArea class="h-screen flex">
+                <div class="flex items-center p-2">
+                    <div class="ml-auto flex items-center gap-2">
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger as-child>
+                                    <Button variant="ghost" size="icon">
+                                        <Clock class="size-4" />
+                                    </Button>
+                                </TooltipTrigger>
+                                <TooltipContent align="center" side="left" :align-offset="0" :arrow-padding="0" avoid-collisions :collision-boundary="null" :collision-padding="{}" hide-when-detached sticky="always">Date</TooltipContent>
+                            </Tooltip>
+                            <Tooltip>
+                                <TooltipTrigger as-child>
+                                    <Button variant="ghost" size="icon">
+                                        <Trash2 class="size-4" />
+                                    </Button>
+                                </TooltipTrigger>
+                                <TooltipContent align="center" side="left" :align-offset="0" :arrow-padding="0" avoid-collisions :collision-boundary="null" :collision-padding="{}" hide-when-detached sticky="always">Delete</TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    </div>
+                </div>
+                <Separator />
+                <ScrollArea class="h-screen flex" style="height: calc(100% - 52px)">
                     <div class="items-center p-4">
                         <div class="grid gap-2 pt-0">
                             <HoverCard :open-delay="200" :close-delay="10">
-                                <HoverCardTrigger as-child>
-                                    <div class="grid gap-4">
-                                        <div class="flex items-center justify-between">
-                                            <Label>{{$t("chat.configuration.workflow.title")}}</Label>
-                                        </div>
-                                        <Select>
-                                            <SelectTrigger>
-                                                <SelectValue :placeholder="$t('chat.configuration.workflow.placeholder')" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectGroup>
-                                                    <SelectLabel>North America</SelectLabel>
-                                                    <SelectItem value="est">Eastern Standard Time (EST)</SelectItem>
-                                                </SelectGroup>
-                                            </SelectContent>
-                                        </Select>
+                                <div class="grid gap-4">
+                                    <div class="flex items-center justify-between">
+                                        <Label>
+                                            <HoverCardTrigger as-child>
+                                                <span>{{$t("chat.configuration.workflow.title")}}</span>
+                                            </HoverCardTrigger>
+                                        </Label>
                                     </div>
-                                </HoverCardTrigger>
+                                    <Select v-model="page.chat.configuration.workflow" :default-value="page.chat.configuration.workflow">
+                                        <SelectTrigger>
+                                            <SelectValue :class="page.chat.configuration.workflow === '' ? 'placeholder' : ''" :placeholder="$t('chat.configuration.workflow.placeholder')"/>
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectLabel>North America</SelectLabel>
+                                                <SelectItem value="est">Eastern Standard Time (EST)</SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
                                 <HoverCardContent align="start" class="w-[260px] text-sm" side="left">
                                     <span class="tips-main">{{$t("chat.configuration.workflow.tips")}}</span>
                                 </HoverCardContent>
                             </HoverCard>
                         </div>
-                        <div class="grid gap-2 pt-4">
+                        <div class="grid gap-2 pt-3">
                             <HoverCard :open-delay="200" :close-delay="10">
-                                <HoverCardTrigger as-child>
-                                    <div class="grid gap-4">
-                                        <div class="flex items-center justify-between">
-                                            <Label>{{$t("chat.configuration.model.title")}}</Label>
-                                        </div>
-                                        <Select>
-                                            <SelectTrigger>
-                                                <SelectValue :placeholder="$t('chat.configuration.model.placeholder')" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectGroup>
-                                                    <SelectLabel>North America</SelectLabel>
-                                                    <SelectItem value="est">Eastern Standard Time (EST)</SelectItem>
-                                                </SelectGroup>
-                                            </SelectContent>
-                                        </Select>
+                                <div class="grid gap-4">
+                                    <div class="flex items-center justify-between">
+                                        <Label>
+                                            <HoverCardTrigger as-child>
+                                                <span>{{$t("chat.configuration.model.title")}}</span>
+                                            </HoverCardTrigger>
+                                        </Label>
                                     </div>
-                                </HoverCardTrigger>
+                                    <Select v-model="page.chat.configuration.model" :default-value="page.chat.configuration.model">
+                                        <SelectTrigger>
+                                            <SelectValue :class="page.chat.configuration.model === '' ? 'placeholder' : ''" :placeholder="$t('chat.configuration.model.placeholder')"/>
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectLabel>North America</SelectLabel>
+                                                <SelectItem value="est">Eastern Standard Time (EST)</SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
                                 <HoverCardContent align="start" class="w-[260px] text-sm" side="left">
                                     <span class="tips-main">{{$t("chat.configuration.model.tips")}}</span>
                                 </HoverCardContent>
@@ -203,85 +281,99 @@
                             <legend class="-ml-1 px-1 text-sm font-medium">{{$t("chat.configuration.settings.title")}}</legend>
                             <Tabs default-value="" class="flex-1">
                                 <TabsList class="grid grid-cols-3">
-                                    <TabsTrigger value="creative">{{$t("chat.configuration.settings.presets.creative")}}</TabsTrigger>
-                                    <TabsTrigger value="balanced">{{$t("chat.configuration.settings.presets.balanced")}}</TabsTrigger>
-                                    <TabsTrigger value="precise">{{$t("chat.configuration.settings.presets.precise")}}</TabsTrigger>
+                                    <TabsTrigger value="creative" @click="onSwitchPreset('creative')">{{$t("chat.configuration.settings.presets.creative")}}</TabsTrigger>
+                                    <TabsTrigger value="balanced" @click="onSwitchPreset('balanced')">{{$t("chat.configuration.settings.presets.balanced")}}</TabsTrigger>
+                                    <TabsTrigger value="precise" @click="onSwitchPreset('precise')">{{$t("chat.configuration.settings.presets.precise")}}</TabsTrigger>
                                 </TabsList>
                             </Tabs>
                             <div class="grid gap-2">
                                 <HoverCard :open-delay="200" :close-delay="10">
-                                    <HoverCardTrigger as-child>
-                                        <div class="grid gap-4">
-                                            <div class="flex items-center justify-between">
-                                                <Label for="temperature">{{$t("chat.configuration.settings.temperature.title")}}</Label>
-                                                <span class="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">{{page.chat.configuration.temperature?.[0]}}</span>
-                                            </div>
-                                            <Slider id="temperature" v-model="page.chat.configuration.temperature" :max="1" :step="0.1" class="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"></Slider>
+                                    <div class="grid gap-4">
+                                        <div class="flex items-center justify-between">
+                                            <Label for="temperature">
+                                                <HoverCardTrigger as-child>
+                                                    <span>{{$t("chat.configuration.settings.temperature.title")}}</span>
+                                                </HoverCardTrigger>
+                                            </Label>
+                                            <span class="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">{{page.chat.configuration.temperature?.[0]}}</span>
                                         </div>
-                                    </HoverCardTrigger>
+                                        <Slider id="temperature" v-model="page.chat.configuration.temperature" :max="1" :step="0.1" class="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"></Slider>
+                                    </div>
                                     <HoverCardContent align="start" class="w-[260px] text-sm" side="left">
                                         <span class="tips-main">{{$t("chat.configuration.settings.temperature.tips")}}</span>
                                     </HoverCardContent>
                                 </HoverCard>
                             </div>
-                            <div class="grid gap-2 pt-2">
+                            <div class="grid gap-2 pt-1">
                                 <HoverCard :open-delay="200" :close-delay="10">
-                                    <HoverCardTrigger as-child>
-                                        <div class="grid gap-4">
-                                            <div class="flex items-center justify-between">
-                                                <Label for="maxlength">{{$t("chat.configuration.settings.maxlength.title")}}</Label>
-                                                <span class="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">{{page.chat.configuration.max_token?.[0]}}</span>
-                                            </div>
-                                            <Slider id="maxlength" v-model="page.chat.configuration.max_token" :max="4096" :step="10" class="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"></Slider>
+                                    <div class="grid gap-4">
+                                        <div class="flex items-center justify-between">
+                                            <Label for="maxlength">
+                                                <HoverCardTrigger as-child>
+                                                    <span>{{$t("chat.configuration.settings.maxlength.title")}}</span>
+                                                </HoverCardTrigger>
+                                            </Label>
+                                            <span class="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">{{page.chat.configuration.max_token?.[0]}}</span>
                                         </div>
-                                    </HoverCardTrigger>
+                                        <Slider id="maxlength" v-model="page.chat.configuration.max_token" :max="4096" :step="10" class="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"></Slider>
+                                    </div>
                                     <HoverCardContent align="start" class="w-[260px] text-sm" side="left">
                                         <span class="tips-main">{{$t("chat.configuration.settings.maxlength.tips")}}</span>
                                     </HoverCardContent>
                                 </HoverCard>
                             </div>
-                            <div class="grid gap-2 pt-2">
+                            <div class="grid gap-2 pt-1">
                                 <HoverCard :open-delay="200" :close-delay="10">
-                                    <HoverCardTrigger as-child>
-                                        <div class="grid gap-4">
-                                            <div class="flex items-center justify-between">
-                                                <Label for="top_p">{{$t("chat.configuration.settings.top_p.title")}}</Label>
-                                                <span class="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">{{page.chat.configuration.top_p?.[0]}}</span>
-                                            </div>
-                                            <Slider id="top_p" v-model="page.chat.configuration.top_p" :max="1" :step="0.1" class="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"></Slider>
+                                    <div class="grid gap-4">
+                                        <div class="flex items-center justify-between">
+                                            <Label for="top_p">
+                                                <HoverCardTrigger as-child>
+                                                    <span>{{$t("chat.configuration.settings.top_p.title")}}</span>
+                                                </HoverCardTrigger>
+                                            </Label>
+                                            <span class="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">{{page.chat.configuration.top_p?.[0]}}</span>
                                         </div>
-                                    </HoverCardTrigger>
+                                        <Slider id="top_p" v-model="page.chat.configuration.top_p" :max="1" :step="0.1" class="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"></Slider>
+                                    </div>
                                     <HoverCardContent align="start" class="w-[260px] text-sm" side="left">
                                         <span class="tips-main">{{$t("chat.configuration.settings.top_p.tips")}}</span>
                                     </HoverCardContent>
                                 </HoverCard>
                             </div>
-                            <div class="grid gap-2 pt-2">
+                            <div class="grid gap-2 pt-1">
                                 <HoverCard :open-delay="200" :close-delay="10">
-                                    <HoverCardTrigger as-child>
                                         <div class="grid gap-4">
                                             <div class="flex items-center justify-between">
-                                                <Label for="frequency_penalty">Frequency penalty</Label>
+                                                <Label for="frequency_penalty">
+                                                    <HoverCardTrigger as-child>
+                                                        <span>{{$t("chat.configuration.settings.frequency_penalty.title")}}</span>
+                                                    </HoverCardTrigger>
+                                                </Label>
                                                 <span class="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">{{page.chat.configuration.frequency_penalty?.[0]}}</span>
                                             </div>
-                                            <Slider id="frequency_penalty" aria-label="Frequency penalty" v-model="page.chat.configuration.frequency_penalty" :max="1" :step="0.1" class="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"></Slider>
+                                            <Slider id="frequency_penalty" v-model="page.chat.configuration.frequency_penalty" :max="1" :step="0.1" class="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"></Slider>
                                         </div>
-                                    </HoverCardTrigger>
-                                    <HoverCardContent align="start" class="w-[260px] text-sm" side="left">How much to penalize new tokens based on their existing frequency in the text so far. Decreases the model's likelihood to repeat the same line verbatim.</HoverCardContent>
+                                    <HoverCardContent align="start" class="w-[260px] text-sm" side="left">
+                                        <span class="tips-main">{{$t("chat.configuration.settings.frequency_penalty.tips")}}</span>
+                                    </HoverCardContent>
                                 </HoverCard>
                             </div>
-                            <div class="grid gap-2 pt-2">
+                            <div class="grid gap-2 pt-1">
                                 <HoverCard :open-delay="200" :close-delay="10">
-                                    <HoverCardTrigger as-child>
-                                        <div class="grid gap-4">
-                                            <div class="flex items-center justify-between">
-                                                <Label for="presence_penalty">Presence penalty</Label>
-                                                <span class="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">{{page.chat.configuration.presence_penalty?.[0]}}</span>
-                                            </div>
-                                            <Slider id="presence_penalty" aria-label="Presence penalty" v-model="page.chat.configuration.presence_penalty" :max="1" :step="0.1" class="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"></Slider>
+                                    <div class="grid gap-4">
+                                        <div class="flex items-center justify-between">
+                                            <Label for="presence_penalty">
+                                                <HoverCardTrigger as-child>
+                                                    <span>{{$t("chat.configuration.settings.presence_penalty.title")}}</span>
+                                                </HoverCardTrigger>
+                                            </Label>
+                                            <span class="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">{{page.chat.configuration.presence_penalty?.[0]}}</span>
                                         </div>
-                                    </HoverCardTrigger>
-                                    <HoverCardContent align="start" class="w-[260px] text-sm" side="left">How much to penalize new tokens based on whether they appear in the text so far. Increases the model's likelihood to talk about new topics.</HoverCardContent>
+                                        <Slider id="presence_penalty" v-model="page.chat.configuration.presence_penalty" :max="1" :step="0.1" class="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"></Slider>
+                                    </div>
+                                    <HoverCardContent align="start" class="w-[260px] text-sm" side="left">
+                                        <span class="tips-main">{{$t("chat.configuration.settings.presence_penalty.tips")}}</span>
+                                    </HoverCardContent>
                                 </HoverCard>
                             </div>
                         </fieldset>
@@ -300,6 +392,7 @@ import {CalendarDate, DateFormatter, getLocalTimeZone} from "@internationalized/
 import {Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from "@/package/ui/select";
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from "@/package/ui/resizable";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/package/ui/tooltip";
+import {Avatar, AvatarFallback, AvatarImage} from "@/package/ui/avatar";
 import {Tabs, TabsList, TabsTrigger, TabsContent} from "@/package/ui/tabs";
 import {Popover, PopoverContent, PopoverTrigger} from "@/package/ui/popover";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "@/package/ui/hover-card";
@@ -307,12 +400,13 @@ import {RangeCalendar} from "@/package/ui/range-calendar";
 import {ScrollArea} from "@/package/ui/scroll-area";
 import {Separator} from "@/package/ui/separator";
 import {Input} from "@/package/ui/input";
-import {Search} from "lucide-vue-next";
+import {Textarea} from "@/package/ui/textarea";
 import {Badge} from "@/package/ui/badge";
 import {Label} from "@/package/ui/label";
 import {Slider} from "@/package/ui/slider";
 import {Button} from "@/package/ui/button";
-import {PlusIcon, CalendarIcon} from "@radix-icons/vue";
+import {PlusIcon, CalendarIcon, QuestionMarkCircledIcon} from "@radix-icons/vue";
+import {Search, Clock, Trash2, Paperclip, Mic, CornerDownLeft} from "lucide-vue-next";
 
 const props: any = defineProps<{
     base: BaseStruct,
@@ -323,6 +417,15 @@ function onFilterTime(time: string){
     if(props.page.chat.filter.time !== time){
         props.page.chat.filter.time = time;
     }
+}
+
+function onSwitchPreset(preset: string){
+    const presets = ["creative", "balanced", "precise"];
+    const preset_item = props.page.chat.configuration.presets[presets.indexOf(preset)];
+    props.page.chat.configuration.temperature = preset_item.temperature;
+    props.page.chat.configuration.top_p = preset_item.top_p;
+    props.page.chat.configuration.presence_penalty = preset_item.presence_penalty;
+    props.page.chat.configuration.frequency_penalty = preset_item.frequency_penalty;
 }
 
 onBeforeMount(() => {});
@@ -380,6 +483,27 @@ onUnmounted(() => {});
 }
 .page-chat .chat-main .middle .chat-item-box .chat-item-main{
     width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+}
+.page-chat .chat-main .middle .chat-item-box .conversation-s{
+    height: calc(100% - 126px);
+    font-size: 14px;
+}
+.page-chat .chat-main .middle .chat-item-box .conversation-s:deep(.box-main) > div:first-child{
+    display: block !important;
+}
+.page-chat .chat-main .middle .chat-item-box .chat-item-footer{
+    position: sticky;
+    width: 100%;
+    min-height: 60px;
+    background-color: #ffffff;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+.page-chat .chat-main .middle .chat-item-box .chat-item-footer form{
     max-width: 850px;
     margin: 0 auto;
 }
