@@ -1,6 +1,6 @@
 <template>
     <router-view ref="routerView" v-slot="{Component}">
-        <component :is="Component" :base="app.base" />
+        <component :is="Component" :base="app.base" :theme="app.theme" />
     </router-view>
 </template>
 
@@ -30,6 +30,11 @@ onMounted(async () => {
                 app.value.base.lang.locale = "en";
             }
         }
+        app.value.base.tools.theme = (theme: string)=>{
+            app.value.theme = theme;
+            document.documentElement.className = "theme-" + app.value.theme + " " + app.value.mode;
+            localStorage.setItem("nodechain:theme", theme);
+        };
         window.addEventListener("resize", function() {
             app.value.base.ipc.send("message", {type: "header-right-button", data: "resize"});
         });

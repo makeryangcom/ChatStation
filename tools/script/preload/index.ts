@@ -17,5 +17,8 @@ import * as Config from "../../../package.json";
     },
     window: {
         max: false
+    },
+    tools: {
+        theme: false
     }
 }

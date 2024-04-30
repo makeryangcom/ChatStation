@@ -132,7 +132,40 @@
                                 </DropdownMenuItem>
                             </DropdownMenuGroup>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>12</DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <div class="theme-main">
+                                    <div class="theme-main-item p-1">
+                                        <span class="flex h-6 w-6 rounded-full ml-1" style="background-color: rgb(82, 82, 91);" @click="onTheme('zinc')">
+                                            <CheckIcon class="w-6 h-6 text-sm p-1" style="color: #ffffff" v-if="theme === 'zinc'" />
+                                        </span>
+                                    </div>
+                                    <div class="theme-main-item p-1">
+                                        <span class="flex h-6 w-6 rounded-full ml-1" style="background-color: rgb(225, 29, 72);" @click="onTheme('rose')">
+                                            <CheckIcon class="w-6 h-6 text-sm p-1" style="color: #ffffff" v-if="theme === 'rose'" />
+                                        </span>
+                                    </div>
+                                    <div class="theme-main-item p-1">
+                                        <span class="flex h-6 w-6 rounded-full ml-1" style="background-color: rgb(37, 99, 235);" @click="onTheme('blue')">
+                                            <CheckIcon class="w-6 h-6 text-sm p-1" style="color: #ffffff" v-if="theme === 'blue'" />
+                                        </span>
+                                    </div>
+                                    <div class="theme-main-item p-1">
+                                        <span class="flex h-6 w-6 rounded-full ml-1" style="background-color: rgb(22, 163, 74);" @click="onTheme('green')">
+                                            <CheckIcon class="w-6 h-6 text-sm p-1" style="color: #ffffff" v-if="theme === 'green'" />
+                                        </span>
+                                    </div>
+                                    <div class="theme-main-item p-1">
+                                        <span class="flex h-6 w-6 rounded-full ml-1" style="background-color: rgb(234, 88, 12);" @click="onTheme('orange')">
+                                            <CheckIcon class="w-6 h-6 text-sm p-1" style="color: #ffffff" v-if="theme === 'orange'" />
+                                        </span>
+                                    </div>
+                                    <div class="theme-main-item p-1">
+                                        <span class="flex h-6 w-6 rounded-full ml-1" style="background-color: rgb(109, 40, 217);" @click="onTheme('violet')">
+                                            <CheckIcon class="w-6 h-6 text-sm p-1" style="color: #ffffff" v-if="theme === 'violet'" />
+                                        </span>
+                                    </div>
+                                </div>
+                            </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem>
                                 <span>{{$t("header.account.menu.logout")}}</span>
@@ -172,6 +205,7 @@ import {CaretSortIcon, CheckIcon, RocketIcon, PlusCircledIcon, ChatBubbleIcon, S
 
 const props: any = defineProps<{
     base: BaseStruct,
+    theme: string,
     page: PageStruct
 }>();
 
@@ -184,6 +218,13 @@ function onRightButton(data: string){
 
 function onHeaderTab(tab: string){
     props.page.current = tab;
+}
+
+function onTheme(theme: string){
+    console.log(theme);
+    if(props.base.tools.theme){
+        props.base.tools.theme(theme);
+    }
 }
 
 onBeforeMount(() => {});
@@ -281,5 +322,19 @@ onUnmounted(() => {});
 }
 .page-header .header-item .right-item .item:hover{
     background-color: hsl(var(--muted));
+}
+.theme-main{
+    width: 100%;
+}
+.theme-main .theme-main-item{
+    width: 16.66%;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    display: inline-block;
+    vertical-align: top;
+}
+.theme-main .theme-main-item span{
+    line-height: 24px;
 }
 </style>

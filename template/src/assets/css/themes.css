@@ -68,6 +68,8 @@ html.dark {
     --destructive-foreground: 0 0% 98%;
 
     --ring: 240 4.9% 83.9%;
+
+    --radius: 0.5rem;
 }
 
 .theme-slate {
@@ -132,6 +134,8 @@ html.dark {
     --destructive-foreground: 210 40% 98%;
 
     --ring: 212.7 26.8% 83.9;
+
+    --radius: 0.5rem;
 }
 
 .theme-stone {
@@ -164,7 +168,7 @@ html.dark {
 
     --ring: 20 14.3% 4.1%;
 
-    --radius: 0.95rem;
+    --radius: 0.5rem;
 }
 
 .theme-stone.dark {
@@ -196,6 +200,8 @@ html.dark {
     --destructive-foreground: 60 9.1% 97.8%;
 
     --ring: 24 5.7% 82.9%;
+
+    --radius: 0.5rem;
 }
 
 .theme-gray {
@@ -228,7 +234,7 @@ html.dark {
 
     --ring: 224 71.4% 4.1%;
 
-    --radius: 0.35rem;
+    --radius: 0.5rem;
 }
 
 .theme-gray.dark {
@@ -260,6 +266,8 @@ html.dark {
     --destructive-foreground: 210 20% 98%;
 
     --ring: 216 12.2% 83.9%;
+
+    --radius: 0.5rem;
 }
 
 .theme-neutral {
@@ -292,7 +300,7 @@ html.dark {
 
     --ring: 0 0% 3.9%;
 
-    --radius: ;
+    --radius: 0.5rem;
 }
 
 .theme-neutral.dark {
@@ -324,6 +332,8 @@ html.dark {
     --destructive-foreground: 0 0% 98%;
 
     --ring: 0 0% 83.1%;
+
+    --radius: 0.5rem;
 }
 
 .theme-red {
@@ -356,7 +366,7 @@ html.dark {
 
     --ring: 0 72.2% 50.6%;
 
-    --radius: 0.4rem;
+    --radius: 0.5rem;
 }
 
 .theme-red.dark {
@@ -388,6 +398,8 @@ html.dark {
     --destructive-foreground: 0 0% 98%;
 
     --ring: 0 72.2% 50.6%;
+
+    --radius: 0.5rem;
 }
 
 .theme-rose {
@@ -452,6 +464,8 @@ html.dark {
     --destructive-foreground: 0 85.7% 97.3%;
 
     --ring: 346.8 77.2% 49.8%;
+
+    --radius: 0.5rem;
 }
 
 .theme-orange {
@@ -484,7 +498,7 @@ html.dark {
 
     --ring: 24.6 95% 53.1%;
 
-    --radius: 0.95rem;
+    --radius: 0.5rem;
 }
 
 .theme-orange.dark {
@@ -516,6 +530,8 @@ html.dark {
     --destructive-foreground: 60 9.1% 97.8%;
 
     --ring: 20.5 90.2% 48.2%;
+
+    --radius: 0.5rem;
 }
 
 .theme-green {
@@ -580,6 +596,8 @@ html.dark {
     --destructive-foreground: 0 85.7% 97.3%;
 
     --ring: 142.4 71.8% 29.2%;
+
+    --radius: 0.5rem;
 }
 
 .theme-blue {
@@ -612,7 +630,7 @@ html.dark {
 
     --ring: 221.2 83.2% 53.3%;
 
-    --radius: ;
+    --radius: 0.5rem;
 }
 
 .theme-blue.dark {
@@ -644,6 +662,8 @@ html.dark {
     --destructive-foreground: 210 40% 98%;
 
     --ring: 224.3 76.3% 48%;
+
+    --radius: 0.5rem;
 }
 
 .theme-yellow {
@@ -676,7 +696,7 @@ html.dark {
 
     --ring: 20 14.3% 4.1%;
 
-    --radius: 0.95rem;
+    --radius: 0.5rem;
 }
 
 .theme-yellow.dark {
@@ -708,6 +728,8 @@ html.dark {
     --destructive-foreground: 60 9.1% 97.8%;
 
     --ring: 35.5 91.7% 32.9%;
+
+    --radius: 0.5rem;
 }
 
 .theme-violet {
@@ -740,7 +762,7 @@ html.dark {
 
     --ring: 262.1 83.3% 57.8%;
 
-    --radius: ;
+    --radius: 0.5rem;
 }
 
 .theme-violet.dark {
@@ -772,4 +794,6 @@ html.dark {
     --destructive-foreground: 210 20% 98%;
 
     --ring: 263.4 70% 50.4%;
+
+    --radius: 0.5rem;
 }

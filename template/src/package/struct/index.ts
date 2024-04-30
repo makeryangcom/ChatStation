@@ -18,6 +18,9 @@ export interface BaseStruct {
     },
     window: {
         max: boolean
+    },
+    tools: {
+        theme: any
     }
 }
 

@@ -1,6 +1,6 @@
 <template>
     <main class="page-main">
-        <CommonHeader ref="commonHeader" :base="props.base" :page="page"></CommonHeader>
+        <CommonHeader ref="commonHeader" :base="props.base" :theme="props.theme" :page="page"></CommonHeader>
         <section class="page-section">
             <PageInstall ref="pageInstall" :base="props.base" :page="page" v-if="!page.install.status"></PageInstall>
             <PageChat ref="pageChat" :base="props.base" :page="page" v-if="page.install.status"></PageChat>
@@ -30,7 +30,8 @@ import CommonFooter from "@/view/common/footer.vue";
 
 const {toast} = useToast();
 const props: any = defineProps<{
-    base: BaseStruct
+    base: BaseStruct,
+    theme: string
 }>();
 
 const page = ref<PageStruct>({
