@@ -21,7 +21,8 @@ export interface BaseStruct {
     },
     tools: {
         theme: any
-    }
+    },
+    database: any
 }
 
 export interface PageStruct {

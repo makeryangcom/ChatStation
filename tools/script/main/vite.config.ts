@@ -22,5 +22,5 @@ export default defineConfig({
                 ...Object.keys(Package.dependencies || {}),
             ]
         },
-    },
+    }
 })

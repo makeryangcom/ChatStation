@@ -392,7 +392,6 @@ import {CalendarDate, DateFormatter, getLocalTimeZone} from "@internationalized/
 import {Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from "@/package/ui/select";
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from "@/package/ui/resizable";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/package/ui/tooltip";
-import {Avatar, AvatarFallback, AvatarImage} from "@/package/ui/avatar";
 import {Tabs, TabsList, TabsTrigger, TabsContent} from "@/package/ui/tabs";
 import {Popover, PopoverContent, PopoverTrigger} from "@/package/ui/popover";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "@/package/ui/hover-card";
@@ -497,7 +496,7 @@ onUnmounted(() => {});
     position: sticky;
     width: 100%;
     min-height: 60px;
-    background-color: #ffffff;
+    background-color: hsl(var(--background));
     bottom: 0;
     left: 0;
     right: 0;

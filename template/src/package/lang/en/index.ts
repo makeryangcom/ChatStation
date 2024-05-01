@@ -77,6 +77,18 @@ export default {
             }
         }
     },
+    workflow: {
+        new: "New Workflow",
+        tag: {
+            all: "All",
+            hot: "Hot",
+            new: "New",
+            user: "My"
+        },
+        search: {
+            placeholder: "Search keywords..."
+        }
+    },
     install: {
         title: "Quick Start",
         description: "Choose a method to quickly start your AI assistant.",

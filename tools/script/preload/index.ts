@@ -2,6 +2,7 @@ import Os from "os";
 import Path from "path";
 import File from "fs";
 import {ipcRenderer} from "electron";
+import Database from "./database";
 import * as Config from "../../../package.json";
 
 (window as any).base = {
@@ -20,5 +21,6 @@ import * as Config from "../../../package.json";
     },
     tools: {
         theme: false
-    }
+    },
+    database: Database
 }

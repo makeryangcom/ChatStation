@@ -112,6 +112,9 @@ props.base.ipc.on("message", (event: any, message: any) => {
         }
         localStorage.setItem("nodechain:lang", props.base.lang.locale);
     }
+    if(message.type === "display-sleep"){
+        props.base.ipc.send("message", {type: "display-sleep", status: message.status});
+    }
 });
 
 onBeforeMount(() => {});

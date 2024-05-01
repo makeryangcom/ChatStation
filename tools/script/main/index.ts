@@ -5,7 +5,10 @@ import ElectronDebug from "electron-debug";
 
 // Initialize the application window
 let Windows: any = {
-    Main: false
+    Main: false,
+    UserData: {
+        Sleep: false,
+    }
 };
 
 // Prevent the application from opening multiple times
@@ -78,6 +81,10 @@ function onWindowMain(){
     Electron.globalShortcut.register("Shift+Alt+L", () => {
         Windows.Main.webContents.send("message", {type: "switch-language"});
     });
+
+    Electron.globalShortcut.register("Shift+Alt+S", () => {
+        Windows.Main.webContents.send("message", {type: "display-sleep", status: !Windows.UserData.Sleep});
+    });
 }
 
 // When the application is ready
@@ -89,10 +96,15 @@ Electron.app.on("ready", () => {
 Electron.app.whenReady().then(() => {
     console.log("[main:whenready]");
     onWindowMain();
+    // Switch the sleep configuration once to ensure the status is not 0
+    Windows.UserData.Sleep = Electron.powerSaveBlocker.start("prevent-display-sleep");
+    Electron.powerSaveBlocker.stop(Windows.UserData.Sleep);
+    Windows.UserData.Sleep = false;
+    // Active state monitoring
     Electron.app.on("activate", () => {
         console.log("[main:activate]");
         if (Electron.BrowserWindow.getAllWindows().length === 0){
-            console.log("[main:activate]", 0);
+            console.log("[main:activate:length]", 0);
             onWindowMain();
         }
     });
@@ -155,6 +167,17 @@ Electron.ipcMain.on("message", (event: any, args: any) => {
                 event.sender.send("message", {type: "header-right-button", data: "restore"});
             }
         }
+    }
+    if(args.type === "display-sleep"){
+        if(args.status){
+            Windows.UserData.Sleep = Electron.powerSaveBlocker.start("prevent-display-sleep");
+        }else{
+            if(Windows.UserData.Sleep){
+                Electron.powerSaveBlocker.stop(Windows.UserData.Sleep);
+                Windows.UserData.Sleep = false;
+            }
+        }
+        console.log("[main:display:sleep]", Windows.UserData.Sleep);
     }
     if(args.type === "updater"){
         console.log("[main:updater]");

@@ -77,6 +77,18 @@ export default {
             }
         }
     },
+    workflow: {
+        new: "新建工作流",
+        tag: {
+            all: "全部",
+            hot: "热门",
+            new: "最新",
+            user: "我的"
+        },
+        search: {
+            placeholder: "搜索关键词..."
+        }
+    },
     install: {
         title: "快速开始",
         description: "选择一种方式，快速启动你的AI助手。",

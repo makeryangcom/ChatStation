@@ -135,32 +135,32 @@
                             <DropdownMenuItem>
                                 <div class="theme-main">
                                     <div class="theme-main-item p-1">
-                                        <span class="flex h-6 w-6 rounded-full ml-1" style="background-color: rgb(82, 82, 91);" @click="onTheme('zinc')">
+                                        <span class="flex h-6 w-6 rounded-full" style="background-color: rgb(82, 82, 91);" @click="onTheme('zinc')">
                                             <CheckIcon class="w-6 h-6 text-sm p-1" style="color: #ffffff" v-if="theme === 'zinc'" />
                                         </span>
                                     </div>
                                     <div class="theme-main-item p-1">
-                                        <span class="flex h-6 w-6 rounded-full ml-1" style="background-color: rgb(225, 29, 72);" @click="onTheme('rose')">
+                                        <span class="flex h-6 w-6 rounded-full" style="background-color: rgb(225, 29, 72);" @click="onTheme('rose')">
                                             <CheckIcon class="w-6 h-6 text-sm p-1" style="color: #ffffff" v-if="theme === 'rose'" />
                                         </span>
                                     </div>
                                     <div class="theme-main-item p-1">
-                                        <span class="flex h-6 w-6 rounded-full ml-1" style="background-color: rgb(37, 99, 235);" @click="onTheme('blue')">
+                                        <span class="flex h-6 w-6 rounded-full" style="background-color: rgb(37, 99, 235);" @click="onTheme('blue')">
                                             <CheckIcon class="w-6 h-6 text-sm p-1" style="color: #ffffff" v-if="theme === 'blue'" />
                                         </span>
                                     </div>
                                     <div class="theme-main-item p-1">
-                                        <span class="flex h-6 w-6 rounded-full ml-1" style="background-color: rgb(22, 163, 74);" @click="onTheme('green')">
+                                        <span class="flex h-6 w-6 rounded-full" style="background-color: rgb(22, 163, 74);" @click="onTheme('green')">
                                             <CheckIcon class="w-6 h-6 text-sm p-1" style="color: #ffffff" v-if="theme === 'green'" />
                                         </span>
                                     </div>
                                     <div class="theme-main-item p-1">
-                                        <span class="flex h-6 w-6 rounded-full ml-1" style="background-color: rgb(234, 88, 12);" @click="onTheme('orange')">
+                                        <span class="flex h-6 w-6 rounded-full" style="background-color: rgb(234, 88, 12);" @click="onTheme('orange')">
                                             <CheckIcon class="w-6 h-6 text-sm p-1" style="color: #ffffff" v-if="theme === 'orange'" />
                                         </span>
                                     </div>
                                     <div class="theme-main-item p-1">
-                                        <span class="flex h-6 w-6 rounded-full ml-1" style="background-color: rgb(109, 40, 217);" @click="onTheme('violet')">
+                                        <span class="flex h-6 w-6 rounded-full" style="background-color: rgb(109, 40, 217);" @click="onTheme('violet')">
                                             <CheckIcon class="w-6 h-6 text-sm p-1" style="color: #ffffff" v-if="theme === 'violet'" />
                                         </span>
                                     </div>
