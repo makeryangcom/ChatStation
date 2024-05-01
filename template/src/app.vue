@@ -40,7 +40,6 @@ onMounted(async () => {
         });
     });
 });
-
 </script>
 
 <style>
