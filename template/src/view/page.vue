@@ -122,6 +122,10 @@ onBeforeMount(() => {});
 onMounted(() => {
     nextTick(()=>{
         console.log("[page:props]", props);
+        console.log("[page:props:base:environment]", props.base.environment());
+        console.log("[page:props:base:app_path]", props.base.app_path());
+        console.log("[page:props:base:app_data_path]", props.base.app_data_path());
+        console.log("[page:props:base:app_home_path]", props.base.app_home_path());
     });
 });
 

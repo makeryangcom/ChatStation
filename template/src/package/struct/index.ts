@@ -8,6 +8,10 @@ export interface AppStruct {
 export interface BaseStruct {
     os: typeof import("os");
     path: typeof import("path");
+    app_path: any,
+    app_data_path: any,
+    app_home_path: any,
+    environment: any,
     platform: string;
     config: any;
     file: typeof import("fs");

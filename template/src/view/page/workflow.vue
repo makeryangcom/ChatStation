@@ -28,7 +28,7 @@
                 <Card style="border-radius: 6px">
                     <CardHeader class="p-4 pb-2">
                         <div class="space-y-2">
-                            <CardTitle style="font-size: 14px">摄影处理工作流</CardTitle>
+                            <CardTitle style="font-size: 14px">Test Workflow</CardTitle>
                             <CardDescription class="text-sm line-clamp-2">Beautifully designed components built with Radix UI and Tailwind CSS.</CardDescription>
                         </div>
                     </CardHeader>

@@ -89,6 +89,18 @@ export default {
             placeholder: "Search keywords..."
         }
     },
+    agent: {
+        new: "New Agent",
+        tag: {
+            all: "All",
+            hot: "Hot",
+            new: "New",
+            user: "My"
+        },
+        search: {
+            placeholder: "Search keywords..."
+        }
+    },
     install: {
         title: "Quick Start",
         description: "Choose a method to quickly start your AI assistant.",

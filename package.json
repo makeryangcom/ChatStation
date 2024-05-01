@@ -8,12 +8,12 @@
     "main": "release/dist/main/index.cjs",
     "scripts": {
         "dev": "node tools/script/watch.mjs",
-        "rebuild": "electron-rebuild -f --ignore=",
+        "rebuild": "electron-rebuild -f -w sqlite3",
         "build": "rimraf release/dist && node --max-old-space-size=6096 tools/script/build.mjs && node --max-old-space-size=6096 tools/script/index.mjs",
-        "win64": "electron-builder --win --x64",
-        "win32": "electron-builder --win --ia32",
-        "mac": "electron-builder --mac --x64",
-        "macarm": "electron-builder -mac --arm64"
+        "win64": "yarn build && electron-builder --win --x64",
+        "win32": "yarn build && electron-builder --win --ia32",
+        "mac": "yarn build && electron-builder --mac --x64",
+        "macarm": "yarn build && electron-builder -mac --arm64"
     },
     "build": {
         "productName": "NodeChain",
@@ -89,7 +89,7 @@
         "radix-vue": "^1.7.2",
         "reactflow": "^11.11.2",
         "sequelize": "^6.37.3",
-        "sqlite3": "^5.1.7",
+        "sqlite3": "4.2.0",
         "tailwind-merge": "^2.3.0",
         "tailwindcss-animate": "^1.0.7",
         "uuid": "^9.0.0",

@@ -38,6 +38,12 @@ yarn config set "strict-ssl" false -g
 yarn global add electron@22.2.0
 ```
 
+3、Install Node-gyp
+
+```shell
+yarn global add node-gyp@latest
+```
+
 ### Download
 
 1、 Download the source code and enter the root directory of the project.
