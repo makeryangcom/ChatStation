@@ -41,10 +41,10 @@ yarn global add electron@22.2.0
 3、Install Node-gyp
 
 ```shell
-yarn global add node-gyp@latest
+yarn global add node-gyp@8.4.1
 ```
 
-### Download
+### Do[readme.md](readme.md)wnload
 
 1、 Download the source code and enter the root directory of the project.
 
