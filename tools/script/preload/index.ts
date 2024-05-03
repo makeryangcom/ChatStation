@@ -1,8 +1,11 @@
 import Os from "os";
 import Path from "path";
 import File from "fs";
-import {ipcRenderer, app} from "electron";
+import {ipcRenderer} from "electron";
 import Database from "./database";
+import System from "./system";
+import Download from "./download";
+import Zip from "./zip";
 import * as Config from "../../../package.json";
 import os from "os";
 
@@ -36,7 +39,10 @@ import os from "os";
         max: false
     },
     tools: {
-        theme: false
+        theme: false,
+        system: System,
+        download: Download,
+        zip: Zip
     },
     database: Database
 }

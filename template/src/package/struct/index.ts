@@ -24,23 +24,54 @@ export interface BaseStruct {
         max: boolean
     },
     tools: {
-        theme: any
+        theme: any,
+        system: {
+            getGPU: any,
+            getMEM: any,
+            getPathSize: any
+        },
+        download: {
+            service: any
+        },
+        zip: {
+            file: any
+        }
     },
     database: any
 }
 
 export interface PageStruct {
     current: string,
+    system: {
+        gpu: {
+            status: boolean,
+            name: string,
+            size: number,
+            check: boolean
+        },
+        memory: {
+            status: boolean,
+            size: number,
+            check: boolean
+        }
+    },
     install: {
         status: boolean,
         mode: string,
         local: {
+            path: string,
             input: string,
             button_loading: boolean
         },
         remote: {
+            path: string,
             input: string,
             button_loading: boolean
+        },
+        progress: {
+            size: number,
+            received: number,
+            value: number
         }
     },
     chat: {

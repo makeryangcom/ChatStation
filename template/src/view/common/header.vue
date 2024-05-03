@@ -221,7 +221,6 @@ function onHeaderTab(tab: string){
 }
 
 function onTheme(theme: string){
-    console.log(theme);
     if(props.base.tools.theme){
         props.base.tools.theme(theme);
     }

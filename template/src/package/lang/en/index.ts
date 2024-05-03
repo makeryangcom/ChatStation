@@ -122,6 +122,9 @@ export default {
         }
     },
     toast: {
-        20001: "Incomplete information, please check."
+        20001: "Incomplete information, please check.",
+        30001: "The remaining storage space in the current path is insufficient.",
+        30002: "The system path is abnormal.",
+        30003: "Installation and deployment failed, please try again.",
     }
 }

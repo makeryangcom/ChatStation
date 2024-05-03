@@ -145,6 +145,15 @@ Electron.app.whenReady().then(() => {
 
 // Listen for main process messages
 Electron.ipcMain.on("message", (event: any, args: any) => {
+    if(args.type === "select_folder_path"){
+        if(args.callback && args.callback === "local_path"){
+            Electron.dialog.showOpenDialog(Windows.Main, {
+                properties: ["openDirectory"]
+            }).then((r: any) => {
+                event.sender.send("message", {type: "select_folder_path", callback: args.callback, data: r});
+            });
+        }
+    }
     if(args.type === "header-right-button"){
         if(args.data === "close"){
             Windows.Main.close();

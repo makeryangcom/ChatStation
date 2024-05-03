@@ -36,16 +36,36 @@ const props: any = defineProps<{
 
 const page = ref<PageStruct>({
     current: "chat",
+    system: {
+        gpu: {
+            status: false,
+            name: "-",
+            size: 0,
+            check: false
+        },
+        memory: {
+            status: false,
+            size: 0,
+            check: false
+        }
+    },
     install: {
         status: false,
         mode: "local",
         local: {
+            path: localStorage.getItem("nodechain:local:path") ? localStorage.getItem("nodechain:local:path") + "": "",
             input: "",
             button_loading: false
         },
         remote: {
+            path: localStorage.getItem("nodechain:remote:path") ? localStorage.getItem("nodechain:remote:path") + "": "",
             input: "",
             button_loading: false
+        },
+        progress: {
+            size: 0,
+            received: 0,
+            value: 0
         }
     },
     chat: {
@@ -101,6 +121,29 @@ const page = ref<PageStruct>({
 });
 
 props.base.ipc.on("message", (event: any, message: any) => {
+    if(message.type === "select_folder_path"){
+        if(message.data.filePaths.length > 0){
+            if(message.callback === "local_path"){
+                props.base.tools.system.getPathSize(message.data.filePaths[0], (size: any, used: any)=>{
+                    if(Math.round((size - used)) >= 30){
+                        page.value.install.local.input = message.data.filePaths[0];
+                    }else{
+                        page.value.install.local.input = "";
+                        page.value.ui.toast({
+                            description: props.base.lang.t("toast.30001"),
+                            duration: 2000
+                        });
+                    }
+                }, (error: any)=>{
+                    page.value.install.local.input = "";
+                    page.value.ui.toast({
+                        description: props.base.lang.t("toast.30002"),
+                        duration: 2000
+                    });
+                });
+            }
+        }
+    }
     if(message.type === "header-right-button"){
         props.base.window.max = message.data !== "restore";
     }
@@ -117,15 +160,48 @@ props.base.ipc.on("message", (event: any, message: any) => {
     }
 });
 
+function onStart(){
+    if(!page.value.install.status){
+        page.value.install.status = true;
+    }
+}
+
 onBeforeMount(() => {});
 
 onMounted(() => {
     nextTick(()=>{
-        console.log("[page:props]", props);
         console.log("[page:props:base:environment]", props.base.environment());
         console.log("[page:props:base:app_path]", props.base.app_path());
         console.log("[page:props:base:app_data_path]", props.base.app_data_path());
         console.log("[page:props:base:app_home_path]", props.base.app_home_path());
+        console.log("[page:props:base:app_local_path]", page.value.install.local.path);
+        console.log("[page:props:base:app_remote_path]", page.value.install.remote.path);
+        if(page.value.install.local.path !== ""){
+            onStart();
+        }
+        props.base.tools.system.getGPU((graphics: any)=>{
+            console.log("[page:props:base:system:gpu]", graphics);
+            if(graphics){
+                page.value.system.gpu.name = graphics.model;
+                page.value.system.gpu.size = Math.round(graphics.total / 1024);
+                page.value.system.gpu.check = Math.round(graphics.total / 1024) >= 3;
+                page.value.system.gpu.status = true;
+            }else{
+                page.value.system.gpu.status = false;
+            }
+            props.base.tools.system.getMEM((memory: any)=>{
+                console.log("[page:props:base:system:memory]", memory);
+                page.value.system.memory.size = Math.round(memory.total / (1024 ** 3));
+                page.value.system.memory.check = Math.round(memory.total / (1024 ** 3)) >= 12;
+                page.value.system.memory.status = true;
+            }, (error: any)=>{
+                console.log("[page:props:base:system:memory]", error);
+                page.value.system.memory.status = false;
+            });
+        }, (error: any)=>{
+            console.log("[page:props:base:system:gpu]", error);
+            page.value.system.gpu.status = false;
+        });
     });
 });
 
