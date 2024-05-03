@@ -6,15 +6,16 @@ export interface AppStruct {
 }
 
 export interface BaseStruct {
-    os: typeof import("os");
-    path: typeof import("path");
+    os: typeof import("os"),
+    path: typeof import("path"),
+    process: typeof import("process"),
     app_path: any,
     app_data_path: any,
     app_home_path: any,
     environment: any,
-    platform: string;
-    config: any;
-    file: typeof import("fs");
+    platform: string,
+    config: any,
+    file: typeof import("fs"),
     ipc: typeof import("electron").ipcRenderer,
     lang: {
         t: any,
@@ -35,7 +36,11 @@ export interface BaseStruct {
         },
         zip: {
             file: any
-        }
+        },
+        shell: {
+            command: any,
+            commands: any
+        },
     },
     database: any
 }
@@ -60,19 +65,18 @@ export interface PageStruct {
         mode: string,
         local: {
             path: string,
-            input: string,
-            button_loading: boolean
+            input: string
         },
         remote: {
             path: string,
-            input: string,
-            button_loading: boolean
+            input: string
         },
         progress: {
             size: number,
             received: number,
             value: number
-        }
+        },
+        button_loading: boolean
     },
     chat: {
         filter: {

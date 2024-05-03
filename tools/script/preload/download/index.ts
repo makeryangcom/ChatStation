@@ -1,9 +1,9 @@
 const Download = {
-    service: (uir: string, file: any, on_response: any, on_data: any, on_end: any)=>{
+    service: (uri: string, file: any, on_response: any, on_data: any, on_end: any)=>{
         const request = require("request");
-        let download: any = request({
+        let download = request({
             method: "GET",
-            uri: uir,
+            uri: uri,
             headers: {
                 "Referer": "https://nodechain.makeryang.com",
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.215 Safari/537.36"

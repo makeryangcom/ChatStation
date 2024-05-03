@@ -9,14 +9,14 @@
                 <CardContent class="p-5 pt-0">
                     <Tabs v-model:model-value="page.install.mode" :default-value="page.install.mode">
                         <TabsList class="grid w-full grid-cols-2">
-                            <TabsTrigger value="local" :disabled="page.install.progress.value > 0" @click="onModeTab('local')">{{$t("install.tab.local.title")}}</TabsTrigger>
-                            <TabsTrigger value="remote" :disabled="page.install.progress.value > 0" @click="onModeTab('remote')">{{$t("install.tab.remote.title")}}</TabsTrigger>
+                            <TabsTrigger value="local" :disabled="page.install.button_loading" @click="onModeTab('local')">{{$t("install.tab.local.title")}}</TabsTrigger>
+                            <TabsTrigger value="remote" :disabled="page.install.button_loading" @click="onModeTab('remote')">{{$t("install.tab.remote.title")}}</TabsTrigger>
                         </TabsList>
                         <TabsContent value="local">
                             <fieldset class="grid gap-2 rounded-lg border p-4">
                                 <div class="flex space-x-2">
-                                    <Input :value="page.install.local.input" :placeholder="$t('install.tab.local.placeholder')"/>
-                                    <Button variant="secondary" class="pt-2" :disabled="page.install.progress.value > 0" @click="onSelectFolder">
+                                    <Input :value="page.install.local.input" :disabled="page.install.button_loading" :placeholder="$t('install.tab.local.placeholder')"/>
+                                    <Button variant="secondary" class="pt-2" :disabled="page.install.button_loading" @click="onSelectFolder">
                                         <MagnifyingGlassIcon />
                                     </Button>
                                 </div>
@@ -25,8 +25,8 @@
                                     <AlertTitle>{{$t("install.tab.local.heads_up")}}</AlertTitle>
                                     <AlertDescription class="text-sm">{{$t("install.tab.local.tips")}}</AlertDescription>
                                 </Alert>
-                                <Button class="w-full" @click="onLocalInstall" :disabled="page.install.local.button_loading || page.install.local.input === ''" v-if="page.install.progress.value === 0">
-                                    <ReloadIcon class="w-4 h-4 mr-2 animate-spin" v-if="page.install.local.button_loading"/>
+                                <Button class="w-full" @click="onLocalInstall" :disabled="page.install.button_loading || page.install.local.input === ''" v-if="page.install.progress.value === 0">
+                                    <ReloadIcon class="w-4 h-4 mr-2 animate-spin" v-if="page.install.button_loading"/>
                                     <span>{{$t("install.tab.local.button")}}</span>
                                 </Button>
                                 <div class="w-full" style="padding: 14px;" v-else>
@@ -47,8 +47,8 @@
                                     <AlertTitle>{{$t("install.tab.remote.heads_up")}}</AlertTitle>
                                     <AlertDescription class="text-sm">{{$t("install.tab.remote.tips")}}</AlertDescription>
                                 </Alert>
-                                <Button class="w-full" @click="onRemoteConnect" :disabled="page.install.remote.button_loading">
-                                    <ReloadIcon class="w-4 h-4 mr-2 animate-spin" v-if="page.install.remote.button_loading"/>
+                                <Button class="w-full" @click="onRemoteConnect" :disabled="page.install.button_loading">
+                                    <ReloadIcon class="w-4 h-4 mr-2 animate-spin" v-if="page.install.button_loading"/>
                                     <span>{{$t("install.tab.remote.button")}}</span>
                                 </Button>
                             </fieldset>
@@ -94,7 +94,7 @@ function onLocalInstall(){
         });
         return;
     }
-    props.page.install.local.button_loading = true;
+    props.page.install.button_loading = true;
     const file_path = props.base.path.resolve(props.page.install.local.input, "./install.zip");
     const download_file = props.base.file.createWriteStream(file_path);
     props.base.tools.download.service("https://cdn.geekros.com/nodechain/install/local_install.zip", download_file, (file_data: any)=>{
@@ -111,14 +111,15 @@ function onLocalInstall(){
         }, ()=>{
             setTimeout(()=>{
                 props.page.install.local.path = props.page.install.local.input;
+                localStorage.setItem("nodechain:mode", "local");
                 localStorage.setItem("nodechain:local:path", props.page.install.local.input);
-                props.page.install.remote.button_loading = false;
+                props.page.install.button_loading = false;
                 props.page.install.status = true;
                 props.page.install.progress.value = 0;
             }, 1500);
         }, (error: any)=>{
             props.page.install.progress.value = 0;
-            props.page.install.remote.button_loading = false;
+            props.page.install.button_loading = false;
             props.page.install.status = false;
             props.page.ui.toast({
                 description: props.base.lang.t("toast.30001"),
@@ -136,9 +137,9 @@ function onRemoteConnect(){
         });
         return;
     }
-    props.page.install.remote.button_loading = true;
+    props.page.install.button_loading = true;
     setTimeout(()=>{
-        props.page.install.remote.button_loading = false;
+        props.page.install.button_loading = false;
         props.page.install.status = true;
     }, 1500);
 }

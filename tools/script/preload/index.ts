@@ -3,6 +3,7 @@ import Path from "path";
 import File from "fs";
 import {ipcRenderer} from "electron";
 import Database from "./database";
+import Shell from "./shell";
 import System from "./system";
 import Download from "./download";
 import Zip from "./zip";
@@ -40,6 +41,7 @@ import os from "os";
     },
     tools: {
         theme: false,
+        shell: Shell,
         system: System,
         download: Download,
         zip: Zip

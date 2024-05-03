@@ -15,10 +15,11 @@
         "skipDefaultLibCheck": true,
         "sourceMap": false,
         "include": [
-            "src/**/*.ts",
-            "src/**/*.d.ts",
-            "src/**/*.tsx",
-            "src/**/*.vue",
+            "template/src/**/*.ts",
+            "template/src/**/*.d.ts",
+            "template/src/**/*.tsx",
+            "template/src/**/*.vue",
+            "tools/script/**/*.ts"
         ]
     }
 }

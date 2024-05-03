@@ -4,8 +4,8 @@
         <section class="page-section">
             <PageInstall ref="pageInstall" :base="props.base" :page="page" v-if="!page.install.status"></PageInstall>
             <PageChat ref="pageChat" :base="props.base" :page="page" v-if="page.install.status"></PageChat>
-            <PageWorkflow ref="pageWorkflow" :base="props.base" :page="page"  v-if="page.install.status"></PageWorkflow>
-            <PageAgent ref="pageAgent" :base="props.base" :page="page"  v-if="page.install.status"></PageAgent>
+            <PageWorkflow ref="pageWorkflow" :base="props.base" :page="page" v-if="page.install.status"></PageWorkflow>
+            <PageAgent ref="pageAgent" :base="props.base" :page="page" v-if="page.install.status"></PageAgent>
             <PageDatabase ref="pageDatabase" :base="props.base" :page="page" v-if="page.install.status"></PageDatabase>
             <PageExtension ref="pageExtension" :base="props.base" :page="page" v-if="page.install.status"></PageExtension>
         </section>
@@ -51,22 +51,21 @@ const page = ref<PageStruct>({
     },
     install: {
         status: false,
-        mode: "local",
+        mode: localStorage.getItem("nodechain:mode") ? localStorage.getItem("nodechain:mode") + "" : "local",
         local: {
             path: localStorage.getItem("nodechain:local:path") ? localStorage.getItem("nodechain:local:path") + "": "",
-            input: "",
-            button_loading: false
+            input: ""
         },
         remote: {
             path: localStorage.getItem("nodechain:remote:path") ? localStorage.getItem("nodechain:remote:path") + "": "",
-            input: "",
-            button_loading: false
+            input: ""
         },
         progress: {
             size: 0,
             received: 0,
             value: 0
-        }
+        },
+        button_loading: false
     },
     chat: {
         filter: {
@@ -161,9 +160,78 @@ props.base.ipc.on("message", (event: any, message: any) => {
 });
 
 function onStart(){
+    if(page.value.install.mode === "local"){
+        if(page.value.install.local.path !== ""){
+            onLocalStart();
+        }
+    }
+    if(page.value.install.mode === "remote"){
+        if(page.value.install.remote.path !== ""){
+            onRemoteStart();
+        }
+    }
+}
+
+function onLocalStart(){
+    if(!page.value.install.status){
+        page.value.install.local.input = page.value.install.local.path;
+        page.value.install.button_loading = true;
+        setEnvironment();
+    }
+}
+
+function onRemoteStart(){
     if(!page.value.install.status){
         page.value.install.status = true;
     }
+}
+
+function setEnvironment(){
+    let system_path = "";
+    let split_symbol = ";";
+    if(props.base.platform !== "win32"){
+        split_symbol = ":";
+        props.base.tools.shell.command("chmod", ["-R", "777", props.base.path.resolve(page.value.install.local.path, "./")]);
+    }
+    props.base.process.env.PATH.split(split_symbol).forEach(function (item: any, index: any, array: any) {
+        if(props.base.platform === "win32"){
+            if((item.toLowerCase()).indexOf("system32") === -1 && (item.toLowerCase()).indexOf("python") === -1 && (item.toLowerCase()).indexOf("git") === -1 && (item.toLowerCase()).indexOf("redis") === -1){
+                if(system_path == "") {
+                    system_path += item;
+                }else{
+                    system_path += split_symbol + item;
+                }
+            }else{
+                if(system_path == "") {
+                    system_path += item;
+                }else{
+                    system_path += split_symbol + item;
+                }
+            }
+        }else{
+            if(system_path == "") {
+                system_path += item;
+            }else{
+                system_path += split_symbol + item;
+            }
+        }
+    });
+    if(props.base.platform === "win32"){
+        system_path += split_symbol + "C:\\Windows\\System32" + split_symbol + "C:\\Windows\\system32";
+    }
+    system_path += split_symbol + props.base.path.resolve(page.value.install.local.path, "./");
+    props.base.process.env.PATH = system_path;
+    props.base.process.env.OLLAMA_HOST = "127.0.0.1:11535";
+    props.base.process.env.OLLAMA_MODELS = props.base.path.resolve(page.value.install.local.path, "./module/chat/model");
+    props.base.process.env.LOCALAPPDATA = props.base.path.resolve(page.value.install.local.path, "./cache");
+    props.base.process.env.OLLAMA_TMPDIR = props.base.path.resolve(page.value.install.local.path, "./cache");
+}
+
+function checkEnvironment(){
+    let paths
+    let commands = [
+
+    ];
 }
 
 onBeforeMount(() => {});
@@ -174,11 +242,7 @@ onMounted(() => {
         console.log("[page:props:base:app_path]", props.base.app_path());
         console.log("[page:props:base:app_data_path]", props.base.app_data_path());
         console.log("[page:props:base:app_home_path]", props.base.app_home_path());
-        console.log("[page:props:base:app_local_path]", page.value.install.local.path);
-        console.log("[page:props:base:app_remote_path]", page.value.install.remote.path);
-        if(page.value.install.local.path !== ""){
-            onStart();
-        }
+        console.log("[page:props:base:install_data]", "mode:" + page.value.install.mode, "local:" + page.value.install.local.path, "remote:" + page.value.install.remote.path);
         props.base.tools.system.getGPU((graphics: any)=>{
             console.log("[page:props:base:system:gpu]", graphics);
             if(graphics){
@@ -194,6 +258,7 @@ onMounted(() => {
                 page.value.system.memory.size = Math.round(memory.total / (1024 ** 3));
                 page.value.system.memory.check = Math.round(memory.total / (1024 ** 3)) >= 12;
                 page.value.system.memory.status = true;
+                onStart();
             }, (error: any)=>{
                 console.log("[page:props:base:system:memory]", error);
                 page.value.system.memory.status = false;

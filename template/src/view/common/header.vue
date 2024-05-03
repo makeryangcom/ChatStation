@@ -9,7 +9,7 @@
                     <Dialog v-model:open="showDialog">
                         <Popover v-model:open="open">
                             <PopoverTrigger as-child>
-                                <Button variant="outline" role="combobox" aria-expanded="true" aria-label="Select a team">
+                                <Button variant="outline" role="combobox" aria-expanded="true" aria-label="Select a team" :disabled="!page.install.status">
                                     <Avatar class="mr-2 h-5 w-5">
                                         <AvatarImage src="https://avatar.vercel.sh/acme-inc.png" alt="1212" />
                                         <AvatarFallback>SC</AvatarFallback>
@@ -102,7 +102,7 @@
                 <div class="account-box">
                     <DropdownMenu>
                         <DropdownMenuTrigger as-child>
-                            <Button variant="ghost" class="relative h-8 w-8 rounded-full">
+                            <Button variant="ghost" class="relative h-8 w-8 rounded-full" :disabled="page.install.button_loading">
                                 <Avatar class="h-8 w-8">
                                     <AvatarImage src="https://avatars.githubusercontent.com/u/156150246?v=4" alt="@shadcn" />
                                     <AvatarFallback>U</AvatarFallback>
