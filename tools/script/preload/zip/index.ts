@@ -19,6 +19,7 @@ const Zip = {
                 const directory = Path.dirname(fullPath);
 
                 File.mkdirSync(directory, {recursive: true});
+
                 if (entry.type === "File") {
                     entry.pipe(File.createWriteStream(fullPath))
                 }else{
