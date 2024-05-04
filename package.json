@@ -8,7 +8,7 @@
     "main": "release/dist/main/index.cjs",
     "scripts": {
         "dev": "node tools/script/watch.mjs",
-        "rebuild": "electron-rebuild -f -w sqlite3",
+        "rebuild": "electron-rebuild -f -w",
         "build": "rimraf release/dist && node --max-old-space-size=6096 tools/script/build.mjs && node --max-old-space-size=6096 tools/script/index.mjs",
         "win64": "yarn build && electron-builder --win --x64",
         "win32": "yarn build && electron-builder --win --ia32",
