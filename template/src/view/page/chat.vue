@@ -217,6 +217,14 @@
                                 </TooltipTrigger>
                                 <TooltipContent align="center" side="left" :align-offset="0" :arrow-padding="0" avoid-collisions :collision-boundary="null" :collision-padding="{}" hide-when-detached sticky="always">Delete</TooltipContent>
                             </Tooltip>
+                            <Tooltip>
+                                <TooltipTrigger as-child>
+                                    <Button variant="ghost" size="icon">
+                                        <Trash2 class="size-4" />
+                                    </Button>
+                                </TooltipTrigger>
+                                <TooltipContent align="center" side="left" :align-offset="0" :arrow-padding="0" avoid-collisions :collision-boundary="null" :collision-padding="{}" hide-when-detached sticky="always">Delete</TooltipContent>
+                            </Tooltip>
                         </TooltipProvider>
                     </div>
                 </div>

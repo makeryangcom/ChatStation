@@ -2,7 +2,7 @@
     <main class="page-header">
         <div class="header-item">
             <div class="left-item">
-                <div class="logo">🐣</div>
+                <div class="logo"></div>
             </div>
             <div class="left-item">
                 <div class="mode-box">
@@ -275,7 +275,8 @@ onUnmounted(() => {});
     text-align: center;
     border-radius: 18px;
     font-size: 18px;
-    background-color: hsl(var(--muted));
+    background: hsl(var(--muted)) url("/image/logo.png") no-repeat center center;
+    background-size: 60%;
 }
 .page-header .header-item .left-item .mode-box{
     width: auto;

@@ -194,12 +194,20 @@ function setEnvironment(){
         props.base.tools.shell.command("chmod", ["-R", "777", props.base.path.resolve(page.value.install.local.path, "./")]);
     }
     props.base.process.env.PATH.split(split_symbol).forEach(function (item: any, index: any, array: any) {
-        if(props.base.platform === "win32"){
-            if((item.toLowerCase()).indexOf("system32") === -1 && (item.toLowerCase()).indexOf("python") === -1 && (item.toLowerCase()).indexOf("git") === -1 && (item.toLowerCase()).indexOf("redis") === -1){
-                if(system_path == "") {
-                    system_path += item;
+        if (item !== "") {
+            if(props.base.platform === "win32"){
+                if((item.toLowerCase()).indexOf("nvidia") === -1 && (item.toLowerCase()).indexOf("physx") === -1 && (item.toLowerCase()).indexOf("system32") === -1 && (item.toLowerCase()).indexOf("python") === -1 && (item.toLowerCase()).indexOf("git") === -1 && (item.toLowerCase()).indexOf("redis") === -1){
+                    if(system_path == "") {
+                        system_path += item;
+                    }else{
+                        system_path += split_symbol + item;
+                    }
                 }else{
-                    system_path += split_symbol + item;
+                    if(system_path == "") {
+                        system_path += item;
+                    }else{
+                        system_path += split_symbol + item;
+                    }
                 }
             }else{
                 if(system_path == "") {
@@ -207,12 +215,6 @@ function setEnvironment(){
                 }else{
                     system_path += split_symbol + item;
                 }
-            }
-        }else{
-            if(system_path == "") {
-                system_path += item;
-            }else{
-                system_path += split_symbol + item;
             }
         }
     });
@@ -228,10 +230,7 @@ function setEnvironment(){
 }
 
 function checkEnvironment(){
-    let paths
-    let commands = [
 
-    ];
 }
 
 onBeforeMount(() => {});
