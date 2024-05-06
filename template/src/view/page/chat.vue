@@ -217,14 +217,6 @@
                                 </TooltipTrigger>
                                 <TooltipContent align="center" side="left" :align-offset="0" :arrow-padding="0" avoid-collisions :collision-boundary="null" :collision-padding="{}" hide-when-detached sticky="always">Delete</TooltipContent>
                             </Tooltip>
-                            <Tooltip>
-                                <TooltipTrigger as-child>
-                                    <Button variant="ghost" size="icon">
-                                        <Trash2 class="size-4" />
-                                    </Button>
-                                </TooltipTrigger>
-                                <TooltipContent align="center" side="left" :align-offset="0" :arrow-padding="0" avoid-collisions :collision-boundary="null" :collision-padding="{}" hide-when-detached sticky="always">Delete</TooltipContent>
-                            </Tooltip>
                         </TooltipProvider>
                     </div>
                 </div>
@@ -412,7 +404,7 @@ import {Badge} from "@/package/ui/badge";
 import {Label} from "@/package/ui/label";
 import {Slider} from "@/package/ui/slider";
 import {Button} from "@/package/ui/button";
-import {PlusIcon, CalendarIcon, QuestionMarkCircledIcon} from "@radix-icons/vue";
+import {PlusIcon, CalendarIcon} from "@radix-icons/vue";
 import {Search, Clock, Trash2, Paperclip, Mic, CornerDownLeft} from "lucide-vue-next";
 
 const props: any = defineProps<{

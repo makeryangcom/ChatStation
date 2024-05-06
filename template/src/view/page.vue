@@ -227,6 +227,11 @@ function setEnvironment(){
     props.base.process.env.OLLAMA_MODELS = props.base.path.resolve(page.value.install.local.path, "./module/chat/model");
     props.base.process.env.LOCALAPPDATA = props.base.path.resolve(page.value.install.local.path, "./cache");
     props.base.process.env.OLLAMA_TMPDIR = props.base.path.resolve(page.value.install.local.path, "./cache");
+    setTimeout(()=>{
+        page.value.install.button_loading = false;
+        page.value.install.status = true;
+        page.value.install.progress.value = 0;
+    }, 2500);
 }
 
 function checkEnvironment(){
