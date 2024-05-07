@@ -1,5 +1,5 @@
 <template>
-    <main class="page-agent" :class="page.current">
+    <main class="page-agent" :class="page.header.current">
         <div class="agent-header">
             <div class="header-main flex-1 space-y-4 p-4 pl-0 pr-0 pt-5">
                 <Tabs default-value="all" class="h-full space-y-6">

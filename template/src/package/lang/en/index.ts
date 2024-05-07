@@ -2,6 +2,7 @@ export default {
     header: {
         left: {
             search_model: "Search model...",
+            browser_model: "Browser",
             local_model: "Local",
             remote_model: "Remote",
             new_remote_model: "New remote devices"
@@ -105,6 +106,12 @@ export default {
         title: "Quick Start",
         description: "Choose a method to quickly start your AI assistant.",
         tab: {
+            browser: {
+                title: "Browser",
+                heads_up: "Heads up!!!",
+                tips: "The built-in browser can solve most of the problems of AI application sites' webpages being inaccessible.",
+                button: "Enter the browser"
+            },
             local: {
                 title: "Local",
                 placeholder: "Select a location to store data",

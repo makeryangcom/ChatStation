@@ -2,6 +2,7 @@ export default {
     header: {
         left: {
             search_model: "搜索模型...",
+            browser_model: "游览器",
             local_model: "本地",
             remote_model: "远程",
             new_remote_model: "新的远程设备"
@@ -105,6 +106,12 @@ export default {
         title: "快速开始",
         description: "选择一种方式，快速启动你的AI助手。",
         tab: {
+            browser: {
+                title: "游览器",
+                heads_up: "提醒!!!",
+                tips: "内置游览器可解决大部分AI应用站点网页无法访问的问题。",
+                button: "进入游览器"
+            },
             local: {
                 title: "本机",
                 placeholder: "选择一个位置用于存储数据",

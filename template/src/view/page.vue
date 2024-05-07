@@ -1,8 +1,9 @@
 <template>
     <main class="page-main">
-        <CommonHeader ref="commonHeader" :base="props.base" :theme="props.theme" :page="page"></CommonHeader>
+        <CommonHeader ref="commonHeader" :base="props.base" :theme="props.theme" :page="page" @onStartFun="onStart"></CommonHeader>
         <section class="page-section">
             <PageInstall ref="pageInstall" :base="props.base" :page="page" v-if="!page.install.status"></PageInstall>
+            <PageBrowser ref="pageBrowser" :base="props.base" :page="page" v-if="page.install.status"></PageBrowser>
             <PageChat ref="pageChat" :base="props.base" :page="page" v-if="page.install.status"></PageChat>
             <PageWorkflow ref="pageWorkflow" :base="props.base" :page="page" v-if="page.install.status"></PageWorkflow>
             <PageAgent ref="pageAgent" :base="props.base" :page="page" v-if="page.install.status"></PageAgent>
@@ -20,6 +21,7 @@ import type {BaseStruct, PageStruct} from "@/package/struct";
 import {useToast} from "@/package/ui/toast/use-toast";
 import {Toaster} from "@/package/ui/toast";
 import CommonHeader from "@/view/common/header.vue";
+import PageBrowser from "@/view/page/browser.vue";
 import PageChat from "@/view/page/chat.vue";
 import PageWorkflow from "@/view/page/workflow.vue";
 import PageAgent from "@/view/page/agent.vue";
@@ -35,7 +37,13 @@ const props: any = defineProps<{
 }>();
 
 const page = ref<PageStruct>({
-    current: "chat",
+    header: {
+        current: "browser",
+        select: {
+            value: "1212",
+            group: []
+        }
+    },
     system: {
         gpu: {
             status: false,
@@ -51,7 +59,7 @@ const page = ref<PageStruct>({
     },
     install: {
         status: false,
-        mode: localStorage.getItem("nodechain:mode") ? localStorage.getItem("nodechain:mode") + "" : "local",
+        mode: localStorage.getItem("nodechain:mode") ? localStorage.getItem("nodechain:mode") + "" : "browser",
         local: {
             path: localStorage.getItem("nodechain:local:path") ? localStorage.getItem("nodechain:local:path") + "": "",
             input: ""
@@ -66,6 +74,9 @@ const page = ref<PageStruct>({
             value: 0
         },
         button_loading: false
+    },
+    browser: {
+
     },
     chat: {
         filter: {
@@ -160,15 +171,76 @@ props.base.ipc.on("message", (event: any, message: any) => {
 });
 
 function onStart(){
+    getHeaderGroupData();
+    if(page.value.install.mode === "browser"){
+        page.value.header.current = "browser";
+        onBrowserStart();
+    }
     if(page.value.install.mode === "local"){
+        page.value.header.current = "chat";
         if(page.value.install.local.path !== ""){
             onLocalStart();
+        }else{
+            page.value.install.button_loading = false;
+            page.value.install.status = false;
+            page.value.install.progress.value = 0;
         }
     }
     if(page.value.install.mode === "remote"){
+        page.value.header.current = "chat";
         if(page.value.install.remote.path !== ""){
             onRemoteStart();
+        }else{
+            page.value.install.button_loading = false;
+            page.value.install.status = false;
+            page.value.install.progress.value = 0;
         }
+    }
+}
+
+function getHeaderGroupData(){
+    page.value.header.select.group = [
+        {
+            label: "Browser",
+            lang: "browser_model",
+            child: [
+                {
+                    label: "Google Chrome",
+                    value: "browser",
+                }
+            ]
+        },
+        {
+            label: "Local",
+            lang: "local_model",
+            child: [
+                {
+                    label: "127.0.0.1",
+                    value: "local",
+                }
+            ]
+        },
+        {
+            label: "Remote",
+            lang: "remote_model",
+            child: [
+                {
+                    label: "192.168.31.192",
+                    value: "192.168.31.192",
+                }
+            ]
+        }
+    ];
+}
+
+function onBrowserStart(){
+    if(!page.value.install.status){
+        page.value.install.button_loading = true;
+        setTimeout(()=>{
+            page.value.install.button_loading = false;
+            page.value.install.status = true;
+            page.value.install.progress.value = 0;
+        }, 2500);
     }
 }
 
@@ -182,7 +254,11 @@ function onLocalStart(){
 
 function onRemoteStart(){
     if(!page.value.install.status){
-        page.value.install.status = true;
+        setTimeout(()=>{
+            page.value.install.button_loading = false;
+            page.value.install.status = true;
+            page.value.install.progress.value = 0;
+        }, 2500);
     }
 }
 

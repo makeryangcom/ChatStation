@@ -46,7 +46,13 @@ export interface BaseStruct {
 }
 
 export interface PageStruct {
-    current: string,
+    header: {
+        current: string,
+        select: {
+            value: string,
+            group: any
+        }
+    },
     system: {
         gpu: {
             status: boolean,
@@ -77,6 +83,9 @@ export interface PageStruct {
             value: number
         },
         button_loading: boolean
+    },
+    browser: {
+
     },
     chat: {
         filter: {

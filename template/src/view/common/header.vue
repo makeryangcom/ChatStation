@@ -10,37 +10,29 @@
                         <Popover v-model:open="open">
                             <PopoverTrigger as-child>
                                 <Button variant="outline" role="combobox" aria-expanded="true" aria-label="Select a team" :disabled="!page.install.status">
-                                    <Avatar class="mr-2 h-5 w-5">
-                                        <AvatarImage src="https://avatar.vercel.sh/acme-inc.png" alt="1212" />
-                                        <AvatarFallback>SC</AvatarFallback>
-                                    </Avatar>
-                                    <span>192.168.131.245</span>
-                                    <CaretSortIcon class="ml-auto h-4 w-4 shrink-0 opacity-50" />
+                                    <span>
+                                        <GlobeIcon class="mr-2" v-if="page.header.select.value === 'browser'" />
+                                        <LaptopIcon class="mr-2" v-else-if="page.header.select.value === 'local'" />
+                                        <DesktopIcon class="mr-2" v-else />
+                                    </span>
+                                    <span>{{page.header.select.value === "browser" ? "Google Chrome" : (page.header.select.value === "local" ? "127.0.0.1" : page.header.select.value)}}</span>
+                                    <CaretSortIcon class="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                 </Button>
                             </PopoverTrigger>
                             <PopoverContent class="w-[200px] p-0">
-                                <Command>
+                                <Command :filter-function="(list: any, child: any) => list.filter((i: any) => i?.toLowerCase()?.includes(child)) ">
+                                    <CommandInput :placeholder="$t('header.left.search_model')" />
                                     <CommandList>
-                                        <CommandInput :placeholder="$t('header.left.search_model')" />
                                         <CommandEmpty>No Model Found.</CommandEmpty>
-                                        <CommandGroup :heading="$t('header.left.local_model')">
-                                            <CommandItem value="2">
-                                                <Avatar class="mr-2 h-5 w-5">
-                                                    <AvatarImage src="https://avatar.vercel.sh/acme-inc.png" alt="1212" />
-                                                    <AvatarFallback>SC</AvatarFallback>
-                                                </Avatar>
-                                                <span>localhost</span>
-                                                <CheckIcon class="ml-auto h-4 w-4 opacity-0"></CheckIcon>
-                                            </CommandItem>
-                                        </CommandGroup>
-                                        <CommandGroup :heading="$t('header.left.remote_model')">
-                                            <CommandItem value="1">
-                                                <Avatar class="mr-2 h-5 w-5">
-                                                    <AvatarImage src="https://avatar.vercel.sh/acme-inc.png" alt="1212" />
-                                                    <AvatarFallback>SC</AvatarFallback>
-                                                </Avatar>
-                                                <span>192.168.131.245</span>
-                                                <CheckIcon class="ml-auto h-4 w-4"></CheckIcon>
+                                        <CommandGroup v-for="(item, index) in page.header.select.group" :key="index" :heading="$t('header.left.' + item.lang)">
+                                            <CommandItem v-for="(child, ii) in item.child" :key="ii" :value="child.value" @select="onHeaderSelect(child);open = false;">
+                                                <span>
+                                                    <GlobeIcon class="mr-2" v-if="child.value === 'browser'" />
+                                                    <LaptopIcon class="mr-2" v-else-if="child.value === 'local'" />
+                                                    <DesktopIcon class="mr-2" v-else />
+                                                </span>
+                                                <span>{{child.label}}</span>
+                                                <CheckIcon class="ml-auto h-4 w-4" :class="page.header.select.value !== child.value ? 'opacity-0' : ''"></CheckIcon>
                                             </CommandItem>
                                         </CommandGroup>
                                     </CommandList>
@@ -70,8 +62,8 @@
             </div>
         </div>
         <div class="header-item">
-            <div class="page-tab">
-                <Tabs class="tabs" v-model:model-value="page.current" :default-value="page.current">
+            <div class="page-tab" v-if="page.header.current !== 'browser' && page.install.status">
+                <Tabs class="tabs" v-model:model-value="page.header.current" :default-value="page.header.current">
                     <TabsList class="list">
                         <TabsTrigger value="chat" @click="onHeaderTab('chat')" :disabled="!page.install.status">
                             <ChatBubbleIcon class="icon" />
@@ -95,6 +87,9 @@
                         </TabsTrigger>
                     </TabsList>
                 </Tabs>
+            </div>
+            <div class="page-tab" v-if="page.header.current === 'browser' && page.install.status">
+                <div class="h-9 rounded-lg bg-muted">1</div>
             </div>
         </div>
         <div class="header-item">
@@ -192,7 +187,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, onBeforeMount, onMounted, onBeforeUnmount, onUnmounted, nextTick} from "vue";
+import {ref, onBeforeMount, onMounted, onBeforeUnmount, onUnmounted, nextTick, defineEmits} from "vue";
 import type {BaseStruct, PageStruct} from "@/package/struct";
 import {Button} from "@/package/ui/button";
 import {Tabs, TabsList, TabsTrigger} from "@/package/ui/tabs";
@@ -201,8 +196,9 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, 
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator} from "@/package/ui/command";
 import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "@/package/ui/dialog";
 import {Popover, PopoverContent, PopoverTrigger} from "@/package/ui/popover";
-import {CaretSortIcon, CheckIcon, RocketIcon, PlusCircledIcon, ChatBubbleIcon, ShuffleIcon, MixIcon, LayersIcon, Cross1Icon, MinusIcon, BoxIcon, RotateCounterClockwiseIcon} from "@radix-icons/vue";
+import {GlobeIcon, DesktopIcon, LaptopIcon, CaretSortIcon, CheckIcon, RocketIcon, PlusCircledIcon, ChatBubbleIcon, ShuffleIcon, MixIcon, LayersIcon, Cross1Icon, MinusIcon, BoxIcon, RotateCounterClockwiseIcon} from "@radix-icons/vue";
 
+const emits = defineEmits(["onStartFun"]);
 const props: any = defineProps<{
     base: BaseStruct,
     theme: string,
@@ -216,8 +212,32 @@ function onRightButton(data: string){
     props.base.ipc.send("message", {type: "header-right-button", data: data});
 }
 
+function onHeaderSelect(child: any){
+    console.log(child);
+    if(props.page.header.select.value !== child.value){
+        props.page.header.select.value = child.value;
+        if(props.page.header.select.value === "browser"){
+            props.page.header.current = "browser";
+            props.page.install.mode = "browser";
+        }else{
+            props.page.header.current = "chat";
+            props.page.install.mode = "local";
+            props.page.install.local.input = props.page.install.local.path;
+            if(props.page.header.select.value !== "local"){
+                props.page.install.mode = "remote";
+                props.page.install.remote.path = props.page.header.select.value;
+                props.page.install.remote.input = props.page.header.select.value;
+            }
+        }
+        props.page.install.button_loading = true;
+        props.page.install.status = false;
+        props.page.install.progress.value = 0;
+        emits("onStartFun");
+    }
+}
+
 function onHeaderTab(tab: string){
-    props.page.current = tab;
+    props.page.header.current = tab;
 }
 
 function onTheme(theme: string){

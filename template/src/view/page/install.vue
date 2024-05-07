@@ -1,5 +1,5 @@
 <template>
-    <main class="page-install" :class="page.current">
+    <main class="page-install" :class="page.header.current">
         <div class="relative w-full h-screen flex items-center justify-center px-4" style="height: 100%">
             <Card class="mx-auto max-w-sm w-[400px]" style="margin-top: -20px">
                 <CardHeader class="p-5">
@@ -8,10 +8,29 @@
                 </CardHeader>
                 <CardContent class="p-5 pt-0">
                     <Tabs v-model:model-value="page.install.mode" :default-value="page.install.mode">
-                        <TabsList class="grid w-full grid-cols-2">
+                        <TabsList class="grid w-full grid-cols-3">
+                            <TabsTrigger value="browser" :disabled="page.install.button_loading" @click="onModeTab('browser')">{{$t("install.tab.browser.title")}}</TabsTrigger>
                             <TabsTrigger value="local" :disabled="page.install.button_loading" @click="onModeTab('local')">{{$t("install.tab.local.title")}}</TabsTrigger>
                             <TabsTrigger value="remote" :disabled="page.install.button_loading" @click="onModeTab('remote')">{{$t("install.tab.remote.title")}}</TabsTrigger>
                         </TabsList>
+                        <TabsContent value="browser">
+                            <fieldset class="grid gap-2 rounded-lg border p-4">
+                                <div class="flex space-x-2 h-9"></div>
+                                <Alert class="alert-main warning" variant="default">
+                                    <ExclamationTriangleIcon />
+                                    <AlertTitle>{{$t("install.tab.browser.heads_up")}}</AlertTitle>
+                                    <AlertDescription class="text-sm">{{$t("install.tab.browser.tips")}}</AlertDescription>
+                                </Alert>
+                                <Button class="w-full" @click="onEnterBrowser" :disabled="page.install.button_loading" v-if="page.install.progress.value === 0">
+                                    <ReloadIcon class="w-4 h-4 mr-2 animate-spin" v-if="page.install.button_loading"/>
+                                    <span>{{$t("install.tab.browser.button")}}</span>
+                                </Button>
+                                <div class="w-full" style="padding: 14px;" v-else>
+                                    <Progress style="display:inline-block;vertical-align: middle;width: calc(100% - 60px)" v-model="page.install.progress.value" />
+                                    <span style="font-size: 12px; height: 8px;line-height: 8px; width: 60px;display:inline-block;vertical-align: middle; text-align: right">{{page.install.progress.value.toFixed(2)}}%</span>
+                                </div>
+                            </fieldset>
+                        </TabsContent>
                         <TabsContent value="local">
                             <fieldset class="grid gap-2 rounded-lg border p-4">
                                 <div class="flex space-x-2">
@@ -30,7 +49,8 @@
                                     <span>{{$t("install.tab.local.button")}}</span>
                                 </Button>
                                 <div class="w-full" style="padding: 14px;" v-else>
-                                    <Progress v-model="page.install.progress.value" />
+                                    <Progress style="display:inline-block;vertical-align: middle;width: calc(100% - 60px)" v-model="page.install.progress.value" />
+                                    <span style="font-size: 12px; height: 8px;line-height: 8px; width: 60px;display:inline-block;vertical-align: middle; text-align: right">{{page.install.progress.value.toFixed(2)}}%</span>
                                 </div>
                             </fieldset>
                         </TabsContent>
@@ -84,6 +104,16 @@ function onModeTab(mode: string){
 
 function onSelectFolder(){
     props.base.ipc.send("message", {type: "select_folder_path", callback: "local_path"});
+}
+
+function onEnterBrowser(){
+    props.page.install.button_loading = true;
+    setTimeout(()=>{
+        localStorage.setItem("nodechain:mode", "browser");
+        props.page.install.button_loading = false;
+        props.page.install.status = true;
+        props.page.install.progress.value = 0;
+    }, 1500);
 }
 
 function onLocalInstall(){

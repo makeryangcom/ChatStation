@@ -1,5 +1,5 @@
 <template>
-    <main class="page-chat" :class="page.current">
+    <main class="page-chat" :class="page.header.current">
         <ResizablePanelGroup direction="horizontal" class="chat-main h-full items-stretch">
             <ResizablePanel class="left">
                 <Tabs class="tab-item" v-model:model-value="page.chat.filter.time" :default-value="page.chat.filter.time">

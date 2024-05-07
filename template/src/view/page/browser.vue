@@ -1,5 +1,9 @@
 <template>
-    <main class="page-database" :class="page.header.current">database</main>
+    <main class="page-browser" :class="page.header.current">
+        <div class="">
+
+        </div>
+    </main>
 </template>
 
 <script setup lang="ts">
@@ -23,13 +27,13 @@ onUnmounted(() => {});
 </script>
 
 <style scoped>
-.page-database{
+.page-browser{
     width: 100%;
     height: 100%;
     background-color: hsl(var(--background));
     display: none;
 }
-.page-database.database{
+.page-browser.browser{
     display: block;
 }
 </style>

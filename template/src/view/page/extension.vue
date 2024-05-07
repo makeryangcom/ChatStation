@@ -1,5 +1,5 @@
 <template>
-    <main class="page-extension" :class="page.current">extension</main>
+    <main class="page-extension" :class="page.header.current">extension</main>
 </template>
 
 <script setup lang="ts">
