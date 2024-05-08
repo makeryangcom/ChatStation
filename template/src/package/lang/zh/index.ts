@@ -1,11 +1,12 @@
 export default {
     header: {
         left: {
-            search_model: "搜索模型...",
-            browser_model: "游览器",
-            local_model: "本地",
-            remote_model: "远程",
-            new_remote_model: "新的远程设备"
+            placeholder: "选择连接方式",
+            search: "搜索关键词...",
+            browser: "游览器",
+            local: "本地",
+            remote: "远程",
+            new_remote: "新的远程设备"
         },
         tab: {
             chat: "对话",

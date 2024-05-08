@@ -2,13 +2,23 @@
     <main class="page-main">
         <CommonHeader ref="commonHeader" :base="props.base" :theme="props.theme" :page="page" @onStartFun="onStart"></CommonHeader>
         <section class="page-section">
-            <PageInstall ref="pageInstall" :base="props.base" :page="page" v-if="!page.install.status"></PageInstall>
-            <PageBrowser ref="pageBrowser" :base="props.base" :page="page" v-if="page.install.status"></PageBrowser>
-            <PageChat ref="pageChat" :base="props.base" :page="page" v-if="page.install.status"></PageChat>
-            <PageWorkflow ref="pageWorkflow" :base="props.base" :page="page" v-if="page.install.status"></PageWorkflow>
-            <PageAgent ref="pageAgent" :base="props.base" :page="page" v-if="page.install.status"></PageAgent>
-            <PageDatabase ref="pageDatabase" :base="props.base" :page="page" v-if="page.install.status"></PageDatabase>
-            <PageExtension ref="pageExtension" :base="props.base" :page="page" v-if="page.install.status"></PageExtension>
+            <ContextMenu>
+                <ContextMenuTrigger>
+                    <PageInstall ref="pageInstall" :base="props.base" :page="page" v-if="!page.install.status"></PageInstall>
+                    <PageBrowser ref="pageBrowser" :base="props.base" :page="page" v-if="page.install.status"></PageBrowser>
+                    <PageChat ref="pageChat" :base="props.base" :page="page" v-if="page.install.status"></PageChat>
+                    <PageWorkflow ref="pageWorkflow" :base="props.base" :page="page" v-if="page.install.status"></PageWorkflow>
+                    <PageAgent ref="pageAgent" :base="props.base" :page="page" v-if="page.install.status"></PageAgent>
+                    <PageDatabase ref="pageDatabase" :base="props.base" :page="page" v-if="page.install.status"></PageDatabase>
+                    <PageExtension ref="pageExtension" :base="props.base" :page="page" v-if="page.install.status"></PageExtension>
+                </ContextMenuTrigger>
+                <ContextMenuContent>
+                    <ContextMenuItem class="pl-3 pr-3" inset @select="onContextMenuSelect">
+                        <span>Cut</span>
+                        <ContextMenuShortcut class="text-right">⌘+X</ContextMenuShortcut>
+                    </ContextMenuItem>
+                </ContextMenuContent>
+            </ContextMenu>
         </section>
         <CommonFooter ref="commonFooter" :base="props.base" :page="page"></CommonFooter>
     </main>
@@ -19,6 +29,7 @@
 import {ref, onBeforeMount, onMounted, onBeforeUnmount, onUnmounted, nextTick} from "vue";
 import type {BaseStruct, PageStruct} from "@/package/struct";
 import {useToast} from "@/package/ui/toast/use-toast";
+import {ContextMenu, ContextMenuCheckboxItem, ContextMenuContent, ContextMenuItem, ContextMenuLabel, ContextMenuRadioGroup, ContextMenuRadioItem, ContextMenuSeparator, ContextMenuShortcut, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger, ContextMenuTrigger} from "@/package/ui/context-menu";
 import {Toaster} from "@/package/ui/toast";
 import CommonHeader from "@/view/common/header.vue";
 import PageBrowser from "@/view/page/browser.vue";
@@ -40,7 +51,7 @@ const page = ref<PageStruct>({
     header: {
         current: "browser",
         select: {
-            value: "1212",
+            value: "",
             group: []
         }
     },
@@ -61,12 +72,12 @@ const page = ref<PageStruct>({
         status: false,
         mode: localStorage.getItem("nodechain:mode") ? localStorage.getItem("nodechain:mode") + "" : "browser",
         local: {
-            path: localStorage.getItem("nodechain:local:path") ? localStorage.getItem("nodechain:local:path") + "": "",
-            input: ""
+            path: localStorage.getItem("nodechain:local:path") ? localStorage.getItem("nodechain:local:path") + "" : "",
+            input: "",
         },
         remote: {
-            path: localStorage.getItem("nodechain:remote:path") ? localStorage.getItem("nodechain:remote:path") + "": "",
-            input: ""
+            path: localStorage.getItem("nodechain:remote:path") ? localStorage.getItem("nodechain:remote:path") + "" : "",
+            input: "",
         },
         progress: {
             size: 0,
@@ -202,7 +213,7 @@ function getHeaderGroupData(){
     page.value.header.select.group = [
         {
             label: "Browser",
-            lang: "browser_model",
+            lang: "browser",
             child: [
                 {
                     label: "Google Chrome",
@@ -212,7 +223,7 @@ function getHeaderGroupData(){
         },
         {
             label: "Local",
-            lang: "local_model",
+            lang: "local",
             child: [
                 {
                     label: "127.0.0.1",
@@ -222,7 +233,7 @@ function getHeaderGroupData(){
         },
         {
             label: "Remote",
-            lang: "remote_model",
+            lang: "remote",
             child: [
                 {
                     label: "192.168.31.192",
@@ -237,6 +248,8 @@ function onBrowserStart(){
     if(!page.value.install.status){
         page.value.install.button_loading = true;
         setTimeout(()=>{
+            page.value.header.select.value = "browser";
+            localStorage.setItem("nodechain:mode", "browser");
             page.value.install.button_loading = false;
             page.value.install.status = true;
             page.value.install.progress.value = 0;
@@ -254,7 +267,11 @@ function onLocalStart(){
 
 function onRemoteStart(){
     if(!page.value.install.status){
+        page.value.install.remote.input = page.value.install.remote.path;
+        page.value.install.button_loading = true;
         setTimeout(()=>{
+            page.value.header.select.value = page.value.install.remote.input;
+            localStorage.setItem("nodechain:mode", "remote");
             page.value.install.button_loading = false;
             page.value.install.status = true;
             page.value.install.progress.value = 0;
@@ -304,6 +321,8 @@ function setEnvironment(){
     props.base.process.env.LOCALAPPDATA = props.base.path.resolve(page.value.install.local.path, "./cache");
     props.base.process.env.OLLAMA_TMPDIR = props.base.path.resolve(page.value.install.local.path, "./cache");
     setTimeout(()=>{
+        page.value.header.select.value = "local";
+        localStorage.setItem("nodechain:mode", "local");
         page.value.install.button_loading = false;
         page.value.install.status = true;
         page.value.install.progress.value = 0;
@@ -312,6 +331,20 @@ function setEnvironment(){
 
 function checkEnvironment(){
 
+}
+
+function onContextMenuSelect(event: any){
+    const selection: any = window.getSelection();
+    if (!selection.rangeCount) return;
+    const range = selection.getRangeAt(0);
+    const container = document.createElement("div");
+    container.appendChild(range.cloneContents());
+    if (container.querySelector("img")) {
+
+    }else{
+        const selectedText = selection.toString();
+        console.log(selectedText);
+    }
 }
 
 onBeforeMount(() => {});
@@ -323,6 +356,8 @@ onMounted(() => {
         console.log("[page:props:base:app_data_path]", props.base.app_data_path());
         console.log("[page:props:base:app_home_path]", props.base.app_home_path());
         console.log("[page:props:base:install_data]", "mode:" + page.value.install.mode, "local:" + page.value.install.local.path, "remote:" + page.value.install.remote.path);
+        page.value.install.local.input = page.value.install.local.path;
+        page.value.install.remote.input = page.value.install.remote.path;
         props.base.tools.system.getGPU((graphics: any)=>{
             console.log("[page:props:base:system:gpu]", graphics);
             if(graphics){

@@ -10,18 +10,21 @@
                         <Popover v-model:open="open">
                             <PopoverTrigger as-child>
                                 <Button variant="outline" role="combobox" aria-expanded="true" aria-label="Select a team" :disabled="!page.install.status">
-                                    <span>
+                                    <span v-if="page.header.select.value !== ''">
                                         <GlobeIcon class="mr-2" v-if="page.header.select.value === 'browser'" />
                                         <LaptopIcon class="mr-2" v-else-if="page.header.select.value === 'local'" />
                                         <DesktopIcon class="mr-2" v-else />
                                     </span>
-                                    <span>{{page.header.select.value === "browser" ? "Google Chrome" : (page.header.select.value === "local" ? "127.0.0.1" : page.header.select.value)}}</span>
+                                    <span v-else>
+                                        <Link1Icon class="mr-2" />
+                                    </span>
+                                    <span>{{page.header.select.value === "" ? $t("header.left.placeholder") : (page.header.select.value === "browser" ? "Google Chrome" : (page.header.select.value === "local" ? "127.0.0.1" : page.header.select.value))}}</span>
                                     <CaretSortIcon class="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                 </Button>
                             </PopoverTrigger>
                             <PopoverContent class="w-[200px] p-0">
                                 <Command :filter-function="(list: any, child: any) => list.filter((i: any) => i?.toLowerCase()?.includes(child)) ">
-                                    <CommandInput :placeholder="$t('header.left.search_model')" />
+                                    <CommandInput :placeholder="$t('header.left.search')" />
                                     <CommandList>
                                         <CommandEmpty>No Model Found.</CommandEmpty>
                                         <CommandGroup v-for="(item, index) in page.header.select.group" :key="index" :heading="$t('header.left.' + item.lang)">
@@ -42,7 +45,7 @@
                                             <DialogTrigger as-child>
                                                 <CommandItem value="create-team" @select="()=>{open = false; showDialog = true;}">
                                                     <PlusCircledIcon class="mr-2 h-5 w-5" />
-                                                    <span>{{$t("header.left.new_remote_model")}}</span>
+                                                    <span>{{$t("header.left.new_remote")}}</span>
                                                 </CommandItem>
                                             </DialogTrigger>
                                         </CommandGroup>
@@ -89,7 +92,23 @@
                 </Tabs>
             </div>
             <div class="page-tab" v-if="page.header.current === 'browser' && page.install.status">
-                <div class="h-9 rounded-lg bg-muted">1</div>
+                <div class="h-9 rounded-lg bg-muted">
+                    <div class="header-browser">
+                        <div class="browser-item">
+                            <Button class="h-7 w-7" variant="outline" size="icon">
+                                <ListBulletIcon class="size-4" />
+                            </Button>
+                        </div>
+                        <div class="browser-item">
+
+                        </div>
+                        <div class="browser-item">
+                            <Button class="h-7 w-7" variant="outline" size="icon">
+                                <UpdateIcon class="size-3" />
+                            </Button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="header-item">
@@ -196,7 +215,7 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, 
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator} from "@/package/ui/command";
 import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "@/package/ui/dialog";
 import {Popover, PopoverContent, PopoverTrigger} from "@/package/ui/popover";
-import {GlobeIcon, DesktopIcon, LaptopIcon, CaretSortIcon, CheckIcon, RocketIcon, PlusCircledIcon, ChatBubbleIcon, ShuffleIcon, MixIcon, LayersIcon, Cross1Icon, MinusIcon, BoxIcon, RotateCounterClockwiseIcon} from "@radix-icons/vue";
+import {Link1Icon, ListBulletIcon, GlobeIcon, UpdateIcon, DesktopIcon, LaptopIcon, CaretSortIcon, CheckIcon, RocketIcon, PlusCircledIcon, ChatBubbleIcon, ShuffleIcon, MixIcon, LayersIcon, Cross1Icon, MinusIcon, BoxIcon, RotateCounterClockwiseIcon} from "@radix-icons/vue";
 
 const emits = defineEmits(["onStartFun"]);
 const props: any = defineProps<{
@@ -213,7 +232,6 @@ function onRightButton(data: string){
 }
 
 function onHeaderSelect(child: any){
-    console.log(child);
     if(props.page.header.select.value !== child.value){
         props.page.header.select.value = child.value;
         if(props.page.header.select.value === "browser"){
@@ -225,8 +243,7 @@ function onHeaderSelect(child: any){
             props.page.install.local.input = props.page.install.local.path;
             if(props.page.header.select.value !== "local"){
                 props.page.install.mode = "remote";
-                props.page.install.remote.path = props.page.header.select.value;
-                props.page.install.remote.input = props.page.header.select.value;
+                props.page.install.remote.input = props.page.install.remote.path;
             }
         }
         props.page.install.button_loading = true;
@@ -342,6 +359,24 @@ onUnmounted(() => {});
 }
 .page-header .header-item .right-item .item:hover{
     background-color: hsl(var(--muted));
+}
+.page-header .header-item .header-browser{
+    width: 100%;
+    height: 36px;
+    padding: 4px;
+    -webkit-app-region: no-drag;
+}
+.page-header .header-item .header-browser .browser-item{
+    width: calc(100% - 56px);
+    height: 28px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.page-header .header-item .header-browser .browser-item:first-child{
+    width: 28px;
+}
+.page-header .header-item .header-browser .browser-item:last-child{
+    width: 28px;
 }
 .theme-main{
     width: 100%;

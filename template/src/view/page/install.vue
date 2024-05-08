@@ -15,7 +15,7 @@
                         </TabsList>
                         <TabsContent value="browser">
                             <fieldset class="grid gap-2 rounded-lg border p-4">
-                                <div class="flex space-x-2 h-9"></div>
+                                <div class="flex space-x-2 h-0"></div>
                                 <Alert class="alert-main warning" variant="default">
                                     <ExclamationTriangleIcon />
                                     <AlertTitle>{{$t("install.tab.browser.heads_up")}}</AlertTitle>
@@ -34,7 +34,7 @@
                         <TabsContent value="local">
                             <fieldset class="grid gap-2 rounded-lg border p-4">
                                 <div class="flex space-x-2">
-                                    <Input :value="page.install.local.input" :disabled="page.install.button_loading" :placeholder="$t('install.tab.local.placeholder')"/>
+                                    <Input v-model:value="page.install.local.input" :disabled="page.install.button_loading" :placeholder="$t('install.tab.local.placeholder')"/>
                                     <Button variant="secondary" class="pt-2" :disabled="page.install.button_loading" @click="onSelectFolder">
                                         <MagnifyingGlassIcon />
                                     </Button>
@@ -57,8 +57,8 @@
                         <TabsContent value="remote">
                             <fieldset class="grid gap-2 rounded-lg border p-4">
                                 <div class="flex space-x-2">
-                                    <Input v-model:model-value="page.install.remote.input" :placeholder="$t('install.tab.remote.placeholder')" />
-                                    <Button variant="secondary" class="pt-2">
+                                    <Input v-model:model-value="page.install.remote.input" :disabled="page.install.button_loading" :placeholder="$t('install.tab.remote.placeholder')" />
+                                    <Button variant="secondary" class="pt-2" :disabled="page.install.button_loading">
                                         <StitchesLogoIcon />
                                     </Button>
                                 </div>
@@ -109,6 +109,7 @@ function onSelectFolder(){
 function onEnterBrowser(){
     props.page.install.button_loading = true;
     setTimeout(()=>{
+        props.page.header.select.value = "browser";
         localStorage.setItem("nodechain:mode", "browser");
         props.page.install.button_loading = false;
         props.page.install.status = true;
@@ -140,6 +141,7 @@ function onLocalInstall(){
             props.page.install.progress.value = (50 + (((props.page.install.progress.received * 100) / props.page.install.progress.size)/ 2));
         }, ()=>{
             setTimeout(()=>{
+                props.page.header.select.value = "local";
                 props.page.install.local.path = props.page.install.local.input;
                 localStorage.setItem("nodechain:mode", "local");
                 localStorage.setItem("nodechain:local:path", props.page.install.local.input);
@@ -169,6 +171,10 @@ function onRemoteConnect(){
     }
     props.page.install.button_loading = true;
     setTimeout(()=>{
+        props.page.header.select.value = props.page.install.remote.input;
+        props.page.install.remote.path = props.page.install.remote.input;
+        localStorage.setItem("nodechain:mode", "remote");
+        localStorage.setItem("nodechain:remote:path", props.page.install.remote.input);
         props.page.install.button_loading = false;
         props.page.install.status = true;
     }, 1500);

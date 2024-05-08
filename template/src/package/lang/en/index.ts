@@ -1,11 +1,12 @@
 export default {
     header: {
         left: {
-            search_model: "Search model...",
-            browser_model: "Browser",
-            local_model: "Local",
-            remote_model: "Remote",
-            new_remote_model: "New remote devices"
+            placeholder: "Choose connection method",
+            search: "Search keyword...",
+            browser: "Browser",
+            local: "Local",
+            remote: "Remote",
+            new_remote: "New remote devices"
         },
         tab: {
             chat: "Chat",

@@ -77,7 +77,6 @@ function onWindowMain(){
     // Implement right-click menu
     Windows.Main.webContents.on("context-menu", (e: any, params: any) => {
         e.preventDefault();
-        showContextMenu(params);
     })
 
     Electron.globalShortcut.register("Shift+Alt+H", () => {
@@ -198,65 +197,3 @@ Electron.ipcMain.on("message", (event: any, args: any) => {
         console.log("[main:updater]");
     }
 });
-
-function showContextMenu(params: any){
-    let Right_Menu = Electron.Menu.buildFromTemplate([
-        {
-            label: "剪切",
-            accelerator: "CmdOrCtrl+X",
-            role: "cut",
-            enabled: params.isEditable && params.selectionText !== ""
-        },
-        {type:"separator"},
-        {
-            label: "复制",
-            accelerator: "CmdOrCtrl+C",
-            role: "copy",
-            enabled: params.selectionText !== ""
-        },
-        {
-            label: "粘贴",
-            accelerator: "CmdOrCtrl+V",
-            role: "paste",
-            enabled: (!(Electron.clipboard.readText() === "" && Electron.clipboard.readImage()))
-        },
-        {type:"separator"},
-        {
-            label: "复制图片",
-            enabled: params.mediaType === "image",
-            click: ()=>{
-                if (params.mediaType === "image") {
-                    const http = require("http");
-                    const https = require("https");
-                    const getModule = (url: string) => url.startsWith("https://") ? https : http;
-                    getModule(params.srcURL).get(params.srcURL, (res: any) => {
-                        const data: any = [];
-                        res.on("data", (chunk: any) => {
-                            data.push(chunk);
-                        }).on("end", () => {
-                            const buffer = Buffer.concat(data);
-                            const image = Electron.nativeImage.createFromBuffer(buffer);
-                            Electron.clipboard.writeImage(image);
-                        });
-                    });
-                }
-            },
-        },
-        {
-            label: "复制图片地址",
-            enabled: params.mediaType === "image",
-            click: ()=>{
-                if (params.mediaType === "image") {
-                    Electron.clipboard.writeText(params.srcURL);
-                }
-            },
-        },
-        {type:"separator"},
-        {
-            label: "刷新",
-            role: "reload",
-            accelerator: "CmdOrCtrl+R",
-        }
-    ]);
-    Right_Menu.popup();
-}
