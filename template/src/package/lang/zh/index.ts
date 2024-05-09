@@ -3,6 +3,7 @@ export default {
         left: {
             placeholder: "选择连接方式",
             search: "搜索关键词...",
+            search_no_found: "没有相关数据",
             browser: "游览器",
             local: "本地",
             remote: "远程",

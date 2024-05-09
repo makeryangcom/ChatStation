@@ -26,7 +26,7 @@
                                 <Command :filter-function="(list: any, child: any) => list.filter((i: any) => i?.toLowerCase()?.includes(child)) ">
                                     <CommandInput :placeholder="$t('header.left.search')" />
                                     <CommandList>
-                                        <CommandEmpty>No Model Found.</CommandEmpty>
+                                        <CommandEmpty>{{$t("header.left.search_no_found")}}</CommandEmpty>
                                         <CommandGroup v-for="(item, index) in page.header.select.group" :key="index" :heading="$t('header.left.' + item.lang)">
                                             <CommandItem v-for="(child, ii) in item.child" :key="ii" :value="child.value" @select="onHeaderSelect(child);open = false;">
                                                 <span>

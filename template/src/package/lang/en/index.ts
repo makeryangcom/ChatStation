@@ -3,6 +3,7 @@ export default {
         left: {
             placeholder: "Choose connection method",
             search: "Search keyword...",
+            search_no_found: "No Model Found",
             browser: "Browser",
             local: "Local",
             remote: "Remote",
