@@ -9,6 +9,9 @@ export default {
             remote: "Remote",
             new_remote: "New remote devices"
         },
+        browser: {
+            placeholder: "Enter website address...",
+        },
         tab: {
             chat: "Chat",
             workflow: "Workflow",

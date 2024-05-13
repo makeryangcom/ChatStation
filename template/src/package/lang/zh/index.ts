@@ -9,6 +9,9 @@ export default {
             remote: "远程",
             new_remote: "新的远程设备"
         },
+        browser: {
+            placeholder: "输入一个网址...",
+        },
         tab: {
             chat: "对话",
             workflow: "工作流",

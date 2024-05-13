@@ -12,6 +12,7 @@ export interface BaseStruct {
     app_path: any,
     app_data_path: any,
     app_home_path: any,
+    app_temp_path: any,
     environment: any,
     platform: string,
     config: any,
@@ -85,7 +86,7 @@ export interface PageStruct {
         button_loading: boolean
     },
     browser: {
-
+        url: string
     },
     chat: {
         filter: {

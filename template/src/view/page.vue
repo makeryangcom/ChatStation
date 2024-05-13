@@ -87,7 +87,7 @@ const page = ref<PageStruct>({
         button_loading: false
     },
     browser: {
-
+        url: ""
     },
     chat: {
         filter: {
@@ -355,6 +355,7 @@ onMounted(() => {
         console.log("[page:props:base:app_path]", props.base.app_path());
         console.log("[page:props:base:app_data_path]", props.base.app_data_path());
         console.log("[page:props:base:app_home_path]", props.base.app_home_path());
+        console.log("[page:props:base:app_temp_path]", props.base.app_temp_path());
         console.log("[page:props:base:install_data]", "mode:" + page.value.install.mode, "local:" + page.value.install.local.path, "remote:" + page.value.install.remote.path);
         page.value.install.local.input = page.value.install.local.path;
         page.value.install.remote.input = page.value.install.remote.path;

@@ -1,8 +1,6 @@
 <template>
     <main class="page-browser" :class="page.header.current">
-        <div class="">
-
-        </div>
+        <div class="browser-main">111</div>
     </main>
 </template>
 

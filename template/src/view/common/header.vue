@@ -100,7 +100,9 @@
                             </Button>
                         </div>
                         <div class="browser-item">
-
+                            <div class="browser-input pl-2 pr-2 h-7">
+                                <Input class="h-7 input text-sm" :placeholder="$t('header.browser.placeholder')" autocomplete="off" spellcheck="false"/>
+                            </div>
                         </div>
                         <div class="browser-item">
                             <Button class="h-7 w-7" variant="outline" size="icon">
@@ -208,6 +210,7 @@
 <script setup lang="ts">
 import {ref, onBeforeMount, onMounted, onBeforeUnmount, onUnmounted, nextTick, defineEmits} from "vue";
 import type {BaseStruct, PageStruct} from "@/package/struct";
+import {Input} from "@/package/ui/input";
 import {Button} from "@/package/ui/button";
 import {Tabs, TabsList, TabsTrigger} from "@/package/ui/tabs";
 import {Avatar, AvatarFallback, AvatarImage} from "@/package/ui/avatar";
@@ -377,6 +380,16 @@ onUnmounted(() => {});
 }
 .page-header .header-item .header-browser .browser-item:last-child{
     width: 28px;
+}
+.page-header .header-item .header-browser .browser-input{
+    width: 100%;
+}
+.page-header .header-item .header-browser .browser-input .input{
+    box-shadow: none;
+    border: 0;
+    text-align: left;
+    line-height: 24px;
+    padding: 0;
 }
 .theme-main{
     width: 100%;

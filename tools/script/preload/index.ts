@@ -25,6 +25,9 @@ import os from "os";
         const path_temp= (os.platform() === "win32" ? (process.env["HOMEDRIVE"]  + "" + process.env["HOMEPATH"]) : process.env["HOME"] + "");
         return Path.join(path_temp, "./");
     },
+    app_temp_path: ()=> {
+        return Path.join(os.tmpdir(), "./");
+    },
     environment: () => {
         return process.env["VITE_DEV_SERVER_HOST"] !== "127.0.0.1" ? "produce" : "develop"
     },
