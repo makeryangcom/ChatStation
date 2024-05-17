@@ -68,7 +68,7 @@ export interface PageStruct {
         },
         network: {
             ping: boolean,
-            spawn: boolean
+            docker: boolean
         }
     },
     install: {

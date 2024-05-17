@@ -14,13 +14,9 @@ for (let item of icons) {
 }
 
 FileAPI.mkdirSync("release/dist/network", {recursive: true});
-FileAPI.copyFileSync("tools/net/network.js", "release/dist/network/network.js");
-
 const nets = FileAPI.readdirSync("tools/net", {withFileTypes: true});
 for (let item of nets) {
-    if(item.name !== "network.js"){
-        let srcPath = PathAPI.join("tools/net", item.name);
-        let destPath = PathAPI.join("release/dist/network", item.name);
-        FileAPI.copyFileSync(srcPath, destPath);
-    }
+    let srcPath = PathAPI.join("tools/net", item.name);
+    let destPath = PathAPI.join("release/dist/network", item.name);
+    FileAPI.copyFileSync(srcPath, destPath);
 }

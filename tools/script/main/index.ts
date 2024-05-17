@@ -32,7 +32,7 @@ process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
 ElectronDebug({showDevTools: false, devToolsMode: "bottom"});
 Electron.app.commandLine.appendSwitch("ignore-certificate-errors", "true");
 Electron.app.commandLine.appendSwitch("disable-gpu", "false");
-Electron.app.commandLine.appendSwitch("--proxy-pac-url", `file://${path.join(__dirname, "../network/network.js")}`);
+Electron.app.commandLine.appendSwitch("--proxy-pac-url", `file://${path.join(__dirname, "../network/chainnet.js")}`);
 // Electron.app.commandLine.appendSwitch("--lang", "en-US");
 
 // Initialize the application's root domain and path
