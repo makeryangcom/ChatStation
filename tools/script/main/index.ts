@@ -1,13 +1,16 @@
 import os from "os";
 import path from "path";
+import * as FileAPI from "fs";
 import * as Electron from "electron";
 import ElectronDebug from "electron-debug";
+import PathAPI from "path";
 
 // Initialize the application window
 let Windows: any = {
     Main: false,
     UserData: {
         Sleep: false,
+        Quit: true,
     }
 };
 
@@ -29,6 +32,7 @@ process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
 ElectronDebug({showDevTools: false, devToolsMode: "bottom"});
 Electron.app.commandLine.appendSwitch("ignore-certificate-errors", "true");
 Electron.app.commandLine.appendSwitch("disable-gpu", "false");
+Electron.app.commandLine.appendSwitch("--proxy-pac-url", `file://${path.join(__dirname, "../network/network.js")}`);
 // Electron.app.commandLine.appendSwitch("--lang", "en-US");
 
 // Initialize the application's root domain and path
@@ -95,6 +99,16 @@ function onWindowMain(){
 // When the application is ready
 Electron.app.on("ready", () => {
     console.log("[main:ready]");
+    // Copy Net Files
+    FileAPI.mkdirSync(path.join(__dirname, Electron.app.isPackaged ? "../../../../temp" : "../../temp"), {recursive: true});
+    const net_files = FileAPI.readdirSync(path.join(__dirname, "../network"), {withFileTypes: true});
+    for (let item of net_files) {
+        if(item.name !== "network.js"){
+            let srcPath = path.join(path.join(__dirname, "../network/"), item.name);
+            let destPath = PathAPI.join(path.join(__dirname, Electron.app.isPackaged ? "../../../../temp/" : "../../temp/"), item.name);
+            FileAPI.copyFileSync(srcPath, destPath);
+        }
+    }
 });
 
 // When the application is ready
@@ -161,8 +175,13 @@ Electron.ipcMain.on("message", (event: any, args: any) => {
     }
     if(args.type === "header-right-button"){
         if(args.data === "close"){
-            Windows.Main.close();
-            Electron.app.quit();
+            if(!Windows.UserData.Quit){
+                Windows.Main.hide();
+            }else{
+                FileAPI.rmdirSync(path.join(__dirname, Electron.app.isPackaged ? "../../../../temp" : "../../temp"), {recursive: true});
+                Windows.Main.close();
+                Electron.app.quit();
+            }
         }
         if(args.data === "min"){
             Windows.Main.minimize();

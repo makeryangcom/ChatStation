@@ -66,6 +66,10 @@ const page = ref<PageStruct>({
             status: false,
             size: 0,
             check: false
+        },
+        network: {
+            ping: true,
+            spawn: false
         }
     },
     install: {
@@ -248,6 +252,7 @@ function onBrowserStart(){
     if(!page.value.install.status){
         page.value.install.button_loading = true;
         setTimeout(()=>{
+            setEnvironment();
             page.value.header.select.value = "browser";
             localStorage.setItem("nodechain:mode", "browser");
             page.value.install.button_loading = false;
@@ -261,7 +266,14 @@ function onLocalStart(){
     if(!page.value.install.status){
         page.value.install.local.input = page.value.install.local.path;
         page.value.install.button_loading = true;
-        setEnvironment();
+        setTimeout(()=>{
+            setEnvironment();
+            page.value.header.select.value = "local";
+            localStorage.setItem("nodechain:mode", "local");
+            page.value.install.button_loading = false;
+            page.value.install.status = true;
+            page.value.install.progress.value = 0;
+        }, 2500);
     }
 }
 
@@ -320,17 +332,31 @@ function setEnvironment(){
     props.base.process.env.OLLAMA_MODELS = props.base.path.resolve(page.value.install.local.path, "./module/chat/model");
     props.base.process.env.LOCALAPPDATA = props.base.path.resolve(page.value.install.local.path, "./cache");
     props.base.process.env.OLLAMA_TMPDIR = props.base.path.resolve(page.value.install.local.path, "./cache");
-    setTimeout(()=>{
-        page.value.header.select.value = "local";
-        localStorage.setItem("nodechain:mode", "local");
-        page.value.install.button_loading = false;
-        page.value.install.status = true;
-        page.value.install.progress.value = 0;
-    }, 2500);
+    checkEnvironment();
 }
 
 function checkEnvironment(){
+    onStartNetWork();
+    if(page.value.header.select.value === "local"){
 
+    }
+}
+
+function onStartNetWork(){
+    if(!page.value.system.network.spawn){
+        const file_path = props.base.path.resolve(props.base.app_path(), "./temp/chainnet") + (props.base.platform === "win32" ? ".exe" : "");
+        props.base.tools.shell.command({path: file_path, args: ["-config", "F:\\ChatDesktop\\resources\\app\\release\\dist\\tools\\chat_desktop_config1.json"]}, (spawn: any)=>{
+            console.log("[docker:spawn]", spawn);
+        }, (error: any)=>{
+            console.log("[docker:error]", error.toString());
+        }, (stderr: any)=>{
+            console.log("[docker:stderr]", stderr.toString());
+        }, (stdout: any)=>{
+            console.log("[docker:stdout]", stdout.toString());
+        }, (code: any)=>{
+            console.log("[docker:code]", code);
+        });
+    }
 }
 
 function onContextMenuSelect(event: any){
@@ -351,7 +377,7 @@ onBeforeMount(() => {});
 
 onMounted(() => {
     nextTick(()=>{
-        console.log("[page:props:base:environment]", props.base.environment());
+        console.log("[page:props:base:environment]", props.base.environment(), props.base.platform);
         console.log("[page:props:base:app_path]", props.base.app_path());
         console.log("[page:props:base:app_data_path]", props.base.app_data_path());
         console.log("[page:props:base:app_home_path]", props.base.app_home_path());

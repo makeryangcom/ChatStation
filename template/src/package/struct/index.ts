@@ -65,6 +65,10 @@ export interface PageStruct {
             status: boolean,
             size: number,
             check: boolean
+        },
+        network: {
+            ping: boolean,
+            spawn: boolean
         }
     },
     install: {

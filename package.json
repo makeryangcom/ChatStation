@@ -9,11 +9,11 @@
     "scripts": {
         "dev": "node tools/script/watch.mjs",
         "rebuild": "electron-rebuild -f -w",
-        "build": "rimraf release/dist && node --max-old-space-size=6096 tools/script/build.mjs && node --max-old-space-size=6096 tools/script/index.mjs",
+        "build": "rimraf release/* && node --max-old-space-size=6096 tools/script/build.mjs && node --max-old-space-size=6096 tools/script/index.mjs",
         "win64": "yarn build && electron-builder --win --x64",
         "win32": "yarn build && electron-builder --win --ia32",
         "mac": "yarn build && electron-builder --mac --x64",
-        "macarm": "yarn build && electron-builder -mac --arm64"
+        "linux": "yarn build && electron-builder --linux --amd64"
     },
     "build": {
         "productName": "NodeChain",
@@ -59,7 +59,8 @@
             "requestedExecutionLevel": "highestAvailable"
         },
         "linux": {
-            "icon": "tools/icons",
+            "icon": "tools/icons/icon.png",
+            "target": ["AppImage"],
             "artifactName": "${productName}_${version}.${ext}"
         },
         "nsis": {
