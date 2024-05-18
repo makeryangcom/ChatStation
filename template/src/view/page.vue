@@ -343,19 +343,28 @@ function checkEnvironment(){
 }
 
 function onStartNetWork(){
-    if(!page.value.system.network.spawn){
+    if(!page.value.system.network.docker){
         const file_path = props.base.path.resolve(props.base.app_path(), "./temp/chainnet") + (props.base.platform === "win32" ? ".exe" : "");
+        let spawn_temp: any = false;
         props.base.process.env["NODE_CHAIN_JSON"] = "5O7iu4Oy4fod_-KIcU4QUHhky-Wy9luvnoE5-MMeyfRgh9u10iHvk1LspPUJMDqVGkiOCPeAWPtPKq-cTGCGaSFU8yKvxJJw53q6EqFgnW_SQwK_K0x7A_c_fSqt8KnO4AGqFg0tYLu-BkiPhNRI7oehyckthkI030SxbVcRVQRZeyqNHjdJf12ywPTrt81StQp85n62HUri0BprIK38HC4xseuXtDefS6SyXs6BPpKkvd2bRkeeQZJwtaAv0L3hPuDUc3P86mttXVE--BwYUdO71ZknUFbmwtcve3lMVfU-zHSekwhWYomLW8qTWQ-BT30ycEnIFpU9S-35VWa5ap_YvvYgMpUCvdW7bdD_nVLU-ZuuiP4tDiZ_OUf0mlmtF5Ttbh9LmPx5hPc07Syc5gd0v2NvNCzgTJsVUY9J1n1jrUYfGAlgOhL34J9y1vjEQV6KAcqAzuoAs9eyv31v41eh5fQvlxxOoFNVGa7kf6J8rZRJp0J_GkWmEKYnKx_XSDPrfEWTPVm9xGKspTuqdzWODw7q7nvhSeFw0L_fXLxvtpllolsNpw6lnGgcwZrGDxUibVSSoQL8Q7FrERa0lz9-6KxwsM0nWNbZus5xuW6BDCI07kKYrBU6_OmuzGajIu8B73pKC75N5kelMkajoTXL9RwHZsynV_AhPedJloAijR35srtPaYtNQBRED9BZoorXD48nPwnRnUtKI698barqN5k7ozMlvgDOnLDBZpGZ_pLcvhPfZpyPdEt0cNYAkgN95-yGmU84NkUfYMM76G9P3L7Ox0w_bXC_GadyNiSYL7ZlC2LOeAz-njnagDGcv4MUiFpBqIfCgz7g5HswHby85L8FDeWOfhHzeNdYufWaBq9uAXEv4T6l7Add-dCLrd4r5_OsL-mas1WmzwfNyzPpwNQw1B-PCv9ad8WuKQCWnDW1QDIlcPqVX3XF49a_BnzmcKW9XhgVOdXKAivgTMrmouH1xZARkp5XlVOyL8q0gS9Q2b9jsWeED1vCtuzsafRP8ML1uvehfTzq25uihWRdYPkqBwDOn9EckwTVxgR5Kah1syPxxgHp-O6RRg8vmfosSpN0npV9kILXUDRB4TUt8hOohw0N9jfUp5ej7mR2uOV8q4p9k0oF2fZOIVuGuwjLmDgn5OdscOxrwytHI140-EkfVmqsF2XjDv2Hb3ziZF60S0qAko4aHjvA1j_vk0LX6D-wOWV9P23NWROZq3b7HKG31XXN8H7m1Vo_45pp7JHDRvBVMgt3gaTmPHwYzxJ_0nWxhqbzdf-7-WDJKvOr9B5tE_Qm76fiVLY2UHdpIk6bW4blZBNtdoCsF24gnn-4f7hCdyemWGT3-sneoCzIs2mqekuaLLZ2J-D-yOAvUb4nrutW31ohWyWEJrcTFUYs827g8Dz1q-JF_l1fLGMN-MLs6WgubCYqVWZ6dS1dv4CePlCL7XW9dBn_j1zuUBIYCiCUbU2_-nQ8V33qBqpDy4K6n8XzwosinCqINemeTurGuaEVateXJbJg-Vrxogh8s9Zrg1yUEQa7NdXSIeRb3rW3a4jofunWz_uH-fGsjssXWe7Bf52hLPmJAT_XE-sXUEvdk0RXHWrdfeRsoK7qqcnBAjK-G8ISvDa8160TDUmg1Mg5Qlb_1sk376UkWwRZ6L4RN2teeH1EqZOge2Jp1Yb1FT0zQbVmv5XtZqk-Hr99oj-tmNKNaLfUXzU0xE7Dp7h09P6CZj8LSNKbFw=="
         props.base.tools.shell.command({path: file_path, args: ["-config", props.base.path.resolve(props.base.app_path(), "./temp/chainnet.json")]}, (spawn: any)=>{
             console.log("[docker:spawn]", spawn);
+            spawn_temp = spawn;
         }, (error: any)=>{
             console.log("[docker:error]", error.toString());
         }, (stderr: any)=>{
             console.log("[docker:stderr]", stderr.toString());
         }, (stdout: any)=>{
             console.log("[docker:stdout]", stdout.toString());
+            if((stdout.toString()).includes("started!!!")){
+                page.value.system.network.docker = spawn_temp;
+            }
         }, (code: any)=>{
             console.log("[docker:code]", code);
+            setTimeout(()=>{
+                spawn_temp.kill();
+                page.value.system.network.docker = false;
+            }, 500);
         });
     }
 }
@@ -374,12 +383,14 @@ function onContextMenuSelect(event: any){
     }
 }
 
-function onStop(){
-    if(props.base.platform === "win32") {
-        props.base.tools.shell.command("TASKKILL", ["/IM", "chainnet.exe", "/F"]);
-    }
-    if(props.base.platform === "darwin") {
-        props.base.tools.shell.command("killall", ["chainnet"]);
+function onStopDocker(){
+    if(page.value.system.network.docker){
+        if(props.base.platform === "win32") {
+            props.base.tools.shell.command({path: "TASKKILL", args: ["/IM", "chainnet.exe", "/F"]}, null, null, null, null, null);
+        }
+        if(props.base.platform === "darwin") {
+            props.base.tools.shell.command({path: "killall", args: ["chainnet"]}, null, null, null, null, null);
+        }
     }
 }
 
@@ -420,13 +431,15 @@ onMounted(() => {
             page.value.system.gpu.status = false;
         });
         window.addEventListener("beforeunload", ()=>{
-            onStop();
+            console.log("[page:beforeunload]");
+            onStopDocker();
         });
     });
 });
 
 onBeforeUnmount(() => {
-    onStop();
+    onStopDocker();
+    props.base.ipc.send("message", {type: "quit"});
 });
 
 onUnmounted(() => {});

@@ -178,7 +178,6 @@ Electron.ipcMain.on("message", (event: any, args: any) => {
             if(!Windows.UserData.Quit){
                 Windows.Main.hide();
             }else{
-                FileAPI.rmdirSync(path.join(__dirname, Electron.app.isPackaged ? "../../../../temp" : "../../temp"), {recursive: true});
                 Windows.Main.close();
                 Electron.app.quit();
             }
@@ -214,5 +213,8 @@ Electron.ipcMain.on("message", (event: any, args: any) => {
     }
     if(args.type === "updater"){
         console.log("[main:updater]");
+    }
+    if(args.type === "quit"){
+        console.log("[main:quit]");
     }
 });
