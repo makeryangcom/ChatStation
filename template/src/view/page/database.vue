@@ -1,5 +1,7 @@
 <template>
-    <main class="page-database" :class="page.header.current">database</main>
+    <main class="page-database" :class="page.header.current">
+
+    </main>
 </template>
 
 <script setup lang="ts">

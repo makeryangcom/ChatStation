@@ -36,7 +36,7 @@ Electron.app.commandLine.appendSwitch("--proxy-pac-url", `file://${path.join(__d
 // Electron.app.commandLine.appendSwitch("--lang", "en-US");
 
 // Initialize the application's root domain and path
-const application_url: string = Electron.app.isPackaged ? `file://${path.join(__dirname, "../template/index.html")}` : `http://localhost:9898`;
+const application_url: string = Electron.app.isPackaged ? `file://${path.join(__dirname, "../template/index.html")}` : `http://www.dev.com:9898`;
 const user_agent: string = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.215 Safari/537.36 NodeChain/2024.04";
 
 function onWindowMain(){
