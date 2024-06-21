@@ -1,6 +1,8 @@
 <template>
     <main class="page-browser" :class="page.header.current">
-        <div class="browser-main">111</div>
+        <div class="browser-main">
+            <webview src="https://www.chatgpt.com" allowpopups nodeintegration webpreferences="javascript=true"></webview>
+        </div>
     </main>
 </template>
 
@@ -33,5 +35,13 @@ onUnmounted(() => {});
 }
 .page-browser.browser{
     display: block;
+}
+.page-browser.browser .browser-main{
+    width: 100%;
+    height: 100%;
+}
+.page-browser.browser .browser-main webview{
+    width: 100%;
+    height: 100%;
 }
 </style>
